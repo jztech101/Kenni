@@ -206,9 +206,9 @@ def kick(jenni, input):
 kick.commands = ['kick']
 kick.priority = 'high'
 
-def configureHostMask (mask):
+def configureHostMask (mask, input):
     if mask == '*!*@*': return mask
-    if re.match('^[^.@!/]+$', mask) is not None: return '%s!*@*' % mask
+    if re.match('^[^.@!/]+$', mask) is not None: return '*!*@%s' % input.host
     if re.match('^[^@!]+$', mask) is not None: return '*!*@%s' % mask
 
     m = re.match('^([^!@]+)@$', mask)
@@ -238,7 +238,7 @@ def ban (jenni, input):
         banmask = text[2]
     if not is_chan_admin(jenni,input,channel):
         return jenni.say('You must be an admin to perform this operation')
-    banmask = configureHostMask(banmask)
+    banmask = configureHostMask(banmask, input)
     if banmask == '': return
     jenni.write(['MODE', channel, '+b', banmask])
 ban.commands = ['ban']
@@ -261,7 +261,7 @@ def unban (jenni, input):
         banmask = text[2]
     if not is_chan_admin(jenni,input,channel):
         return jenni.say('You must be an admin to perform this operation')
-    banmask = configureHostMask(banmask)
+    banmask = configureHostMask(banmask, input)
     if banmask == '': return
     jenni.write(['MODE', channel, '-b', banmask])
 unban.commands = ['unban']
@@ -284,7 +284,7 @@ def quiet (jenni, input):
        banmask = text[2]
    if not is_chan_admin(jenni, input, channel):
        return jenni.say('You must be an admin to perform this operation')
-   quietmask = configureHostMask(banmask)
+   quietmask = configureHostMask(banmask, input)
    if quietmask == '': return
    jenni.write(['MODE', channel, '+q', quietmask])
 quiet.commands = ['quiet']
@@ -307,7 +307,7 @@ def unquiet (jenni, input):
        banmask = text[2]
    if not is_chan_admin(jenni, input, channel):
        return jenni.say('You must be an admin to perform this operation')
-   quietmask = configureHostMask(banmask)
+   quietmask = configureHostMask(banmask, input)
    if quietmask == '': return
    jenni.write(['MODE', channel, '-q', quietmask])
 unquiet.commands = ['unquiet']
