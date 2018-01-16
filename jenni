@@ -84,6 +84,10 @@ def create_default_config(fn):
     # http://products.wolframalpha.com/api/
     # This is needed in order to make .calc/.c have more comprehensive answers.
     # wolframalpha_apikey = ''
+    
+    
+    # yelp API Key
+    # yelp_apikey = ''
 
 
     # twitter_consumer_key and twitter_consumer_secret are for Twitter's API
