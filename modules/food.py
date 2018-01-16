@@ -8,39 +8,76 @@ More info:
  * Phenny: http://inamidst.com/phenny/
 """
 
-from yelpapi import YelpAPI
+from urllib2 import HTTPError
+from urllib import quote
+from urllib import urlencode
 import random
+import requests
+import json
+import pprint
+import sys
+import urllib
+import argparse
 
+def request(host, path, api_key, url_params=None):
+
+    url_params = url_params or {}
+    url = '{0}{1}'.format(host, quote(path.encode('utf8')))
+    headers = {
+        'Authorization': 'Bearer %s' % api_key,
+    }
+
+    print(u'Querying {0} ...'.format(url))
+
+    response = requests.request('GET', url, headers=headers, params=url_params)
+
+    return response.json()
 
 def food(jenni, input):
-    if not hasattr(jenni.config, 'yelp_api_credentials'):
-        return
-    yelp_api = YelpAPI(jenni.config.yelp_api_credentials['consumer_key'], jenni.config.yelp_api_credentials['consumer_secret'], jenni.config.yelp_api_credentials['token'], jenni.config.yelp_api_credentials['token_secret'])
+    if not hasattr(jenni.config, 'yelp_apikey'):
+        return jenni.say('Please sign up for a Yelp API key to use this function.')
+    key = jenni.config.yelp_apikey
+    API_HOST = 'https://api.yelp.com'
+    SEARCH_PATH = '/v3/businesses/search'
+    BUSINESS_PATH = '/v3/businesses/'
 
     location = input.group(2)
-
+    term = input.group(3)
     if not location:
         jenni.say("Please enter a location.")
         return
+    if not term:
+        jenni.say("Please enter a food")
+    url_params = {
+        'term': term.replace(' ', '+'),
+        'location': location.replace(' ', '+'),
+        'limit': 3
+    }
 
-    done = False
-    max_offset = 5
+    response = request(API_HOST, SEARCH_PATH, key, url_params=url_params)
 
-    try:
-        while not done:
-            offset = random.randint(0, max_offset)
-            response = yelp_api.search_query(category_filter="restaurants", location=location, limit=20, offset=offset)
-            if len(response['businesses']) > 0:
-                done = True
-                jenni.say("How about, " + response['businesses'][random.randint(0, len(response['businesses']) - 1)]['name'] + "?")
+    businesses = response.get('businesses')
+
+    if not businesses:
+        jenni.say(u'No businesses for {0} in {1} found.'.format(term, location))
+        return
+    finalresponse=""
+    for x in range(3):
+        if x >= len(businesses):
+            break
+        else:
+            if not finalresponse:
+                finalresponse = request(API_HOST, BUSINESS_PATH + businesses[x]['id'], key)
             else:
-                max_offset = offset - 1
-    except YelpAPI.YelpAPIError:
-        jenni.say("Invalid location!")
+                finalresponse = finalresponse + ", " +request(API_HOST, BUSINESS_PATH + businesses[x]['id'], key)
+    if len(businesses) <= 3:
+        jenni.say(len(businesses)+ " found: " + finalresponse)
+    else:
+        jenni.say(len(businesses)+ " found, showing first 3: " + finalresponse)
 
 food.commands = ["food"]
 food.priority = 'medium'
-food.example = '.food <location>'
+food.example = '.food <location> <thing>'
 
 if __name__ == '__main__':
     print __doc__.strip()
