@@ -7,5 +7,6 @@ blocks
 logs/*
 *.db
 build
+.idea/*
 *~
 nohup.out

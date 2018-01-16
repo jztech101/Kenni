@@ -8,7 +8,7 @@ Installation & Configuration
 jenni requires python 2.7, jenni will not work with python 3.x.
 
 1. Run ./jenni - this creates a default config file
-2. Edit ~/.jenni/default.py
+2. Edit ~/jenni/config/default.py
 3. Run ./jenni - this now runs jenni with your settings
 
 Enjoy!
