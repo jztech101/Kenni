@@ -42,12 +42,9 @@ def food(jenni, input):
     BUSINESS_PATH = '/v3/businesses/'
 
     location = input.group(2)
-    term = input.group(3)
     if not location:
         jenni.say("Please enter a location.")
         return
-    if not term:
-        jenni.say("Please enter a food")
     url_params = {
         'term': term.replace(' ', '+'),
         'location': location.replace(' ', '+'),

@@ -187,7 +187,6 @@ deauth_nick.event = 'NICK'
 deauth_nick.rule = '.*'
 
 def kick(jenni, input):
-    if not input.admin: return
     text = input.group().split()
     argc = len(text)
     if argc < 2: return
@@ -200,15 +199,17 @@ def kick(jenni, input):
         nick = text[2]
         channel = opt
         reasonidx = 3
+    if not is_chan_admin(jenni,input,channel):
+        return jenni.say('You must be an admin to perform this operation')
     reason = ' '.join(text[reasonidx:])
     if nick != jenni.config.nick:
         jenni.write(['KICK', channel, nick, reason])
 kick.commands = ['kick']
 kick.priority = 'high'
 
-def configureHostMask (mask, input):
+def configureHostMask (mask):
     if mask == '*!*@*': return mask
-    if re.match('^[^.@!/]+$', mask) is not None: return '*!*@%s' % input.host
+    if re.match('^[^.@!/]+$', mask) is not None: return '%s!*@*' % mask
     if re.match('^[^@!]+$', mask) is not None: return '*!*@%s' % mask
 
     m = re.match('^([^!@]+)@$', mask)
@@ -238,7 +239,7 @@ def ban (jenni, input):
         banmask = text[2]
     if not is_chan_admin(jenni,input,channel):
         return jenni.say('You must be an admin to perform this operation')
-    banmask = configureHostMask(banmask, input)
+    banmask = configureHostMask(banmask)
     if banmask == '': return
     jenni.write(['MODE', channel, '+b', banmask])
 ban.commands = ['ban']
@@ -261,7 +262,7 @@ def unban (jenni, input):
         banmask = text[2]
     if not is_chan_admin(jenni,input,channel):
         return jenni.say('You must be an admin to perform this operation')
-    banmask = configureHostMask(banmask, input)
+    banmask = configureHostMask(banmask)
     if banmask == '': return
     jenni.write(['MODE', channel, '-b', banmask])
 unban.commands = ['unban']
@@ -284,7 +285,7 @@ def quiet (jenni, input):
        banmask = text[2]
    if not is_chan_admin(jenni, input, channel):
        return jenni.say('You must be an admin to perform this operation')
-   quietmask = configureHostMask(banmask, input)
+   quietmask = configureHostMask(banmask)
    if quietmask == '': return
    jenni.write(['MODE', channel, '+q', quietmask])
 quiet.commands = ['quiet']
@@ -307,7 +308,7 @@ def unquiet (jenni, input):
        banmask = text[2]
    if not is_chan_admin(jenni, input, channel):
        return jenni.say('You must be an admin to perform this operation')
-   quietmask = configureHostMask(banmask, input)
+   quietmask = configureHostMask(banmask)
    if quietmask == '': return
    jenni.write(['MODE', channel, '-q', quietmask])
 unquiet.commands = ['unquiet']
@@ -357,6 +358,8 @@ def topic(jenni, input):
         if argc < 2: return
         channel = text[1]
         topic = ' '.join(text[2:])
+    if not is_chan_admin(jenni,input,channel):
+        return jenni.say('You must be an admin to perform this operation')
     if topic == '':
         return
     jenni.write(['TOPIC', channel], topic)
