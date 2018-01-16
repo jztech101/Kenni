@@ -38,13 +38,13 @@ def fucking_dinner(jenni, input):
         except:
             short_url = long_url
 
-        jenni.say("WHY DON'T YOU EAT SOME FUCKING: " + dish +
+        jenni.say("WHY DON'T YOU EAT SOME FUCKING " + dish +
                   " HERE IS THE RECIPE: " + short_url)
 
     else:
         jenni.say("I DON'T FUCKING KNOW, EAT PIZZA.")
 
-fucking_dinner.commands = ['fucking_dinner', 'fd', 'wtfsimfd']
+fucking_dinner.commands = ['fucking_dinner', 'fuckingdinner', 'dinner', 'fd', 'wtfsimfd']
 fucking_dinner.priority = 'low'
 
 if __name__ == '__main__':
