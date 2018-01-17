@@ -74,7 +74,7 @@ def f_remind(jenni, input):
 
     # @@ Multiple comma-separated tellees? Cf. Terje, #swhack, 2006-04-15
     line_prefix = (input.group()).lower()
-    if input.group() and (line_prefix.startswith('.tell') or line_prefix.startswith('.yell')):
+    if input.group() and (line_prefix.startswith('+tell') or line_prefix.startswith('+yell')):
         verb = 'tell'.encode('utf-8')
         line = input.groups()
         line_txt = line[1].split()

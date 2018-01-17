@@ -33,7 +33,7 @@ def insult(jenni, input):
     random.seed()
     jenni.say(target + ': ' + uc.decode(random.choice(lines)))
 
-insult.commands = ['i']
+insult.commands = ['i', 'insult']
 insult.priority = 'medium'
 insult.example = '.i <target>'
 
