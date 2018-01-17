@@ -154,7 +154,7 @@ def remind(jenni, input):
         except:
             jenni.reply('Please enter a more realistic time-frame.')
     else: jenni.reply('Okay, will remind in %s secs' % duration)
-remind.commands = ['in']
+remind.commands = ['remind','in']
 
 r_time = re.compile(r'.*([0-9]{2}[:.][0-9]{2}).*')
 r_zone = re.compile(r'(?:[\d]{4}-[\d]{2}-[\d]{2})?\s+?(([A-Za-z]+|[+-]\d\d?)).*')
@@ -297,7 +297,7 @@ def at(jenni, input):
 
     ## communicate to the user!
     jenni.reply('Reminding at %s %s - in %s %s' % (t, z, t_duration, phrase))
-at.commands = ['at']
+at.commands = ['remindat','at']
 
 if __name__ == '__main__':
     print __doc__.strip()

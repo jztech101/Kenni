@@ -55,7 +55,7 @@ def magic8Ball(jenni, input):
         jenni.reply(answers[int(hash.hexdigest(), 16) % len(answers)])
 
 
-magic8Ball.commands = ['magic8Ball', 'm8b']
+magic8Ball.commands = ['magic8Ball', 'm8b', '8ball', '8b']
 magic8Ball.priority = 'low'
 magic8Ball.example = '.m8b will it rain tomorrow?'
 

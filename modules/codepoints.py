@@ -209,7 +209,7 @@ def u(jenni, input):
         else:
             ## oh baby
             jenni.reply('Sorry, your input is too long!')
-u.commands = ['u']
+u.commands = ['u', 'unicode']
 u.example = '.u 203D'
 
 

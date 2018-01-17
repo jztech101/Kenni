@@ -57,7 +57,7 @@ def rand(jenni, input):
             else:
                 jenni.reply("I'm not sure what you want me to do!")
 
-rand.commands = ['rand']
+rand.commands = ['rand', 'randnum','randominteger']
 rand.priority = 'medium'
 
 if __name__ == '__main__':

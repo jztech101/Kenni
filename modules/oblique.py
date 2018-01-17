@@ -98,7 +98,7 @@ def o(jenni, input):
             elif (command in commands) and (manifest[0] == '!'):
                 return jenni.reply('Sorry, %s is blacklisted' % command)
     service(jenni, input, command, args)
-o.commands = ['o']
+o.commands = ['o','oblique']
 o.example = '.o servicename arg1 arg2 arg3'
 o.services = {}
 o.serviceURI = None

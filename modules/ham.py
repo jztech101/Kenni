@@ -148,7 +148,7 @@ def cs(jenni, input):
     else:
         response = 'No matches found.'
     jenni.say(response)
-cs.commands = ['cs']
+cs.commands = ['cs', 'callsign']
 cs.example = '.cs W8LT'
 
 def cw(jenni, input):
@@ -179,7 +179,7 @@ def cw(jenni, input):
                 break
             output += " "
     jenni.reply(output)
-cw.commands = ['cw']
+cw.commands = ['cw', 'morse', 'm']
 cw.thread = True
 
 if __name__ == '__main__':

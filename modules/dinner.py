@@ -39,7 +39,7 @@ def fucking_dinner(jenni, input):
             short_url = long_url
 
         jenni.say("WHY DON'T YOU EAT SOME FUCKING " + dish +
-                  " HERE IS THE RECIPE: " + short_url)
+                  ", HERE IS THE RECIPE: " + short_url)
 
     else:
         jenni.say("I DON'T FUCKING KNOW, EAT PIZZA.")

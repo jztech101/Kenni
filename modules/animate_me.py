@@ -72,7 +72,7 @@ def gif(jenni, input):
     else:
         jenni.say('Can\'t find anything in Giphy for "%s".' % origterm)
 
-gif.commands = ['animate_me', 'nm8_me']
+gif.commands = ['animate_me', 'gif','nm8_me']
 gif.priority = 'high'
 gif.rate = 10
 

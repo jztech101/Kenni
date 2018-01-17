@@ -110,37 +110,9 @@ def btc(jenni, input):
     response += '\x02Last updated\x02 at: {0} UTC'.format(temp_time)
 
     jenni.say(response)
-btc.commands = ['btc']
+btc.commands = ['btc', 'bitcoin']
 btc.example = '.btc'
 btc.rate = 20
-
-
-def fbtc(jenni, input):
-    '''.fbtc - returns prices from "The Fucking Bitcoin"'''
-    try:
-        page = proxy.get('http://thefuckingbitcoin.com/')
-    except:
-        return jenni.say('Could not access thefuckingbitcoin.com')
-
-    price = re.search('<p id="lastPrice">(\S+)</p>', page)
-    remarks = re.search('<p id="remark">(.*?)</p><p id="remarkL2">(.*?)</p>', page)
-
-    try:
-        remarks = remarks.groups()
-    except:
-        return jenni.say('Could not find relevant information.')
-
-    resp = str()
-    resp += '1 BTC == %s USD. ' % price.groups()
-
-    if remarks:
-        resp += '%s %s' % (remarks[0], remarks[1])
-
-    jenni.say(resp)
-
-fbtc.commands = ['fbtc']
-fbtc.example = '.fbtc'
-fbtc.rate = 20
 
 
 def bitfinex_retrieve(page):
@@ -195,7 +167,7 @@ def bcc(jenni, input):
 
     #print "exchanges_status:", exchanges_status
     jenni.say(response)
-bcc.commands = ['bcc']
+bcc.commands = ['bcc', 'bitcoincash']
 
 
 if __name__ == '__main__':
