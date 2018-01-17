@@ -46,7 +46,6 @@ def food(jenni, input):
         jenni.say("Please enter a location.")
         return
     url_params = {
-        'term': term.replace(' ', '+'),
         'location': location.replace(' ', '+'),
         'limit': 3
     }
@@ -56,7 +55,7 @@ def food(jenni, input):
     businesses = response.get('businesses')
 
     if not businesses:
-        jenni.say(u'No businesses for {0} in {1} found.'.format(term, location))
+        jenni.say('No businesses in ' + location + ' found.')
         return
     finalresponse=""
     for x in range(3):
