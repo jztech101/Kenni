@@ -126,7 +126,7 @@ def kick(jenni, input):
             reasonidx = " ".join(text[2:])
     if not is_chan_admin(jenni, input, channel):
         return jenni.say('You must be an admin to perform this operation')
-    jenni.write(['KICK', channel, nick, ' :', reasonidx])
+    jenni.write(['KICK', channel, nick, ' :', "[" + input.nick + "] " + reasonidx])
 kick.commands = ['kick']
 kick.priority = 'high'
 
@@ -262,7 +262,7 @@ def kickban (jenni, input):
    mask = configureHostMask(nick,jenni)
    if mask == '': return
    jenni.write(['MODE', channel, '+b', mask])
-   jenni.write(['KICK', channel, nick, ' :', reasonidx])
+   jenni.write(['KICK', channel, nick, ' :', "[" + input.nick + "] " + reasonidx])
 kickban.commands = ['kickban', 'kb', 'kban']
 kickban.priority = 'high'
 
