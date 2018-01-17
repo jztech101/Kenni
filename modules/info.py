@@ -22,49 +22,6 @@ def fchannels():
     lines = lines.replace('\n', '')
     return lines.split(',')
 
-
-def doc(jenni, input):
-    """Shows a command's documentation, and possibly an example."""
-    if input.group(1) == "help":
-        name = input.group(2)
-    else:
-        name = input.group(1)
-    name = name.lower()
-
-    if name in jenni.doc:
-        jenni.reply(jenni.doc[name][0])
-        if jenni.doc[name][1]:
-            jenni.say('e.g. ' + jenni.doc[name][1])
-doc.rule = '(?i)$nick[,:]\s(?:help|doc) +([A-Za-z]+)(?:\?+)?$'
-doc.example = '$nickname: doc tell?'
-doc.priority = 'low'
-
-
-def commands(jenni, input):
-    common_commands = "Common commands: join <channel> - Join the provided channel. (admin only); part <channel> - Leave the provided channel. (admin only); animate_me, nm8_me <search term> - Find an animated gif from giphy.com; py, python <python> - Interpret some Python (runs on Google App Engine); s/<find>/<replace> - Not a command, jenni will listen for phrases beginning with s/ and perform basic find-replace functionality. Note that this is not PRE compliant; .food <location> - Find food in your area using the Yelp API; img_me, image_me <search term> - Provide a random result from the first page of Google Image search; commands, help - Display a list of all commands, ip, iplookup, host <ip|host> - Get approximate geolocation from an IP or host using freegeoip.net; mustache_me <search term> - Adds a mustache to the image returned for the given search term; reload <module>: Ask jenni to reload a module. (admin only), bing <search query> - Provides the first result from a Bing search; duck, ddg <search query> - Provides the first link from a DuckDuckGo search; g - <query> - Google for <query> and return the top result; search <search query> - Provides the first result from Bing, DuckDuckgo, and Google; tell, to <person> <message> - relays a message to a person the next time they say something anywhere jenni is present; w, wik, wiki <entry> - Returns the wiki entry for <entry>; xkcd - Randomly generates a valid URL for an xkcd item."
-
-    jenni.reply("I'm sending you a list of my most common commands in private.")
-    jenni.reply('For a list of all of my commands, please visit: https://is.gd/CPStvK')
-
-    common_split = izip_longest(*[iter(common_commands)]*445, fillvalue='')
-    for split_commands in common_split:
-        jenni.msg(input.nick, ''.join(split_commands), False, False, 1)
-
-commands.commands = ['commands', 'help']
-commands.priority = 'low'
-
-
-def help(jenni, input):
-    response = (
-        'Hi, I\'m a bot. Say ".commands" to me in private for a list ' +
-        'of my commands, or see https://github.com/myano/jenni/wiki for more ' +
-        'general details. My owner is %s.'
-    ) % jenni.config.owner
-    jenni.reply(response)
-help.rule = ('$nick', r'(?i)help(?:[?!]+)?$')
-help.priority = 'low'
-
-
 def stats(jenni, input):
     """Show information on command usage patterns."""
     if input.sender == '##uno':

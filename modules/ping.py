@@ -23,6 +23,7 @@ interjection.example = '$nickname!'
 def f_ping(jenni, input):
     """ping jenni in a channel or pm"""
     jenni.reply('pong!')
+f_ping.command = 'ping'
 f_ping.rule = r'(?i)$nickname[:,]?\sping'
 f_ping.priority = 'high'
 f_ping.example = '$nickname: ping!'
