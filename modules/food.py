@@ -65,13 +65,14 @@ def food(jenni, input):
             if not finalresponse:
                 finalresponse = request(API_HOST, BUSINESS_PATH + businesses[x]['id'], key)
             else:
-                finalresponse = finalresponse + ", " +request(API_HOST, BUSINESS_PATH + businesses[x]['id'], key)
+                tmp = request(API_HOST, BUSINESS_PATH + businesses[x]['id'])
+                finalresponse = finalresponse + ", " + tmp, key
     if len(businesses) <= 3:
         jenni.say(len(businesses)+ " found: " + finalresponse)
     else:
         jenni.say(len(businesses)+ " found, showing first 3: " + finalresponse)
 
-food.commands = ["food"]
+food.commands = ["food", "yelp"]
 food.priority = 'medium'
 food.example = '.food <location> <thing>'
 
