@@ -68,9 +68,9 @@ def food(jenni, input):
 
                 finalresponse = finalresponse + ", " + businesses[x]['name']
     if len(businesses) <= 3:
-        jenni.say(len(businesses)+ " found: " + finalresponse)
+        jenni.say(str(len(businesses))+ " found: " + finalresponse)
     else:
-        jenni.say(len(businesses)+ " found, showing first 3: " + finalresponse)
+        jenni.say(str(len(businesses))+ " found, showing first 3: " + finalresponse)
 
 food.commands = ["food", "yelp"]
 food.priority = 'medium'

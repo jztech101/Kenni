@@ -11,3 +11,4 @@ build
 *~
 nohup.out
 venv/*
+config/*
