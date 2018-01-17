@@ -17,7 +17,7 @@ from tools import deprecated
 etyuri = 'http://etymonline.com/?term=%s'
 etysearch = 'http://etymonline.com/?search=%s'
 
-r_definition = re.compile(r'(?ims)<dd[^>]*>.*?</dd>')
+r_definition = re.compile(r'(?ims)<div class="word--C9UPa"[^>]*>.*?</div>')
 r_tag = re.compile(r'<(?!!)[^>]+>')
 r_whitespace = re.compile(r'[\t\r\n ]+')
 
@@ -34,6 +34,7 @@ def unescape(s):
     s = s.replace('&gt;', '>')
     s = s.replace('&lt;', '<')
     s = s.replace('&amp;', '&')
+    s = s.replace('&quot;','\"')
     return s
 
 def text(html):
@@ -86,7 +87,7 @@ def f_etymology(self, origin, match, args):
         self.msg(origin.sender, msg)
         return
     except AttributeError:
-        result = AttributeError.message
+        result = None
 
     if result is not None:
         self.msg(origin.sender, result)
