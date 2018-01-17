@@ -63,10 +63,10 @@ def food(jenni, input):
             break
         else:
             if not finalresponse:
-                finalresponse = str(request(API_HOST, BUSINESS_PATH + businesses[x]['name'], key))
+                finalresponse = businesses[x]['name']
             else:
 
-                finalresponse = finalresponse + ", " + str(request(API_HOST, BUSINESS_PATH + businesses[x]['name'], key))
+                finalresponse = finalresponse + ", " + businesses[x]['name']
     if len(businesses) <= 3:
         jenni.say(len(businesses)+ " found: " + finalresponse)
     else:
