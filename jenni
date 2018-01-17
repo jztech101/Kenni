@@ -123,15 +123,14 @@ def create_default_config(fn):
     # auto_title_disable_chans = ['##yano',]
 
     # These are people who will be able to use admin.py's functions...
-    admins = [owner, 'someoneyoutrust']
-    # But admin.py is disabled by default, as follows:
-    exclude = ['adminchannel', 'chicken_reply', 'insult', 'lispy', 'twss']
+    admins = [owner]
+    #exclude = ['adminchannel', 'chicken_reply', 'insult', 'lispy', 'twss']
 
     # This allows one to allow specific people to use channel admin commands
     # in specific channels.
     helpers = {
-        '#channel1': ['a.somedomain.tld', 'b.anotherdomain.tld'],
-        '##channel2': ['some/other/hostmask'],
+       # '#channel1': ['a.somedomain.tld', 'b.anotherdomain.tld'],
+       # '##channel2': ['some/other/hostmask'],
         }
 
     # Enable raw logging of everything jenni sees.

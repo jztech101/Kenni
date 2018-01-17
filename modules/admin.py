@@ -14,17 +14,6 @@ import time
 
 intentional_part = False
 
-def reload_confs(jenni, input):
-    # Reload known configs. This is an owner-only command.
-    if not input.owner: return
-
-    config_modules = []
-
-    jenni.config.config_helper.load_modules(config_modules)
-    jenni.reply("Reloaded configs")
-reload_confs.commands = ['reload_configs', 'reload_config', 'reload_conf']
-reload_confs.priority = 'low'
-
 def join(jenni, input):
     '''Join the specified channel. This is an owner-only command.'''
     # Can only be done in privmsg by an owner
@@ -44,9 +33,7 @@ def join(jenni, input):
         if len(inc) > 1:
             ## 2 inputs
             key = inc[1]
-        if not key:
-            jenni.write(['JOIN'], channel)
-        else: jenni.write(['JOIN', channel, key])
+        jenni.join(channel, key)
 join.commands = ['join']
 join.priority = 'low'
 join.example = '.join #example or .join #example key'
@@ -73,48 +60,6 @@ def quit(jenni, input):
 quit.commands = ['quit']
 quit.priority = 'low'
 
-def msg(jenni, input):
-    # Can only be done in privmsg by an admin
-    if input.sender.startswith('#'): return
-    a, b = input.group(2), input.group(3)
-    if (not a) or (not b): return
-    if (a.startswith('+') or a.startswith('@')) and not input.owner:
-        return
-    al = a.lower()
-    parts = al.split(',')
-    if not input.owner:
-        notallowed = ['chanserv', 'nickserv', 'hostserv', 'memoserv', 'saslserv', 'operserv']
-        #if al == 'chanserv' or al == 'nickserv' or al == 'hostserv' or al == 'memoserv' or al == 'saslserv' or al == 'operserv':
-        for each in notallowed:
-            for part in parts:
-                if part in notallowed:
-                    return
-    helper = False
-    if hasattr(jenni.config, 'helpers'):
-        if a in jenni.config.helpers and (input.host in jenni.config.helpers[a] or (input.nick).lower() in jenni.config.helpers[a]):
-            helper = True
-    if input.admin or helper:
-        for part in parts:
-            jenni.msg(part, b)
-msg.rule = (['msg'], r'(#?\S+) (.+)')
-msg.priority = 'low'
-
-def me(jenni, input):
-    # Can only be done in privmsg by an admin
-    if input.sender.startswith('#'): return
-    a, b = input.group(2), input.group(3)
-    helper = False
-    if hasattr(jenni.config, 'helpers'):
-        if a in jenni.config.helpers and (input.host in jenni.config.helpers[a] or (input.nick).lower() in jenni.config.helpers[a]):
-            helper = True
-    if input.admin or helper:
-        if a and b:
-            msg = '\x01ACTION %s\x01' % input.group(3)
-            jenni.msg(input.group(2), msg, x=True)
-me.rule = (['me'], r'(#?\S+) (.*)')
-me.priority = 'low'
-
-
 def defend_ground(jenni, input):
     '''
     This function monitors all kicks across all channels jenni is in. If she
@@ -124,9 +69,9 @@ def defend_ground(jenni, input):
     annoying. Please use this with caution.
     '''
     channel = input.sender
-    jenni.write(['JOIN'], channel)
+    jenni.join(channel, None)
     time.sleep(10)
-    jenni.write(['JOIN'], channel)
+    jenni.join(channel, None)
 defend_ground.event = 'KICK'
 defend_ground.rule = '.*'
 defend_ground.priority = 'low'
@@ -137,9 +82,9 @@ def defend_ground2(jenni, input):
     if not intentional_part and input.nick == jenni.config.nick:
         intentional_part = False
         channel = input.sender
-        jenni.write(['JOIN'], channel)
+        jenni.join(channel, None)
         time.sleep(10)
-        jenni.write(['JOIN'], channel)
+        jenni.join(channel, None)
 defend_ground2.event = 'PART'
 defend_ground2.rule = '.*'
 defend_ground2.priority = 'low'

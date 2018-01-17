@@ -10,7 +10,7 @@ More info:
  * Phenny: http://inamidst.com/phenny/
 """
 
-import threading, time
+import threading, time, sys
 
 def setup(jenni):
     # by clsn
@@ -72,7 +72,7 @@ def startup(jenni, input):
 
     # Cf. http://swhack.com/logs/2005-12-05#T19-32-36
     for channel in jenni.channels:
-        jenni.write(('JOIN', channel))
+        jenni.join(channel, None)
         time.sleep(0.5)
 startup.rule = r'(.*)'
 startup.event = '251'
@@ -82,7 +82,6 @@ startup.priority = 'low'
 def privs_on_join(jenni, input):
     if not input.mode_target or not input.mode_target.startswith('#'):
         return
-
     channel = input.mode_target
     if input.names and len(input.names) > 0:
         split_names = input.names.split()
@@ -93,10 +92,26 @@ def privs_on_join(jenni, input):
             elif nick_mode == '%':
                 jenni.add_halfop(channel, nick)
             elif nick_mode == '+':
-                jenni.add_voice(channel, nick)
+                jenni.add_voice(channel, nick_mode + nick)
 privs_on_join.rule = r'(.*)'
 privs_on_join.event = '353'
 privs_on_join.priority = 'high'
+
+def hostmask_on_join(jenni, input):
+    if not input.mode or not input.mode.startswith('#'):
+        return
+    jenni.set_hostmask(input.other2, input.names)
+hostmask_on_join.rule = r'(.*)'
+hostmask_on_join.event = '352'
+hostmask_on_join.priority = 'high'
+
+def new_Join_Hostmask(jenni, input):
+    if not input.sender or not input.sender.startswith('#'):
+        return
+    jenni.set_hostmask(input.nick, input.host)
+new_Join_Hostmask.rule = r'(.*)'
+new_Join_Hostmask.event = 'JOIN'
+new_Join_Hostmask.priority = 'high'
 
 # Method for tracking changes to ops/hops/voices in channels
 def track_priv_change(jenni, input):

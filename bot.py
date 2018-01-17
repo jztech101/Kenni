@@ -74,6 +74,7 @@ class Jenni(irc.Bot):
         modules = []
         for filename in filenames:
             name = os.path.basename(filename)[:-3]
+            print >> sys.stderr, name
             # if name in sys.modules:
             #     del sys.modules[name]
             try: module = imp.load_source(name, filename)
@@ -234,21 +235,24 @@ class Jenni(irc.Bot):
                 s.args = args
                 s.mode = origin.mode
                 s.mode_target = origin.mode_target
+                s.other = origin.other
+                s.other2 = origin.other2
+                s.other3 = origin.other3
                 s.names = origin.names
                 s.full_ident = origin.full_ident
                 s.admin = origin.nick in self.config.admins
                 if s.admin == False:
                     for each_admin in self.config.admins:
-                        re_admin = re.compile(each_admin)
-                        if re_admin.findall(origin.host):
+                        if each_admin is origin.host:
                             s.admin = True
                         elif '@' in each_admin:
-                            temp = each_admin.split('@')
-                            re_host = re.compile(temp[1])
-                            if re_host.findall(origin.host):
+                            if origin.nick + '@' + origin.host == each_admin:
                                 s.admin = True
+                s.chanadmin = False
+                if hasattr(self.config, 'helpers'):
+                    if origin.sender in self.config.helpers and origin.host in self.config.helpers[origin.sender]:
+                        s.chanadmin = True
                 s.owner = origin.nick + '@' + origin.host == self.config.owner
-                if s.owner == False: s.owner = origin.nick == self.config.owner
                 s.host = origin.host
                 return s
 

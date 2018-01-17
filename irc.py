@@ -15,7 +15,7 @@ import socket, asyncore, asynchat, ssl, select
 import os, codecs
 import errno
 
-IRC_CODES = ('251', '252', '254', '255', '265', '266', '250', '328', '332', '333', '353', '366', '372', '375', '376', 'QUIT', 'NICK')
+IRC_CODES = ('001', '002', '003','004', '005', '253', '251', '252', '254', '255', '265', '266', '250', '315', '328', '332', '333', '352', '353', '366', '372', '375', '376', 'QUIT', 'NICK', 'JOIN')
 cwd = os.getcwd()
 
 class Origin(object):
@@ -25,7 +25,7 @@ class Origin(object):
         match = Origin.source.match(source or '')
         self.nick, self.user, self.host = match.groups()
 
-        target = mode = mode_target = names = None
+        target = mode = mode_target = names = other = other2 = None
 
         arg_len = len(args)
         if arg_len > 1:
@@ -36,14 +36,18 @@ class Origin(object):
                     mode_target = args[3]
                     if arg_len > 4:
                         names = args[4]
-
-        else: target = None
-
+                        if arg_len > 5:
+                            other = args[5]
+                            if arg_len > 6:
+                                other2 = args[6]
         mappings = {bot.nick: self.nick, None: None}
         self.sender = mappings.get(target, target)
         self.mode = mode
         self.mode_target = mode_target
         self.names = names
+        self.other = other
+        self.other2 = other2
+        self.other3 = target
         self.full_ident = source
 
 def create_logdir():
@@ -106,6 +110,7 @@ class Bot(asynchat.async_chat):
         self.verbose = True
         self.channels = channels or list()
         self.stack = list()
+        self.hostmasks = dict()
         self.stack_log = list()
         self.logchan_pm = logchan_pm
         self.logging = logging
@@ -158,6 +163,12 @@ class Bot(asynchat.async_chat):
                 self.__write(args, text)
         except Exception, e:
             print '[WRITE FAILED]', e
+    def join(self, channel, key):
+        if not key:
+            self.write(['JOIN'], channel)
+        else: self.write(['JOIN', channel, key])
+        self.write(['WHO', channel])
+
 
     def safe(self, input, u=False):
         if input:
@@ -411,6 +422,12 @@ class Bot(asynchat.async_chat):
             self.ops[channel].add(name)
         else:
             self.ops[channel] = set([name])
+    def set_hostmask(self, name, hostmask):
+        if name not in self.hostmasks:
+            self.hostmasks[name] = hostmask
+        elif self.hostmasks[name] != hostmask:
+            self.hostmasks[name] = hostmask
+
 
     def add_halfop(self, channel, name):
         if channel in self.hops:

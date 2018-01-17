@@ -29,7 +29,7 @@ class Configs():
                 module.prefix = r'\.'
 
             if not hasattr(module, 'name'):
-                module.name = 'jenni yanosbot, https://git.io/jenni'
+                module.name = 'Forked jenni: https://github.com/jztech101/jenni/'
 
             if not hasattr(module, 'port'):
                 module.port = 6667
