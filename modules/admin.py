@@ -16,8 +16,6 @@ intentional_part = False
 
 def join(jenni, input):
     '''Join the specified channel. This is an owner-only command.'''
-    # Can only be done in privmsg by an owner
-    if input.sender.startswith('#'): return
     if not input.owner:
         return jenni.say('You do not have owner privs.')
     incoming = input.group(2)
@@ -40,9 +38,7 @@ join.example = '.join #example or .join #example key'
 
 def part(jenni, input):
     '''Part the specified channel. This is an admin-only command.'''
-    # Can only be done in privmsg by an admin
     global intentional_part
-    if input.sender.startswith('#'): return
     if input.admin:
         intentional_part = True
         jenni.write(['PART'], input.group(2))
@@ -52,8 +48,6 @@ part.example = '.part #example'
 
 def quit(jenni, input):
     '''Quit from the server. This is an owner-only command.'''
-    # Can only be done in privmsg by the owner
-    if input.sender.startswith('#'): return
     if input.owner:
         jenni.write(['QUIT'])
         __import__('os')._exit(0)

@@ -112,21 +112,21 @@ deop.example = '.deop ##example or .deop ##example nick'
 def kick(jenni, input):
     text = input.group().split()
     argc = len(text)
-    if argc < 2: return
+    channel = input.sender
     opt = text[1]
     nick = opt
-    channel = input.sender
-    reasonidx = 2
+    reasonidx = "Your behavior is not conductive to the desired environment"
     if opt.startswith('#'):
-        if argc < 3: return
-        nick = text[2]
         channel = opt
-        reasonidx = 3
-    if not is_chan_admin(jenni,input,channel):
+        nick = text[2]
+        if (argc > 3):
+            reasonidx = " ".join(text[3:])
+    else:
+        if (argc > 2):
+            reasonidx = " ".join(text[2:])
+    if not is_chan_admin(jenni, input, channel):
         return jenni.say('You must be an admin to perform this operation')
-    reason = ' '.join(text[reasonidx:])
-    if nick != jenni.config.nick:
-        jenni.write(['KICK', channel, nick, reason])
+    jenni.write(['KICK', channel, nick, ' :', reasonidx])
 kick.commands = ['kick']
 kick.priority = 'high'
 
@@ -245,26 +245,25 @@ def kickban (jenni, input):
    """
    text = input.group().split()
    argc = len(text)
-   if argc < 4: return
-   opt = text[1]
    channel = input.sender
+   opt = text[1]
    nick = opt
-   mask = text[2]
-   reasonidx = 3
+   reasonidx = "Your behavior is not conductive to the desired environment"
    if opt.startswith('#'):
-       if argc < 5: return
        channel = opt
        nick = text[2]
-       mask = text[3]
-       reasonidx = 4
+       if(argc >3):
+           reasonidx = " ".join(text[3:])
+   else:
+       if(argc >2):
+           reasonidx = " ".join(text[2:])
    if not is_chan_admin(jenni, input, channel):
        return jenni.say('You must be an admin to perform this operation')
-   reason = ' '.join(text[reasonidx:])
-   mask = configureHostMask(mask)
+   mask = configureHostMask(nick,jenni)
    if mask == '': return
    jenni.write(['MODE', channel, '+b', mask])
-   jenni.write(['KICK', channel, nick, ' :', reason])
-kickban.commands = ['kickban', 'kb']
+   jenni.write(['KICK', channel, nick, ' :', reasonidx])
+kickban.commands = ['kickban', 'kb', 'kban']
 kickban.priority = 'high'
 
 def topic(jenni, input):
