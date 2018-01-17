@@ -24,8 +24,8 @@ def is_chan_admin(jenni, input, a):
     if hasattr(jenni.config, 'helpers'):
         if a in jenni.config.helpers and (input.host in jenni.config.helpers[a] or (input.nick).lower() in jenni.config.helpers[a]):
             chanadmin = True
-    elif input.admin:
-        chanadmin = True
+    if input.admin:
+            chanadmin = True
     return chanadmin
 
 def voice(jenni, input):
