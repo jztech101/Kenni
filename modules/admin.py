@@ -54,6 +54,34 @@ def quit(jenni, input):
 quit.commands = ['quit']
 quit.priority = 'low'
 
+
+def msg(jenni, input):
+    if input.owner:
+        text = input.group().split()
+        argc = len(text)
+        channel = input.sender
+        msg = ' '.join(text[1:])
+        if argc > 2 and text[1].startswith("#"):
+            channel = text[1]
+            msg = ' '.join(text[2:])
+        jenni.write(['PRIVMSG', channel], msg)
+msg.commands = ['say']
+msg.priority = 'low'
+
+def act(jenni, input):
+    if input.owner:
+        text = input.group().split()
+        argc = len(text)
+        channel = input.sender
+        msg = ' '.join(text[1:])
+        if argc > 2 and text[1].startswith("#"):
+            channel = text[1]
+            msg = ' '.join(text[2:])
+        jenni.write(['PRIVMSG', channel], '\x01ACTION ' + msg + '\x01')
+act.commands = ['act']
+act.priority = 'low'
+
+
 def defend_ground(jenni, input):
     '''
     This function monitors all kicks across all channels jenni is in. If she

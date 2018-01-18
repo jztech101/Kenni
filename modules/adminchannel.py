@@ -32,17 +32,21 @@ def voice(jenni, input):
     """
     text = input.group().split()
     argc = len(text)
-    if argc < 2: return
-    opt = text[1]
-    nick = opt
+    nick = input.nick
     channel = input.sender
-    if opt.startswith('#'):
-        if argc < 3: return
-        nick = text[2]
-        channel = opt
-    if not is_chan_admin(jenni,input,channel):
-        return jenni.say('You must be an admin to perform this operation')
-    jenni.write(['MODE', channel, "+v", nick])
+    if not input.sender.startswith('#'):
+        channel = None
+    if argc >= 2 and text[1] is not None:
+        if text[1].startswith('#'):
+            channel = text[1]
+            if argc >= 3 and text[2] is not None:
+                nick = text[2]
+        else:
+            nick = text[1]
+    if channel is not None:
+        if not is_chan_admin(jenni,input,channel):
+            return jenni.say('You must be an admin to perform this operation')
+        jenni.write(['MODE', channel, "+v", nick])
 voice.commands = ['voice']
 voice.priority = 'low'
 voice.example = '.voice ##example or .voice ##example nick'
@@ -54,17 +58,21 @@ def devoice(jenni, input):
     """
     text = input.group().split()
     argc = len(text)
-    if argc < 2: return
-    opt = text[1]
-    nick = opt
+    nick = input.nick
     channel = input.sender
-    if opt.startswith('#'):
-        if argc < 3: return
-        nick = text[2]
-        channel = opt
-    if not is_chan_admin(jenni,input,channel):
-        return jenni.say('You must be an admin to perform this operation')
-    jenni.write(['MODE', channel, "-v", nick])
+    if not input.sender.startswith('#'):
+        channel = None
+    if argc >= 2 and text[1] is not None:
+        if text[1].startswith('#'):
+            channel = text[1]
+            if argc >= 3 and text[2] is not None:
+                nick = text[2]
+        else:
+            nick = text[1]
+    if channel is not None:
+        if not is_chan_admin(jenni,input,channel):
+            return jenni.say('You must be an admin to perform this operation')
+        jenni.write(['MODE', channel, "-v", nick])
 devoice.commands = ['devoice']
 devoice.priority = 'low'
 devoice.example = '.devoice ##example or .devoice ##example nick'
@@ -76,17 +84,21 @@ def op(jenni, input):
     """
     text = input.group().split()
     argc = len(text)
-    if argc < 2: return
-    opt = text[1]
-    nick = opt
+    nick = input.nick
     channel = input.sender
-    if opt.startswith('#'):
-        if argc < 3: return
-        nick = text[2]
-        channel = opt
-    if not is_chan_admin(jenni,input,channel):
-        return jenni.say('You must be an admin to perform this operation')
-    jenni.write(['MODE', channel, "+o", nick])
+    if not input.sender.startswith('#'):
+        channel = None
+    if argc >= 2 and text[1] is not None:
+        if text[1].startswith('#'):
+            channel = text[1]
+            if argc >= 3 and text[2] is not None:
+                nick = text[2]
+        else:
+            nick = text[1]
+    if channel is not None:
+        if not is_chan_admin(jenni,input,channel):
+            return jenni.say('You must be an admin to perform this operation')
+        jenni.write(['MODE', channel, "+o", nick])
 op.commands = ['op']
 op.priority = 'low'
 op.example = '.op ##example or .op ##example nick'
@@ -94,17 +106,21 @@ op.example = '.op ##example or .op ##example nick'
 def deop(jenni, input):
     text = input.group().split()
     argc = len(text)
-    if argc < 2: return
-    opt = text[1]
-    nick = opt
+    nick = input.nick
     channel = input.sender
-    if opt.startswith('#'):
-        if argc < 3: return
-        nick = text[2]
-        channel = opt
-    if not is_chan_admin(jenni,input,channel):
-        return jenni.say('You must be an admin to perform this operation')
-    jenni.write(['MODE', channel, "-o", nick])
+    if not input.sender.startswith('#'):
+        channel = None
+    if argc >= 2 and text[1] is not None:
+        if text[1].startswith('#'):
+            channel = text[1]
+            if argc >= 3 and text[2] is not None:
+                nick = text[2]
+        else:
+            nick = text[1]
+    if channel is not None:
+        if not is_chan_admin(jenni,input,channel):
+            return jenni.say('You must be an admin to perform this operation')
+        jenni.write(['MODE', channel, "-o", nick])
 deop.commands = ['deop']
 deop.priority = 'low'
 deop.example = '.deop ##example or .deop ##example nick'

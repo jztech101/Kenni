@@ -74,7 +74,6 @@ class Jenni(irc.Bot):
         modules = []
         for filename in filenames:
             name = os.path.basename(filename)[:-3]
-            print >> sys.stderr, name
             # if name in sys.modules:
             #     del sys.modules[name]
             try: module = imp.load_source(name, filename)
