@@ -80,6 +80,10 @@ def collectlines(jenni, input):
     """Creates a temporary storage of most recent lines for s///"""
     # don't log things in PM
     #channel = (input.sender).encode("utf-8")
+    if not hasattr(jenni.config, 'sed_enable'):
+        return
+    if not input.sender in jenni.config.sed_enable:
+        return
     channel = uc.decode(input.sender)
     channel = uc.encode(channel)
     nick = (input.nick).encode("utf-8")
@@ -107,6 +111,10 @@ collectlines.priority = 'low'
 def findandreplace(jenni, input):
     """s/old text/new text/ -- allows you to replace text from something you previously said"""
     # don't bother in PM
+    if not hasattr(jenni.config, 'sed_enable'):
+       return
+    if not input.sender in jenni.config.sed_enable:    
+       return
     channel = (input.sender).encode("utf-8")
     nick = (input.nick).encode("utf-8")
 

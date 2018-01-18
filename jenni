@@ -121,7 +121,7 @@ def create_default_config(fn):
     # and it won't auto-title URLs in that channel, but .title and other features
     # will still work
     # auto_title_disable_chans = ['##yano',]
-
+    # sed_enable = ['#channel']
     # These are people who will be able to use admin.py's functions...
     admins = [owner]
     #exclude = ['adminchannel', 'chicken_reply', 'insult', 'lispy', 'twss']
