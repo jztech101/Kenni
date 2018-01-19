@@ -259,20 +259,6 @@ class Jenni(irc.Bot):
 
     def call(self, func, origin, jenni, input):
         nick = (input.nick).lower()
-
-        ## rate limiting
-        if nick in self.times:
-            if func in self.times[nick]:
-                if not input.admin:
-                    ## admins are not rate limited
-                    if time.time() - self.times[nick][func] < func.rate:
-                        self.times[nick][func] = time.time()
-                        return
-        else:
-            self.times[nick] = dict()
-
-        self.times[nick][func] = time.time()
-
         try:
             if hasattr(self, 'excludes'):
                 if (input.sender).lower() in self.excludes:
@@ -291,15 +277,6 @@ class Jenni(irc.Bot):
             func(jenni, input)
         except Exception, e:
             self.error(origin)
-
-    def limit(self, origin, func):
-        if origin.sender and origin.sender.startswith('#'):
-            if hasattr(self.config, 'limit'):
-                limits = self.config.limit.get(origin.sender)
-                if limits and (func.__module__ not in limits):
-                    return True
-        return False
-
     def dispatch(self, origin, args):
         bytes, event, args = args[0], args[1], args[2:]
         text = decode(bytes)
@@ -312,8 +289,6 @@ class Jenni(irc.Bot):
 
                     match = regexp.match(text)
                     if match:
-                        if self.limit(origin, func): continue
-
                         jenni = self.wrapped(origin, text, match)
                         input = self.input(origin, text, bytes, match, event, args)
 
