@@ -29,3 +29,7 @@ f_ping.example = '$nickname: ping!'
 
 if __name__ == '__main__':
     print __doc__.strip()
+def source(jenni, input):
+    jenni.reply('https://github.com/jztech101/jenni')
+source.commands = ['source']
+source.priority = 'high'
