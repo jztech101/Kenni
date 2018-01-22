@@ -1,7 +1,7 @@
 Jenni
 =====
 
-This is a fork of jenni is a python IRC bot maintained and developed by Michael Yanovich. This project was originally created by Sean B. Palmer.
+This is a fork of jenni which is a python IRC bot maintained and developed by Michael Yanovich. This project was originally created by Sean B. Palmer.
 
 Installation & Configuration
 ============================
