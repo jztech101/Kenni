@@ -19,6 +19,9 @@ def nicecurrency(c):
 def nicenum(c):
     locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
     return locale.format("%d", float(c), grouping=True)
+def nicedeci(c):
+    locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+    return locale.format("%.5f", float(c))
 
 def cryptocoin(jenni, input):
     try:
@@ -45,7 +48,7 @@ def cryptocoin(jenni, input):
     if currency is None:
         jenni.say("Currency not found")
     else:
-        jenni.say(currency["name"] + " (" + currency["symbol"] + ") - Price (USD): " + nicecurrency(currency['price_usd']) + " - Market Cap (USD): " + nicecurrency(currency['market_cap_usd']) + " - In Circulation: " + nicenum(currency["available_supply"]) + " - Volume (24 hours - USD): " + nicecurrency(currency['24h_volume_usd']) + " - 1 hour: " + currency['percent_change_1h'] + "% - 24 hours: " + currency['percent_change_24h'] + "% - 7 days: " + currency['percent_change_7d'] + "%")
+        jenni.say(currency["name"] + " (" + currency["symbol"] + ") - Price (USD): " + nicecurrency(currency['price_usd']) + " - Price (BTC): " + nicedeci(currency['price_btc']) + " - Market Cap (USD): " + nicecurrency(currency['market_cap_usd']) + " - In Circulation: " + nicenum(currency["available_supply"]) + " - Volume (24 hours - USD): " + nicecurrency(currency['24h_volume_usd']) + " - 1 hour: " + currency['percent_change_1h'] + "% - 24 hours: " + currency['percent_change_24h'] + "% - 7 days: " + currency['percent_change_7d'] + "%")
 cryptocoin.commands = ['cryptocoin', 'cc']
 cryptocoin.example = '.cryptocoin'
 cryptocoin.rate = 20
