@@ -78,7 +78,7 @@ def act(jenni, input):
             channel = text[1]
             msg = ' '.join(text[2:])
         jenni.write(['PRIVMSG', channel], '\x01ACTION ' + msg + '\x01')
-act.commands = ['act']
+act.commands = ['act', 'do']
 act.priority = 'low'
 
 
