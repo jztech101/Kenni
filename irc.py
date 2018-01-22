@@ -308,7 +308,7 @@ class Bot(asynchat.async_chat):
                 ## send stuff in PM to logging channel
                 dlist = line.split()
                 if len(dlist) >= 3:
-                    if "#" not in dlist[2] and dlist[1].strip() not in IRC_CODES:
+                    if ("#" not in dlist[2] or dlist[1].strip() == 'NOTICE') and dlist[1].strip() not in IRC_CODES:
                         self.msg(self.logchan_pm, line, True)
             if self.logging:
                 ## if logging (to log file) is enabled
