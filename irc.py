@@ -309,7 +309,15 @@ class Bot(asynchat.async_chat):
                 dlist = line.split()
                 if len(dlist) >= 3:
                     if ("#" not in dlist[2] or dlist[1].strip() == 'NOTICE') and dlist[1].strip() not in IRC_CODES:
-                        self.msg(self.logchan_pm, line, True)
+                        if dlist[1].strip() == 'NOTICE':
+                            if dlist[2].startswith('#'):
+                                self.msg(self.logchan_pm, '[Notice] ' + dlist[0] + ': (' + dlist[2] + ')' + ' '.join(dlist[3:]), True)
+                            else:
+                                self.msg(self.logchan_pm, '[Notice] ' + dlist[0] + ': ' + ' '.join(dlist[3:]), True)
+                        elif dlist[1].strip() == 'PRIVMSG' and '#' not in dlist[2]:
+                            self.msg(self.logchan_pm, '[PM] ' + dlist[0] + ': ' + ' '.join(dlist[3:]), True)
+                        else:
+                            self.msg(self.logchan_pm, line, True)
             if self.logging:
                 ## if logging (to log file) is enabled
                 ## send stuff to the log file
