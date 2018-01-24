@@ -310,11 +310,11 @@ class Bot(asynchat.async_chat):
                 if len(dlist) >= 3:
                     if ("#" not in dlist[2] or dlist[1].strip() == 'NOTICE') and dlist[1].strip() not in IRC_CODES:
                         if dlist[1].strip() == 'NOTICE':
-                            if dlist[2].startswith('#'):
+                            if not dlist[2].isalnum():
                                 self.msg(self.logchan_pm, '[Notice] ' + dlist[0].replace(':','') + ': (' + dlist[2] + ') ' + ' '.join(dlist[3:]).replace(":",""), True)
                             else:
                                 self.msg(self.logchan_pm, '[Notice] ' + dlist[0].replace(":","") + ': ' + ' '.join(dlist[3:]).replace(":",""), True)
-                        elif dlist[1].strip() == 'PRIVMSG' and '#' not in dlist[2]:
+                        elif dlist[1].strip() == 'PRIVMSG' and dlist[2].isalnum():
                             self.msg(self.logchan_pm, '[PM] ' + dlist[0].replace(":","") + ': ' + ' '.join(dlist[3:]).replace(":",""), True)
                         else:
                             self.msg(self.logchan_pm, line, True)
