@@ -59,9 +59,9 @@ def search(term):
     else: term = term.decode('utf-8')
 
     term = term.replace('_', ' ')
-    try: uri, url_only = search.duck_search('site:en.wikipedia.org %s' % term)
+    try: uri = search.duck_search('site:en.wikipedia.org %s' % term)
     except IndexError: return term
-    if url_only and uri:
+    if uri:
         return uri[len('https://en.wikipedia.org/wiki/'):]
     else: return term
 

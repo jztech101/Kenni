@@ -23,12 +23,11 @@ def nicedeci(c):
     locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
     return locale.format("%.5f", float(c))
 
-def cryptocoin(jenni, input):
+def cryptocoin(jenni, input): 
     try:
-        page = proxy.get("https://api.coinmarketcap.com/v1/ticker/")
+        page = proxy.get("https://files.coinmarketcap.com/generated/search/quick_search.json")
     except:
         return jenni.say('[CryptoCoin] Connection to API did not succeed.')
-
     try:
         data = json.loads(page)
     except:
@@ -37,18 +36,29 @@ def cryptocoin(jenni, input):
     text = input.group(2)
     for x in data:
         if x["name"].lower() == text.lower():
-            currency = x
+            currency = x["slug"]
             break
-        elif x["id"].lower() == text.lower():
-            currency = x
-            break
-        elif x["symbol"].lower() == text.lower():
-            currency = x
-            break
+        #elif x["symbol"].lower() == text.lower():
+        #   currency = x["slug"]
+        #    break
+        else:
+            for y in x["tokens"]:
+                if y.lower() == text.lower():
+                    currency = x["slug"]
+                    break
     if currency is None:
         jenni.say("Currency not found")
     else:
-        jenni.say(currency["name"] + " (" + currency["symbol"] + ") - Price (USD): " + nicecurrency(currency['price_usd']) + " - Price (BTC): " + nicedeci(currency['price_btc']) + " - Market Cap (USD): " + nicecurrency(currency['market_cap_usd']) + " - In Circulation: " + nicenum(currency["available_supply"]) + " - Volume (24 hours - USD): " + nicecurrency(currency['24h_volume_usd']) + " - 1 hour: " + currency['percent_change_1h'] + "% - 24 hours: " + currency['percent_change_24h'] + "% - 7 days: " + currency['percent_change_7d'] + "%")
+        try:
+            page = proxy.get("https://api.coinmarketcap.com/v1/ticker/" + currency +"/")
+        except:
+            return jenni.say('[CryptoCoin] Connection to API did not succeed.')
+        try:
+            data = json.loads(page)
+        except:
+            return jenni.say("[CryptoCoin] Couldn't make sense of information from API")
+        data=data[0]
+        jenni.say(data["name"] + " (" + data["symbol"] + ") - Price (USD): " + nicecurrency(data['price_usd']) + " - Price (BTC): " + nicedeci(data['price_btc']) + " - Market Cap (USD): " + nicecurrency(data['market_cap_usd']) + " - In Circulation: " + nicenum(data["available_supply"]) + " - Volume (24 hours - USD): " + nicecurrency(data['24h_volume_usd']) + " - 1 hour: " + data['percent_change_1h'] + "% - 24 hours: " + data['percent_change_24h'] + "% - 7 days: " + data['percent_change_7d'] + "%")
 cryptocoin.commands = ['cryptocoin', 'cc']
 cryptocoin.example = '.cryptocoin'
 cryptocoin.rate = 20

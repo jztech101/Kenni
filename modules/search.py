@@ -66,26 +66,6 @@ bing.example = '.bing swhack'
 def duck_sanitize(incoming):
     return web.decode((incoming).decode('utf-8'))
 
-
-def duck_zero_click_scrape(html):
-    '''Scrape DDG HTML page for Zero-Click'''
-    try:
-        ## prefer to use BeautifulSoup
-        from BeautifulSoup import BeautifulSoup
-    except:
-        ## if BS is not available, just fail out here
-        return str()
-
-    soup = BeautifulSoup(html)
-    zero_click = str()
-    if soup('div', {'class': 'zero-click-result'}):
-        zero_click = str(soup('div', {'class': 'zero-click-result'})[0])
-    output = r_tag.sub('', zero_click).strip()
-    output = output.replace('\n', '').replace('\t', '')
-    output = remove_spaces(output)
-    return output
-
-
 def duck_search(query):
     '''Do a DuckDuckGo Search'''
 
@@ -134,11 +114,8 @@ def duck_search(query):
                     output = result
                     break
         else:
-            ## if we absolustely can't find a URL, let's try scraping the HTML
-            ## page for a zero_click info
-            return((duck_zero_click_scrape(page), False))
-
-    return((duck_sanitize(output), True))
+            return None
+    return duck_sanitize(output)
 
 def min_size(key, dictt):
     ## I am lazy
@@ -163,7 +140,7 @@ def duck(jenni, input):
     #jenni.say('query: ' + query)
 
     ## try to find a search result via the API
-    uri, only_url = duck_search(query)
+    uri = duck_search(query)
     if uri:
         passs, title = find_title(uri)
         if passs:
