@@ -14,8 +14,6 @@ More info:
 
 import re
 import web
-from modules.url import short
-
 re_mark = re.compile('<dt><a href="(.*?)" target="_blank">(.*?)</a></dt>')
 
 def food(jenni, input):
@@ -33,13 +31,8 @@ def food(jenni, input):
         dish = results[0][1].upper()
         long_url = results[0][0]
 
-        try:
-            short_url = short(long_url)[0][1]
-        except:
-            short_url = long_url
-
         jenni.say("WHY DON'T YOU EAT SOME FUCKING " + dish +
-                  ", HERE IS THE RECIPE: " + short_url)
+                  ", HERE IS THE RECIPE: " + long_url)
 
     else:
         jenni.say("I DON'T FUCKING KNOW, EAT PIZZA.")

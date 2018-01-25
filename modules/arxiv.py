@@ -12,7 +12,6 @@ More info:
 
 import web, re, feedparser
 from web import urllib
-from modules.url import short
 
 # Base api query url
 base_url = 'http://export.arxiv.org/api/query?';
@@ -42,11 +41,6 @@ def get_arxiv(query):
     abs_link = entry.id
     arxivid = id_filter.sub(r'\1', abs_link)
 
-    try:
-        short_url = short(abs_link)[0][1]
-    except:
-        short_url = ''
-
     # format the author string
     # use et al. for 3+ authors
     if len(entry.authors) > 2:
@@ -63,7 +57,7 @@ def get_arxiv(query):
     title = entry.title
     abstract = no_newlines.sub(' ', entry.summary)
 
-    return (arxivid, authors, title, abstract, short_url)
+    return (arxivid, authors, title, abstract, abs_link)
 
 def summary(jenni, input):
 

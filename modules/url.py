@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """
-url.py - jenni Bitly Module
+url.py - jenni 
+Bitly Module
 Copyright 2015, Sujeet Akula (sujeet@freeboson.org)
 Copyright 2010-2013, Michael Yanovich (yanovich.net)
 Copyright 2010-2013, Kenneth Sham
@@ -22,7 +23,7 @@ from modules import proxy
 import time
 import urllib2
 import web
-
+import sys
 
 # Place a file in your ~/jenni/ folder named, bitly.txt
 # and inside this file place your API key followed by a ','
@@ -32,46 +33,13 @@ import web
 
 # this variable is to determine when to use bitly. If the URL is more
 # than this length, it'll display a bitly URL instead. To disable bit.ly,
-# put None even if it's set to None, triggering .bitly command will still work!
-BITLY_TRIGGER_LEN_TITLE = 30
-BITLY_TRIGGER_LEN_NOTITLE = 80
-EXCLUSION_CHAR = '!'
-IGNORE = list()
+# put None even if it's set to None, triggering .bitly command will still 
 
 # do not edit below this line unless you know what you're doing
-bitly_loaded = False
-BLOCKED_MODULES = ['bitly', 'head', 'host', 'in', 'ip', 'isup', 'longurl', 'py',
-                   'short', 'spotify', 'sp', 'st', 'tell', 'title', 'tw',
-                   'twitter', 'unbitly', 'untiny', 'fixurl', 'fix_url', 'isgd']
-
 BAD_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.bmp', '.tiff', '.gif', '.pdf',
                   '.doc', '.docx', '.deb', '.rpm', '.exe', '.zip', '.7z', '.gz',
                   '.tar', '.webm', '.mp4', '.mp3', '.avi', '.mpeg', '.mpg',
                   '.ogv', '.ogg', '.java')
-
-simple_channels = list()
-
-try:
-    file = open('bitly.txt', 'r')
-    key = file.read()
-    key = key.split(',')
-    bitly_api_key = str(key[0].strip())
-    bitly_user = str(key[1].strip())
-    file.close()
-    bitly_loaded = True
-except:
-    print 'WARNING: No bitly.txt found.'
-
-try:
-    f = open('simple_channels.txt', 'r')
-    channels = f.read()
-    channels = channels.split(',')
-    for channel in channels:
-        simple_channels.append(channel.strip())
-    f.close()
-except:
-    print 'WARNING: No simple_channels.txt found'
-
 url_finder = re.compile(r'(?iu)(%s?(http|https|ftp)(://\S+\.?\S+/?\S+?))' %
                         (EXCLUSION_CHAR))
 r_entity = re.compile(r'&[A-Za-z0-9#]+;')
@@ -110,14 +78,8 @@ def find_title(url):
     """
     This finds the title when provided with a string of a URL.
     """
-
-    for item in IGNORE:
-        if item in url:
-            return False, 'ignored'
-
-    if not re.search('^((https?)|(ftp))://', url):
+    if not url.startswith("http"):
         url = 'http://' + url
-
     if '/#!' in url:
         url = url.replace('/#!', '/?_escaped_fragment_=')
 
@@ -265,74 +227,6 @@ def find_title(url):
     else:
         return False, 'No Title'
 
-def is_bitly(txt):
-    bitly_domains = ['//j.mp', '//bit.ly', '//bitly.com']
-    for each in bitly_domains:
-        if each in txt:
-            return True
-    return False
-
-
-def short(text):
-    """
-    This function creates a bitly url for each url in the provided string.
-    The return type is a list.
-    """
-
-    if not bitly_loaded:
-        return list()
-    if not text:
-        return list()
-    bitlys = list()
-    try:
-        a = re.findall(url_finder, text)
-        k = len(a)
-        i = 0
-        while i < k:
-            b = uc.decode(a[i][0])
-            ## make sure that it is not already a bitly shortened link
-            if not is_bitly(b):
-                longer = urllib2.quote(b)
-                url = 'https://api-ssl.bitly.com/v3/shorten?login=%s' % (bitly_user)
-                url += '&apiKey=%s&longUrl=%s&format=txt' % (bitly_api_key,
-                                                             longer)
-                #shorter = proxy.get(url)
-                shorter = web.get(url)
-                shorter.strip()
-                shorter = shorter.replace('j.mp', 'bit.ly')
-                bitlys.append([b, shorter])
-            else:
-                bitlys.append([b, str()])
-            i += 1
-            return bitlys
-    except:
-        return
-    return bitlys
-
-
-def generateBitLy(jenni, input):
-    url = input.group(2)
-    if not url:
-        if hasattr(jenni, 'last_seen_uri') and input.sender in jenni.last_seen_uri:
-            url = jenni.last_seen_uri[input.sender]
-        else:
-            return jenni.say('No URL provided')
-
-    bitly = short(url)
-    for b in bitly:
-        displayBitLy(jenni, b[0], b[1])
-generateBitLy.commands = ['bitly']
-generateBitLy.priority = 'high'
-
-
-def displayBitLy(jenni, url, shorten):
-    if url is None or shorten is None:
-        return
-    u = getTLD(url)
-    shorten = shorten.replace('http:', 'https:')
-    jenni.say('%s  -  %s' % (u, shorten))
-
-
 def remove_nonprint(text):
     new = str()
     for char in text:
@@ -340,33 +234,6 @@ def remove_nonprint(text):
         if x > 32 and x <= 126:
             new += char
     return new
-
-
-def getTLD(url):
-    url = url.strip()
-    url = remove_nonprint(url)
-    idx = 7
-    if url.startswith('https://'):
-        idx = 8
-    elif url.startswith('ftp://'):
-        idx = 6
-    u = url[idx:]
-    f = u.find('/')
-    if f == -1:
-        u = url
-    else:
-        u = url[0:idx] + u[0:f]
-    return remove_nonprint(u)
-
-
-def doUseBitLy(title, url):
-    BTL = None
-    if title:
-        BTL = BITLY_TRIGGER_LEN_TITLE
-    else:
-        BTL = BITLY_TRIGGER_LEN_NOTITLE
-    return bitly_loaded and BTL is not None and len(url) > BTL
-
 
 def get_results(text, manual=False):
     if not text:
@@ -384,30 +251,8 @@ def get_results(text, manual=False):
         url = uc.decode(url)
         url = uc.iriToUri(url)
         url = remove_nonprint(url)
-        domain = getTLD(url)
-        if '//' in domain:
-            domain = domain.split('//')[1]
-        if 'i.imgur.com' in url and url.startswith('http://'):
-            url = url.replace('http:', 'https:')
-
-        bitly = url
-
-        if not url.startswith(EXCLUSION_CHAR):
-            passs, page_title = find_title(url)
-            if not manual:
-                if bitly_loaded:
-                    if channel and channel not in simple_channels:
-                        bitly = short(url)
-                        if bitly:
-                            bitly = bitly[0][1]
-            display.append([page_title, url, bitly, passs])
-        else:
-            ## has exclusion character
-            if manual:
-                ## only process excluded URLs if .title is used
-                url = url[1:]
-                passs, page_title = find_title(url)
-                display.append([page_title, url, bitly, passs])
+        passs, page_title = find_title(url)
+        display.append([page_title, url, passs])
         i += 1
 
     ## check to make sure at least 1 URL worked correctly
@@ -417,18 +262,12 @@ def get_results(text, manual=False):
             overall_pass = True
 
     return overall_pass, display
-
-
-def show_title_auto(jenni, input):
-    return
-
 def show_title_demand(jenni, input):
     '''.title http://google.com/ -- forcibly show titles for a given URL'''
     uri = input.group(2)
 
     if uri and 'http' not in uri:
         uri = 'http://' + uri
-
     if not uri:
         channel = input.sender
         if not hasattr(jenni, 'last_seen_uri'):
@@ -439,12 +278,10 @@ def show_title_demand(jenni, input):
             return jenni.say('No recent links seen in this channel.')
 
     status, results = get_results(uri, True)
-
     for r in results:
         returned_title = r[0]
         orig = r[1]
-        bitly_link = r[2]
-        link_pass = r[3]
+        link_pass = r[2]
 
         if returned_title is None:
             jenni.say('No title returned.')
