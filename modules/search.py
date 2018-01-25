@@ -16,7 +16,7 @@ import re
 import urllib
 import web
 from modules import proxy
-
+from modules.url import find_title
 r_tag = re.compile(r'<(?!!)[^>]+>')
 r_bing = re.compile(r'<h2><a href="([^"]+)"')
 
@@ -50,7 +50,11 @@ def bing(jenni, input):
     query = query.encode('utf-8')
     uri = bing_search(query, lang)
     if uri:
-        jenni.say(uri)
+        passs, title = find_title(uri)
+        if passs:
+            jenni.say("[" + title +"] " + uri)
+        else:
+            jenni.say(uri)
         if not hasattr(jenni, 'last_seen_uri'):
             jenni.last_seen_uri = {}
         jenni.last_seen_uri[input.sender] = uri
@@ -149,29 +153,6 @@ def duck_api(query):
     results = json.loads(results)
     return results
 
-
-def duck_zero_click_api(query):
-    output = list()
-    header = 'Zero Click: '
-    results = duck_api(query)
-    ## look for any possible Zero Click answers
-    if 'Redirect' in results and min_size('Redirect', results):
-        ## this is used when it is a !bang
-        output.append(results['Redirect'].strip())
-    if 'AbstractText' in results and min_size('AbstractText', results):
-        ## topic summary (with no HTML)
-        output.append(header + results['AbstractText'].strip())
-    if 'Answer' in results and min_size('Answer', results):
-        output.append(header + results['Answer'].strip())
-    if 'Definition' in results and min_size('Definition', results):
-        output.append(header + results['Definition'].strip())
-    if not output:
-        ## if we can't find anything in the API for Zero-Click
-        ## give up
-        return None
-    return output
-
-
 def duck(jenni, input):
     '''Perform a DuckDuckGo Search and Zero-Click lookup'''
     query = input.group(2)
@@ -184,47 +165,14 @@ def duck(jenni, input):
     ## try to find a search result via the API
     uri, only_url = duck_search(query)
     if uri:
-        jenni.say(uri)
-        if hasattr(jenni, 'last_seen_uri') and input.sender in jenni.last_seen_uri:
-            jenni.last_seen_uri[input.sender] = uri
-
-    ## try to find any Zero-Click stuff
-    result = duck_zero_click_api(query)
-
-    if result and len(result) == 1:
-        if hasattr(jenni, 'last_seen_uri') and input.sender in jenni.last_seen_uri:
-            jenni.last_seen_uri[input.sender] = result[0]
-
-    ## loop through zero-click results
-    if result and len(result) >= 1:
-        k = 0
-        for each in result:
-            if len(each) > 0:
-                jenni.say(remove_spaces(each))
-                k += 1
-                if k > 3:
-                    ## only show 3 zero-click results
-                    ## we don't want to be too spammy
-                    break
-
-    ## if we didn't get a search result
-    ## nor did we get a Zero-Click result
-    ## fail
-    if not uri and (not result or not len(result) >= 1):
+        passs, title = find_title(uri)
+        if passs:
+            jenni.say("[" + title +"] " + uri)
+        else:
+            jenni.say(uri)
+    else:
         return jenni.reply("No results found for '%s'." % query)
 duck.commands = ['duck', 'ddg', 'g', 'search']
-
-
-def suggest(jenni, input):
-    if not input.group(2):
-        return jenni.reply("No query term.")
-    query = input.group(2).encode('utf-8')
-    uri = 'http://websitedev.de/temp-bin/suggest.pl?q='
-    answer = web.get(uri + web.urllib.quote(query).replace('+', '%2B'))
-    if answer:
-        jenni.say(answer)
-    else: jenni.reply('Sorry, no result.')
-suggest.commands = ['suggest']
 
 if __name__ == '__main__':
     print __doc__.strip()

@@ -40,8 +40,7 @@ BAD_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.bmp', '.tiff', '.gif', '.pdf',
                   '.doc', '.docx', '.deb', '.rpm', '.exe', '.zip', '.7z', '.gz',
                   '.tar', '.webm', '.mp4', '.mp3', '.avi', '.mpeg', '.mpg',
                   '.ogv', '.ogg', '.java')
-url_finder = re.compile(r'(?iu)(%s?(http|https|ftp)(://\S+\.?\S+/?\S+?))' %
-                        (EXCLUSION_CHAR))
+url_finder = re.compile(r'(?iu)(%s?(http|https)(://\S+\.?\S+/?\S+?))' )
 r_entity = re.compile(r'&[A-Za-z0-9#]+;')
 INVALID_WEBSITE = 0x01
 HTML_ENTITIES = { 'apos': "'" }
@@ -303,7 +302,7 @@ def collect_links(jenni, input):
     if not hasattr(jenni, 'last_seen_uri'):
         jenni.last_seen_uri = dict()
     jenni.last_seen_uri[channel] = link
-collect_links.rule = '(?iu).*(%s?(http|https)(://\S+)).*' % (EXCLUSION_CHAR)
+collect_links.rule = '(?iu).*(%s?(http|https)(://\S+)).*'
 collect_links.priority = 'low'
 
 re_meta = re.compile('(?i)content="\S+;\s*?url=(\S+)"\s*?>')
