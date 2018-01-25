@@ -61,7 +61,7 @@ def msg(jenni, input):
         argc = len(text)
         channel = input.sender
         msg = ' '.join(text[1:])
-        if argc > 2 and text[1].startswith("#"):
+        if argc > 2 and (text[1].startswith("#") or (not text[1][0].isalnum() and text[1][1] == "#")):
             channel = text[1]
             msg = ' '.join(text[2:])
         jenni.write(['PRIVMSG', channel], msg)
