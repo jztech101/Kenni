@@ -24,9 +24,8 @@ def git_info():
 
 
 def version(jenni, input):
-    commit, author, date = git_info()
 
-    jenni.say(str(input.nick) + ': running version: ' + commit + '  ' + author + '  ' + date)
+    jenni.say("JZTech101's fork of jenni")
 version.commands = ['version']
 version.priority = 'medium'
 version.rate = 10

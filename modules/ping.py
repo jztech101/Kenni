@@ -23,9 +23,12 @@ def f_ping(jenni, input):
     """ping jenni in a channel or pm"""
     jenni.reply('pong')
 f_ping.commands = ['ping']
-f_ping.rule = r'(?i)$nickname[:,]?\sping'
 f_ping.priority = 'high'
-f_ping.example = '$nickname: ping!'
+
+def f_pong(jenni, input):
+   jenni.reply('ping')
+f_pong.commands = ['pong']
+f_pong.priority = 'high'
 
 if __name__ == '__main__':
     print __doc__.strip()
