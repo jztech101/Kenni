@@ -26,10 +26,17 @@ f_ping.commands = ['ping']
 f_ping.priority = 'high'
 
 def f_pong(jenni, input):
-   jenni.reply('ping')
+    jenni.reply('ping')
 f_pong.commands = ['pong']
 f_pong.priority = 'high'
 
+def cookie(jenni, input):
+    nick = input.nick
+    if input.group(2):
+        nick = input.group(2)
+    jenni.write(['PRIVMSG', input.sender], '\x01ACTION gives ' + nick + ' a cookie\x01')
+cookie.commands = ['cookie']
+cookie.priority = 'high'
 if __name__ == '__main__':
     print __doc__.strip()
 def source(jenni, input):
