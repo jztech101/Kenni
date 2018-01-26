@@ -234,33 +234,6 @@ def remove_nonprint(text):
             new += char
     return new
 
-def get_results(text, manual=False):
-    if not text:
-        return False, list()
-    a = re.findall(url_finder, text)
-    k = len(a)
-    i = 0
-    display = list()
-    passs = False
-    channel = str()
-    if hasattr(text, 'sender'):
-        channel = text.sender
-    while i < k:
-        url = uc.encode(a[i][0])
-        url = uc.decode(url)
-        url = uc.iriToUri(url)
-        url = remove_nonprint(url)
-        passs, page_title = find_title(url)
-        display.append([page_title, url, passs])
-        i += 1
-
-    ## check to make sure at least 1 URL worked correctly
-    overall_pass = False
-    for x in display:
-        if x[-1] == True:
-            overall_pass = True
-
-    return overall_pass, display
 def show_title_demand(jenni, input):
     '''.title http://google.com/ -- forcibly show titles for a given URL'''
     uri = input.group(2)
@@ -275,22 +248,12 @@ def show_title_demand(jenni, input):
             uri = jenni.last_seen_uri[channel]
         else:
             return jenni.say('No recent links seen in this channel.')
-
-    status, results = get_results(uri, True)
-    for r in results:
-        returned_title = r[0]
-        orig = r[1]
-        link_pass = r[2]
-
-        if returned_title is None:
-            jenni.say('No title returned.')
-            continue
-
-        if status and link_pass:
-            response = '[ %s ]' % (returned_title)
-        else:
-            response = '(%s)' % (returned_title)
-        jenni.say(response)
+    passs, page_title = find_title(uri)
+    if passs:
+        response = page_title
+    else:
+        response = "No Title Found"
+    jenni.say(response)
 show_title_demand.commands = ['title']
 show_title_demand.priority = 'high'
 
