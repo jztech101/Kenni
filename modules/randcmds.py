@@ -1,5 +1,5 @@
 def potato(jenni, input):
-    jenni.write(['PRIVMSG', input.sender], '\x01ACTION is a potato')
+    jenni.write(['PRIVMSG', input.sender], '\x01ACTION is a potato\x01')
 potato.commands = ['potato']
 potato.priority = 'high'
  def moo(jenni, input):
