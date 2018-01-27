@@ -30,6 +30,16 @@ def f_pong(jenni, input):
 f_pong.commands = ['pong']
 f_pong.priority = 'high'
 
+def potato(jenni, input):
+    jenni.write(['PRIVMSG', input.sender], '\x01ACTION is a potato')
+potato.commands = ['potato']
+potato.priority = 'high'
+
+def moo(jenni, input):
+    jenni.reply('mooooooooooo')
+moo.commands = ['moo']
+moo.priority = 'high'
+
 def cookie(jenni, input):
     nick = input.nick
     if input.group(2):
