@@ -10,8 +10,8 @@ More info:
  * Phenny: http://inamidst.com/phenny/
 """
 
-import httplib, time
-from htmlentitydefs import name2codepoint
+import http.client, time
+from html.entities import name2codepoint
 from modules import proxy
 import web
 
@@ -36,7 +36,7 @@ def head(jenni, input):
 
     try: info = proxy.head(uri)
     except IOError: return jenni.say("Can't connect to %s" % uri)
-    except httplib.InvalidURL: return jenni.say("Not a valid URI, sorry.")
+    except http.client.InvalidURL: return jenni.say("Not a valid URI, sorry.")
 
     if not isinstance(info, list):
         try: info = dict(info)
@@ -50,20 +50,20 @@ def head(jenni, input):
 
     if header is None:
         data = []
-        if info.has_key('Status'):
+        if 'Status' in info:
             data.append(info['Status'])
-        if info.has_key('content-type'):
+        if 'content-type' in info:
             data.append(info['content-type'].replace('; charset=', ', '))
-        if info.has_key('last-modified'):
+        if 'last-modified' in info:
             modified = info['last-modified']
             modified = time.strptime(modified, '%a, %d %b %Y %H:%M:%S %Z')
             data.append(time.strftime('%Y-%m-%d %H:%M:%S UTC', modified))
-        if info.has_key('content-length'):
+        if 'content-length' in info:
             data.append(info['content-length'] + ' bytes')
         jenni.reply(', '.join(data))
     else:
         headerlower = header.lower()
-        if info.has_key(headerlower):
+        if headerlower in info:
             jenni.say(header + ': ' + info.get(headerlower))
         else:
             msg = 'There was no %s header in the response.' % header
@@ -72,4 +72,4 @@ head.commands = ['head']
 head.example = '.head http://www.w3.org/'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

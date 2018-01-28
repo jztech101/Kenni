@@ -14,7 +14,7 @@ More info:
 This module has been imported from Willie.
 """
 
-from modules import unicode as uc
+from modules import str as uc
 import json
 import re
 import socket
@@ -33,7 +33,7 @@ def ip_lookup(jenni, input):
     response = "[IP/Host Lookup] "
     try:
         page = web.get(base + txt)
-    except IOError, err:
+    except IOError as err:
         return jenni.say('Could not access given address. (Detailed error: %s)' % (err))
     try:
         results = json.loads(page)
@@ -73,4 +73,4 @@ ip_lookup.commands = ['ip', 'iplookup', 'host']
 ip_lookup.example = ".iplookup 8.8.8.8"
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

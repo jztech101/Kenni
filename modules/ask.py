@@ -38,4 +38,4 @@ ask.priority = 'low'
 ask.example = '.ask today or tomorrow or next week'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

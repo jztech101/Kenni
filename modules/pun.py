@@ -28,4 +28,4 @@ def puns(jenni, input):
 puns.commands = ['puns', 'pun', 'badpun', 'badpuns']
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

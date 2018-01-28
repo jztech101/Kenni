@@ -14,7 +14,7 @@ More info:
 
 import json
 from random import randrange
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 try:
     from BeautifulSoup import BeautifulSoup as Soup
@@ -24,10 +24,10 @@ except ImportError:
 
 USER_AGENT = "JenniBot/1.0 (https://github.com/myano/jenni) JenniBot/1.0"
 
-class JenniURLopener(urllib.FancyURLopener):
+class JenniURLopener(urllib.request.FancyURLopener):
     version = USER_AGENT
 
-urllib._urlopener = JenniURLopener()
+urllib.request._urlopener = JenniURLopener()
 
 BASE_URL = "https://en.wikiquote.org/w/api.php?format=json&"
 
@@ -96,7 +96,7 @@ def random_quote(jenni, cat):
     while(True):
         try:
             cat_url = BASE_URL + SUBCATS % cat
-            content = json.loads(urllib.urlopen(cat_url).read())
+            content = json.loads(urllib.request.urlopen(cat_url).read())
             cat_members = content["query"]["categorymembers"]
 
             # Select at random
@@ -118,7 +118,7 @@ def random_quote(jenni, cat):
     # Next select a random quote from the page
     try:
         page_url = BASE_URL + SECTIONS % page_id
-        content = json.loads(urllib.urlopen(page_url).read())
+        content = json.loads(urllib.request.urlopen(page_url).read())
         sections = content["parse"]["sections"]
 
         quote = None
@@ -133,7 +133,7 @@ def random_quote(jenni, cat):
             section_index = randrange(len(sections)) + 1
     
             section_url = BASE_URL + SECTION % (page_id, section_index)
-            content = json.loads(urllib.urlopen(section_url).read())
+            content = json.loads(urllib.request.urlopen(section_url).read())
             section_title = content["parse"]["title"]
             html = Soup(content["parse"]["text"]["*"])
             all_quotes = []
@@ -178,4 +178,4 @@ list_cats.commands = ['list_quote_cats', 'list_wikiquote_cats', 'ls_wq_cats']
 list_cats.priority = 'low'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

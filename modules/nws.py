@@ -20,7 +20,7 @@ import sqlite3
 import string
 import textwrap
 import time
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import web
 
 states = {
@@ -170,7 +170,7 @@ def nws_lookup(jenni, input):
         county = (county).strip().lower()
         reverse_lookup = list()
         if len(state) == 2:
-            reverse_lookup = [k for k, v in states.iteritems() if v == state]
+            reverse_lookup = [k for k, v in states.items() if v == state]
             if reverse_lookup:
                 state = reverse_lookup[0]
         if state not in states and len(reverse_lookup) < 1:
@@ -182,7 +182,7 @@ def nws_lookup(jenni, input):
         prev2 = str()
         url_part2 = str()
         for line in page1:
-            mystr = '>' + unicode(county) + '<'
+            mystr = '>' + str(county) + '<'
             if mystr in line.lower():
                 url_part2 = prev2[9:40]
                 break
@@ -216,7 +216,7 @@ def nws_lookup(jenni, input):
                     state = state[0].lower()
                     state = states[state].upper()
                     location = city[0] + ', ' + state
-                    fips_combo = unicode(state) + 'C' + unicode(fips[0])
+                    fips_combo = str(state) + 'C' + str(fips[0])
                     master_url = alerts.format(fips_combo)
                 except:
                     return jenni.reply('Could not parse state or city from database.')
@@ -232,12 +232,12 @@ def nws_lookup(jenni, input):
         if nomsg[:51] == colourize(item['title']):
             return jenni.say(nomsg.format(location))
         else:
-            warnings_dict[colourize(unicode(item['title']))] = unicode(item['summary'])
+            warnings_dict[colourize(str(item['title']))] = str(item['summary'])
 
     if len(warnings_dict) > 0:
         ## if we have any alerts...
         ## let us sort it so the most recent thing is first, then second, etc...
-        warn_keys = warnings_dict.keys()
+        warn_keys = list(warnings_dict.keys())
         find_issue = re.compile('issued (\S+) (\S+) at (\S+):(\S+)(\S)M')
         warn_keys_dt = dict()
         for warn in warn_keys:
@@ -337,11 +337,11 @@ def weather_feed(jenni):
                     severity = entry['cap_severity']
                     status = entry['cap_status']
                     urgency = entry['cap_urgency']
-                except Exception, e:
+                except Exception as e:
                     jenni.msg(jenni.logchan_pm, 'No entry available. See stdout for more information.')
-                    print time.time(), str(e)
-                    print str(entry)
-                    print ''
+                    print(time.time(), str(e))
+                    print(str(entry))
+                    print('')
 
                 ch_state = '{0}-{1}-{2}'.format(CHANNEL, 'us', state.lower())
 
@@ -386,4 +386,4 @@ def weather_feed(jenni):
             c.close()
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

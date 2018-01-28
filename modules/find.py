@@ -13,7 +13,7 @@ This module will fix spelling errors if someone corrects them
 using the sed notation (s///) commonly found in vi/vim.
 """
 
-from modules import unicode as uc
+from modules import str as uc
 import os, re
 
 
@@ -179,4 +179,4 @@ findandreplace.priority = 'high'
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

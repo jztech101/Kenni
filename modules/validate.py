@@ -28,10 +28,10 @@ def val(jenni, input):
     if isinstance(info, list):
         return jenni.say('Got HTTP response %s' % info[1])
 
-    if info.has_key('X-W3C-Validator-Status'):
+    if 'X-W3C-Validator-Status' in info:
         result += str(info['X-W3C-Validator-Status'])
         if info['X-W3C-Validator-Status'] != 'Valid':
-            if info.has_key('X-W3C-Validator-Errors'):
+            if 'X-W3C-Validator-Errors' in info:
                 n = int(info['X-W3C-Validator-Errors'].split(' ')[0])
                 if n != 1:
                     result += ' (%s errors)' % n
@@ -43,4 +43,4 @@ val.rule = (['val'], r'(?i)(\S+)')
 val.example = '.val http://www.w3.org/'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

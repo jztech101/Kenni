@@ -52,10 +52,10 @@ class Origin(object):
 
 def create_logdir():
     try: os.mkdir(cwd + "/logs")
-    except Exception, e:
-        print >> sys.stderr, 'There was a problem creating the logs directory.'
-        print >> sys.stderr, e.__class__, str(e)
-        print >> sys.stderr, 'Please fix this and then run jenni again.'
+    except Exception as e:
+        print('There was a problem creating the logs directory.', file=sys.stderr)
+        print(e.__class__, str(e), file=sys.stderr)
+        print('Please fix this and then run jenni again.', file=sys.stderr)
         sys.exit(1)
 
 def check_logdir():
@@ -128,9 +128,9 @@ class Bot(asynchat.async_chat):
         and then disconnect.'''
         trace = traceback.format_exc()
         try:
-            print trace
-        except Exception, e:
-            print 'Uncaptured error!!!', e
+            print(trace)
+        except Exception as e:
+            print('Uncaptured error!!!', e)
 
 
     def __write(self, args, text=None, raw=False):
@@ -147,9 +147,9 @@ class Bot(asynchat.async_chat):
             self.push(temp)
             if self.logging:
                 log_raw(temp)
-        except Exception, e:
-            print time.time()
-            print '[__WRITE FAILED]', e
+        except Exception as e:
+            print(time.time())
+            print('[__WRITE FAILED]', e)
             #pass
 
     def write(self, args, text=None, raw=False):
@@ -161,8 +161,8 @@ class Bot(asynchat.async_chat):
                 self.__write(args, text, raw)
             else:
                 self.__write(args, text)
-        except Exception, e:
-            print '[WRITE FAILED]', e
+        except Exception as e:
+            print('[WRITE FAILED]', e)
     def join(self, channel, key):
         if not key:
             self.write(['JOIN'], channel)
@@ -184,7 +184,7 @@ class Bot(asynchat.async_chat):
     def initiate_connect(self, host, port):
         if self.verbose:
             message = 'Connecting to %s:%s...' % (host, port)
-            print >> sys.stderr, message,
+            print(message, end=' ', file=sys.stderr)
 
         if self.use_ssl:
             self.send = self._ssl_send
@@ -212,8 +212,8 @@ class Bot(asynchat.async_chat):
         try: asyncore.loop()
         except KeyboardInterrupt:
             sys.exit()
-        except Exception, e:
-            print '[asyncore]', e
+        except Exception as e:
+            print('[asyncore]', e)
 
     def handle_connect(self):
         if self.use_ssl:
@@ -222,7 +222,7 @@ class Bot(asynchat.async_chat):
                 try:
                     self.ssl.do_handshake()
                     break
-                except ssl.SSLError, err:
+                except ssl.SSLError as err:
                     if err.args[0] == ssl.SSL_ERROR_WANT_READ:
                         select.select([self.ssl], [], [])
                     elif err.args[0] == ssl.SSL_ERROR_WANT_WRITE:
@@ -234,7 +234,7 @@ class Bot(asynchat.async_chat):
             self.set_socket(self.ssl)
 
         if self.verbose:
-            print >> sys.stderr, 'connected!'
+            print('connected!', file=sys.stderr)
 
         if self.use_sasl:
             self.write(('CAP', 'LS'))
@@ -248,7 +248,7 @@ class Bot(asynchat.async_chat):
 
     def handle_close(self):
         self.close()
-        print >> sys.stderr, 'Closed!'
+        print('Closed!', file=sys.stderr)
 
     def _ssl_send(self, data):
         """ Replacement for self.send() during SSL connections. """
@@ -256,23 +256,23 @@ class Bot(asynchat.async_chat):
         try:
             result = self.socket.send(data)
             return result
-        except ssl.SSLError, why:
+        except ssl.SSLError as why:
             if why[0] in (asyncore.EWOULDBLOCK, errno.ESRCH):
                 return 0
             else:
-                raise ssl.SSLError, why
+                raise ssl.SSLError(why)
             return 0
 
     def _ssl_recv(self, buffer_size):
         """ Replacement for self.recv() during SSL connections. """
         """ Thank you - http://www.evanfosmark.com/2010/09/ssl-support-in-asynchatasync_chat/ """
         try:
-            data = self.read(buffer_size)
+            data = self.socket.read(buffer_size)
             if not data:
                 self.handle_close()
                 return ''
             return data
-        except ssl.SSLError, why:
+        except ssl.SSLError as why:
             if why[0] in (asyncore.ECONNRESET, asyncore.ENOTCONN,
                           asyncore.ESHUTDOWN):
                 self.handle_close()
@@ -353,13 +353,13 @@ class Bot(asynchat.async_chat):
         self.sending.acquire()
 
         # Cf. http://swhack.com/logs/2006-03-01#T19-43-25
-        if isinstance(text, unicode):
+        if isinstance(text, str):
             try: text = text.encode('utf-8')
-            except UnicodeEncodeError, e:
+            except UnicodeEncodeError as e:
                 text = e.__class__ + ': ' + str(e)
-        if isinstance(recipient, unicode):
+        if isinstance(recipient, str):
             try: recipient = recipient.encode('utf-8')
-            except UnicodeEncodeError, e:
+            except UnicodeEncodeError as e:
                 return
 
         if not x:
@@ -410,7 +410,7 @@ class Bot(asynchat.async_chat):
         try:
             import traceback
             trace = traceback.format_exc()
-            print trace
+            print(trace)
             lines = list(reversed(trace.splitlines()))
 
             report = [lines[0].strip()]
@@ -463,7 +463,7 @@ class Bot(asynchat.async_chat):
 
 class TestBot(Bot):
     def f_ping(self, origin, match, args):
-        delay = m.group(1)
+        delay = match.group(1)
         if delay is not None:
             import time
             time.sleep(int(delay))
@@ -474,7 +474,7 @@ class TestBot(Bot):
 def main():
     # bot = TestBot('testbot', ['#d8uv.com'])
     # bot.run('irc.freenode.net')
-    print __doc__
+    print(__doc__)
 
 if __name__ == "__main__":
     main()

@@ -13,7 +13,7 @@ More info:
 
 import json
 import re
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import web
 from modules import proxy
 from modules.url import find_title
@@ -152,4 +152,4 @@ def duck(jenni, input):
 duck.commands = ['duck', 'ddg', 'g', 'search']
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

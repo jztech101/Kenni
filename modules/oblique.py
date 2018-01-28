@@ -10,7 +10,7 @@ More info:
  * Phenny: http://inamidst.com/phenny/
 """
 
-import re, urllib
+import re, urllib.request, urllib.parse, urllib.error
 import web
 
 definitions = 'https://github.com/myano/jenni/wiki/oblique'
@@ -33,9 +33,9 @@ def mappings(uri):
 
 def service(jenni, input, command, args):
     t = o.services[command]
-    template = t.replace('${args}', urllib.quote(args.encode('utf-8'), ''))
-    template = template.replace('${nick}', urllib.quote(input.nick, ''))
-    uri = template.replace('${sender}', urllib.quote(input.sender, ''))
+    template = t.replace('${args}', urllib.parse.quote(args.encode('utf-8'), ''))
+    template = template.replace('${nick}', urllib.parse.quote(input.nick, ''))
+    uri = template.replace('${sender}', urllib.parse.quote(input.sender, ''))
 
     info = web.head(uri)
     if isinstance(info, list):
@@ -85,7 +85,7 @@ def o(jenni, input):
         msg = o.services.get(args, 'No such service!')
         return jenni.reply(msg)
 
-    if not o.services.has_key(command):
+    if command not in o.services:
         return jenni.reply('Service not found in %s' % o.serviceURI)
 
     if hasattr(jenni.config, 'external'):
@@ -108,7 +108,7 @@ def snippet(jenni, input):
     if not o.services:
         refresh(jenni)
 
-    search = urllib.quote(input.group(2).encode('utf-8'))
+    search = urllib.parse.quote(input.group(2).encode('utf-8'))
     py = "BeautifulSoup.BeautifulSoup(re.sub('<.*?>|(?<= ) +', '', " + \
           "''.join(chr(ord(c)) for c in " + \
           "eval(urllib.urlopen('https://ajax.googleapis.com/ajax/serv" + \
@@ -121,4 +121,4 @@ snippet.commands = ['snippet']
 snippet.rate = 20
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

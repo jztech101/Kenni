@@ -28,4 +28,4 @@ slap.priority = 'medium'
 slap.rate = 60
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())
