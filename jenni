@@ -127,6 +127,9 @@ def create_default_config(fn):
        # '#channel1': ['a.somedomain.tld', 'b.anotherdomain.tld'],
        # '##channel2': ['some/other/hostmask'],
         }
+    prefixes = {
+       # '#channel1': r'\$'
+        }
 
     # Enable raw logging of everything jenni sees.
     # logged to the folder 'log'

@@ -99,9 +99,11 @@ class Jenni(irc.Bot):
                 self.variables[name] = obj
 
     def bind_commands(self):
+        self.rules = {'high': {}, 'medium': {}, 'low': {}}
         self.commands = {'high': {}, 'medium': {}, 'low': {}}
+        self.commandrules = {'high': {}, 'medium': {}, 'low': {}}
 
-        def bind(self, priority, regexp, func):
+        def bind_rules(self, priority, regexp, func):
             # register documentation
             if not hasattr(func, 'name'):
                 func.name = func.__name__
@@ -111,16 +113,37 @@ class Jenni(irc.Bot):
                     example = example.replace('$nickname', self.nick)
                 else: example = None
                 self.doc[func.name] = (func.__doc__, example)
-            self.commands[priority].setdefault(regexp, []).append(func)
-            regexp = re.sub('\x01|\x02', '', regexp.pattern)
-            return (func.__module__, func.__name__, regexp, priority)
+            self.rules[priority].setdefault(regexp, []).append(func)
+
+        def bind_command(self, priority, command, func):
+            # register documentation
+            if not hasattr(func, 'name'):
+                func.name = func.__name__
+            if func.__doc__:
+                if hasattr(func, 'example'):
+                    example = func.example
+                    example = example.replace('$nickname', self.nick)
+                else: example = None
+                self.doc[func.name] = (func.__doc__, example)
+            self.commands[priority].setdefault(command, []).append(func)
+        def bind_commandrule(self, priority, command, func):
+            # register documentation
+            if not hasattr(func, 'name'):
+                func.name = func.__name__
+            if func.__doc__:
+                if hasattr(func, 'example'):
+                    example = func.example
+                    example = example.replace('$nickname', self.nick)
+                else: example = None
+                self.doc[func.name] = (func.__doc__, example)
+            self.commandrules[priority].setdefault(command, []).append(func)
+
 
         def sub(pattern, self=self):
             # These replacements have significant order
             pattern = pattern.replace('$nickname', re.escape(self.nick))
             return pattern.replace('$nick', r'%s[,:] +' % re.escape(self.nick))
 
-        bound_funcs = []
         for name, func in self.variables.iteritems():
             # print name, func
             if not hasattr(func, 'priority'):
@@ -147,7 +170,7 @@ class Jenni(irc.Bot):
                 if isinstance(func.rule, str):
                     pattern = sub(func.rule)
                     regexp = re.compile(pattern)
-                    bound_funcs.append(bind(self, func.priority, regexp, func))
+                    bind_rules(self, func.priority, regexp, func)
 
                 if isinstance(func.rule, tuple):
                     # 1) e.g. ('$nick', '(.*)')
@@ -155,16 +178,14 @@ class Jenni(irc.Bot):
                         prefix, pattern = func.rule
                         prefix = sub(prefix)
                         regexp = re.compile(prefix + pattern)
-                        bound_funcs.append(bind(self, func.priority, regexp, func))
+                        bind_rules(self, func.priority, regexp, func)
 
                     # 2) e.g. (['p', 'q'], '(.*)')
                     elif len(func.rule) == 2 and isinstance(func.rule[0], list):
-                        prefix = self.config.prefix
                         commands, pattern = func.rule
                         for command in commands:
                             command = r'(?i)(%s)\b(?: +(?:%s))?' % (command, pattern)
-                            regexp = re.compile(prefix + command)
-                            bound_funcs.append(bind(self, func.priority, regexp, func))
+                            bind_commandrule(self, func.priority, command, func)
 
                     # 3) e.g. ('$nick', ['p', 'q'], '(.*)')
                     elif len(func.rule) == 3:
@@ -173,20 +194,11 @@ class Jenni(irc.Bot):
                         for command in commands:
                             command = r'(?i)(%s) +' % command
                             regexp = re.compile(prefix + command + pattern)
-                            bound_funcs.append(bind(self, func.priority, regexp, func))
+                            bind_rules(self, func.priority, regexp, func)
 
             if hasattr(func, 'commands'):
                 for command in func.commands:
-                    template = r'(?i)^%s(%s)(?: +(.*))?$'
-                    pattern = template % (self.config.prefix, command)
-                    regexp = re.compile(pattern)
-                    bound_funcs.append(bind(self, func.priority, regexp, func))
-
-        max_pattern_width = max(len(f[2]) for f in bound_funcs)
-        for module, name, regexp, priority in sorted(bound_funcs):
-            encoded_regex = regexp.encode('utf-8').ljust(max_pattern_width)
-            print ('{0} | {1}.{2}, {3} priority'.format(encoded_regex,  module, name, priority))
-
+                    bind_command(self, func.priority, command, func)
     def wrapped(self, origin, text, match):
         class JenniWrapper(object):
             def __init__(self, jenni):
@@ -277,88 +289,127 @@ class Jenni(irc.Bot):
             func(jenni, input)
         except Exception, e:
             self.error(origin)
+
+    def dispatchcommand(self,origin,args, text, match, event, func):
+        jenni = self.wrapped(origin, text, match)
+        input = self.input(origin, text, bytes, match, event, args)
+
+        nick = (input.nick).lower()
+
+        # blocking ability
+        if os.path.isfile("blocks"):
+            g = open("blocks", "r")
+            contents = g.readlines()
+            g.close()
+
+            try:
+                bad_masks = contents[0].split(',')
+            except:
+                bad_masks = ['']
+
+            try:
+                bad_nicks = contents[1].split(',')
+            except:
+                bad_nicks = ['']
+
+            try:
+                bad_idents = contents[2].split(',')
+            except:
+                bad_idents = ['']
+
+            # check for blocked hostmasks
+            if len(bad_masks) > 0:
+                host = origin.host
+                host = host.lower()
+                for hostmask in bad_masks:
+                    hostmask = hostmask.replace("\n", "").strip()
+                    if len(hostmask) < 1: continue
+                    try:
+                        re_temp = re.compile(hostmask)
+                        if re_temp.findall(host):
+                            return
+                    except:
+                        if hostmask in host:
+                            return
+            # check for blocked nicks
+            if len(bad_nicks) > 0:
+                for nick in bad_nicks:
+                    nick = nick.replace("\n", "").strip()
+                    if len(nick) < 1: continue
+                    try:
+                        re_temp = re.compile(nick)
+                        if re_temp.findall(input.nick):
+                            return
+                    except:
+                        if nick in input.nick:
+                            return
+
+            if len(bad_idents) > 0:
+                for ident in bad_idents:
+                    ident = ident.replace('\n', '').strip()
+                    if len(ident) < 1: continue
+                    try:
+                        re_temp = re.compile(ident)
+                        if re_temp.findall(input.ident):
+                            return
+                    except:
+                        if ident in input.ident:
+                            return
+
+        # stats
+        if func.thread:
+            targs = (func, origin, jenni, input)
+            t = threading.Thread(target=self.call, args=targs)
+            t.start()
+        else:
+            self.call(func, origin, jenni, input)
+
+        for source in [origin.sender, origin.nick]:
+            try:
+                self.stats[(func.name, source)] += 1
+            except KeyError:
+                self.stats[(func.name, source)] = 1
+
     def dispatch(self, origin, args):
         bytes, event, args = args[0], args[1], args[2:]
         text = decode(bytes)
 
         for priority in ('high', 'medium', 'low'):
-            items = self.commands[priority].items()
+            items = self.rules[priority].items()
             for regexp, funcs in items:
                 for func in funcs:
                     if event != func.event: continue
-
                     match = regexp.match(text)
                     if match:
-                        jenni = self.wrapped(origin, text, match)
-                        input = self.input(origin, text, bytes, match, event, args)
+                        self.dispatchcommand(origin,args, text, match, event, func)
 
-                        nick = (input.nick).lower()
+            items = self.commands[priority].items()
+            for command, funcs in items:
+                for func in funcs:
+                    if event != func.event: continue
+                    prefix = self.config.prefix
+                    if hasattr(self.config, 'prefixes'):
+                        if origin.sender in self.config.prefixes:
+                            prefix = self.config.prefixes[origin.sender]
+                    template = r'(?i)^%s(%s)(?: +(.*))?$'
+                    pattern = template % (prefix, command)
+                    command = re.compile(pattern)
+                    match = command.match(text)
+                    if match:
+                        self.dispatchcommand(origin,args, text, match, event, func)
+            items = self.commandrules[priority].items()
+            for commandrule, funcs in items:
+                for func in funcs:
+                    if event != func.event: continue
+                    if hasattr(self.config, 'prefixes'):
+                        prefix = self.config.prefix
+                        if origin.sender in self.config.prefixes:
+                            prefix = self.config.prefixes[origin.sender]
+                    commandrule = re.compile(prefix + commandrule)
+                    match = commandrule.match(text)
+                    if match:
+                        self.dispatchcommand(origin,args, text, match, event, func)
 
-                        # blocking ability
-                        if os.path.isfile("blocks"):
-                            g = open("blocks", "r")
-                            contents = g.readlines()
-                            g.close()
-
-                            try: bad_masks = contents[0].split(',')
-                            except: bad_masks = ['']
-
-                            try: bad_nicks = contents[1].split(',')
-                            except: bad_nicks = ['']
-
-                            try: bad_idents = contents[2].split(',')
-                            except: bad_idents = ['']
-
-                            # check for blocked hostmasks
-                            if len(bad_masks) > 0:
-                                host = origin.host
-                                host = host.lower()
-                                for hostmask in bad_masks:
-                                    hostmask = hostmask.replace("\n", "").strip()
-                                    if len(hostmask) < 1: continue
-                                    try:
-                                        re_temp = re.compile(hostmask)
-                                        if re_temp.findall(host):
-                                            return
-                                    except:
-                                        if hostmask in host:
-                                            return
-                            # check for blocked nicks
-                            if len(bad_nicks) > 0:
-                                for nick in bad_nicks:
-                                    nick = nick.replace("\n", "").strip()
-                                    if len(nick) < 1: continue
-                                    try:
-                                        re_temp = re.compile(nick)
-                                        if re_temp.findall(input.nick):
-                                            return
-                                    except:
-                                        if nick in input.nick:
-                                            return
-
-                            if len(bad_idents) > 0:
-                                for ident in bad_idents:
-                                    ident = ident.replace('\n', '').strip()
-                                    if len(ident) < 1: continue
-                                    try:
-                                        re_temp = re.compile(ident)
-                                        if re_temp.findall(input.ident):
-                                            return
-                                    except:
-                                        if ident in input.ident:
-                                            return
-
-                        # stats
-                        if func.thread:
-                            targs = (func, origin, jenni, input)
-                            t = threading.Thread(target=self.call, args=targs)
-                            t.start()
-                        else: self.call(func, origin, jenni, input)
-
-                        for source in [origin.sender, origin.nick]:
-                            try: self.stats[(func.name, source)] += 1
-                            except KeyError:
-                                self.stats[(func.name, source)] = 1
 
 if __name__ == '__main__':
     print __doc__
