@@ -86,8 +86,7 @@ def setup(jenni):
     global r_command
 
     periods = '|'.join(scaling.keys())
-    p_command = r'{}in ([0-9]+(?:\.[0-9]+)?)\s?((?:{})\b)?:?\s?(.*)'.format(
-        jenni.config.prefix,
+    p_command = r'[^a-zA-Z]\w+ ([0-9]+(?:\.[0-9]+)?)\s?((?:{})\b)?:?\s?(.*)'.format(
         periods,
     )
     r_command = re.compile(p_command)
