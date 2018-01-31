@@ -44,7 +44,7 @@ def create_default_config(fn):
     ssl  = False
     sasl = False
     channels = ['#example', '#test']
-
+    prefix = r'\+'
     # Channel jenni will report all private messages sent to her to.
     # This includes server notices.
     # logchan_pm = '#jenni-log'
