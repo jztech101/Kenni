@@ -290,7 +290,7 @@ class Jenni(irc.Bot):
         except Exception, e:
             self.error(origin)
 
-    def dispatchcommand(self,origin,args, text, match, event, func):
+    def dispatchcommand(self,origin,args, bytes,  text, match, event, func):
         jenni = self.wrapped(origin, text, match)
         input = self.input(origin, text, bytes, match, event, args)
 
@@ -381,7 +381,7 @@ class Jenni(irc.Bot):
                     if event != func.event: continue
                     match = regexp.match(text)
                     if match:
-                        self.dispatchcommand(origin,args, text, match, event, func)
+                        self.dispatchcommand(origin,args, bytes, text, match, event, func)
 
             items = self.commands[priority].items()
             for command, funcs in items:
@@ -396,7 +396,7 @@ class Jenni(irc.Bot):
                     command = re.compile(pattern)
                     match = command.match(text)
                     if match:
-                        self.dispatchcommand(origin,args, text, match, event, func)
+                        self.dispatchcommand(origin,args,bytes, text, match, event, func)
             items = self.commandrules[priority].items()
             for commandrule, funcs in items:
                 for func in funcs:
@@ -408,7 +408,7 @@ class Jenni(irc.Bot):
                     commandrule = re.compile(prefix + commandrule)
                     match = commandrule.match(text)
                     if match:
-                        self.dispatchcommand(origin,args, text, match, event, func)
+                        self.dispatchcommand(origin,args,bytes, text, match, event, func)
 
 
 if __name__ == '__main__':
