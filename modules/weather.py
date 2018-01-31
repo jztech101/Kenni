@@ -16,6 +16,7 @@ import json
 import re
 import urllib
 import web
+import sys
 from tools import deprecated
 from modules import unicode as uc
 from icao import data
@@ -965,6 +966,10 @@ def weather_wunderground(jenni, input):
 
     try:
         useful = json.loads(page)
+
+        if 'results' in useful['response']:
+            txt = useful['response']['results'][0]['zmw']
+            useful = json.loads(web.get(url % (apikey, 'zmw:'+txt)))
     except:
         return jenni.say('We could not obtain useful information from the wunderground.com API.')
 
@@ -1055,6 +1060,9 @@ def forecast_wg(jenni, input):
 
     try:
         useful = json.loads(page)
+        if 'results' in useful['response']:
+            txt = useful['response']['results'][0]['zmw']
+            useful = json.loads(web.get(url % (apikey, 'zmw:'+txt)))
     except:
         return jenni.say('We could not obtain useful information from the wunderground.com API.')
 
