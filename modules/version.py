@@ -24,7 +24,7 @@ def git_info():
 
 def version(kenni, input):
 
-    kenni.say("Kenni 1.0")
+    kenni.say("Kenni")
 version.commands = ['version']
 version.priority = 'medium'
 version.rate = 10
