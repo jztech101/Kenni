@@ -81,8 +81,8 @@ def log_raw(line):
 class Bot(asynchat.async_chat):
     def __init__(self, nick, name, channels, user=None, password=None, logchan_pm=None, logging=False, ipv6=False):
         asynchat.async_chat.__init__(self)
-        self.set_terminator('\n')
-        self.buffer = ''
+        self.set_terminator(b'\n')
+        self.buffer = b''
 
         self.nick = nick
         if user is not None:
@@ -135,28 +135,30 @@ class Bot(asynchat.async_chat):
 
     def __write(self, args, text=None, raw=False):
         # print '%r %r %r' % (self, args, text)
+        print(args, text)
         try:
             if raw:
-                temp = ' '.join(args)[:510] + " :" + text + '\r\n'
+                temp = b' '.join(args)[:510] + b" :" + text + b'\r\n'
             elif not raw:
                 if text:
                     # 510 because CR and LF count too, as nyuszika7h points out
-                    temp = (' '.join(args) + ' :' + text)[:510] + '\r\n'
+                    temp = (b' '.join(args) + b' :' + text)[:510] + b'\r\n'
                 else:
-                    temp = ' '.join(args)[:510] + '\r\n'
+                    temp = b' '.join(args)[:510] + b'\r\n'
             self.push(temp)
             if self.logging:
                 log_raw(temp)
         except Exception as e:
             print(time.time())
+            print(traceback.format_exc())
             print('[__WRITE FAILED]', e)
             #pass
 
     def write(self, args, text=None, raw=False):
         try:
-            args = [self.safe(arg, u=True) for arg in args]
+            args = [self.safe(arg) for arg in args]
             if text is not None:
-                text = self.safe(text, u=True)
+                text = self.safe(text)
             if raw:
                 self.__write(args, text, raw)
             else:
@@ -170,13 +172,11 @@ class Bot(asynchat.async_chat):
         self.write(['WHO', channel])
 
 
-    def safe(self, input, u=False):
+    def safe(self, input):
         if input:
             input = input.replace('\n', '')
             input = input.replace('\r', '')
-            if u:
-                input = input.encode('utf-8')
-        return input
+        return input.encode('utf-8')
 
     def run(self, host, port=6667):
         self.initiate_connect(host, port)
@@ -270,16 +270,16 @@ class Bot(asynchat.async_chat):
             data = self.socket.read(buffer_size)
             if not data:
                 self.handle_close()
-                return ''
+                return b''
             return data
         except ssl.SSLError as why:
             if why[0] in (asyncore.ECONNRESET, asyncore.ENOTCONN,
                           asyncore.ESHUTDOWN):
                 self.handle_close()
-                return ''
+                return b''
             elif why[0] == errno.ENOENT:
                 # Required in order to keep it non-blocking
-                return ''
+                return b''
             else:
                 raise
 
@@ -297,7 +297,7 @@ class Bot(asynchat.async_chat):
         '''
 
     def found_terminator(self):
-        line = self.buffer
+        line = self.buffer.decode('utf-8')
 
         if line.endswith('\r'):
             line = line[:-1]
@@ -323,7 +323,7 @@ class Bot(asynchat.async_chat):
                 ## send stuff to the log file
                 log_raw(line)
 
-        self.buffer = ''
+        self.buffer = b''
 
         # print line
         if line.startswith(':'):
@@ -351,16 +351,6 @@ class Bot(asynchat.async_chat):
 
     def msg(self, recipient, text, log=False, x=False, wait_time=3):
         self.sending.acquire()
-
-        # Cf. http://swhack.com/logs/2006-03-01#T19-43-25
-        if isinstance(text, str):
-            try: text = text.encode('utf-8')
-            except UnicodeEncodeError as e:
-                text = e.__class__ + ': ' + str(e)
-        if isinstance(recipient, str):
-            try: recipient = recipient.encode('utf-8')
-            except UnicodeEncodeError as e:
-                return
 
         if not x:
             text = text.replace('\x01', '')
@@ -393,7 +383,7 @@ class Bot(asynchat.async_chat):
                     return
         '''
 
-        self.__write(('PRIVMSG', self.safe(recipient)), self.safe(text))
+        self.__write((b'PRIVMSG', self.safe(recipient)), self.safe(text))
         if log:
             self.stack_log.append((time.time(), text))
         else:

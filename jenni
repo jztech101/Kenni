@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 jenni - An IRC Bot
 Copyright 2009-2013, Michael Yanovich (yanovich.net)
