@@ -15,14 +15,6 @@ import irc
 
 home = os.getcwd()
 
-def decode(bytes):
-    try: text = bytes.decode('utf-8')
-    except UnicodeDecodeError:
-        try: text = bytes.decode('iso-8859-1')
-        except UnicodeDecodeError:
-            text = bytes.decode('cp1252')
-    return text
-
 class Jenni(irc.Bot):
     def __init__(self, config):
         lc_pm = None
@@ -278,8 +270,7 @@ class Jenni(irc.Bot):
         except Exception as e:
             self.error(origin)
     def dispatch(self, origin, args):
-        bytes, event, args = args[0], args[1], args[2:]
-        text = decode(bytes)
+        text, event, args = args[0], args[1], args[2:]
 
         for priority in ('high', 'medium', 'low'):
             items = list(self.commands[priority].items())
