@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 """
-tld.py - jenni Why Module
+tld.py - kenni Why Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import BeautifulSoup
@@ -25,13 +24,13 @@ soup = False
 last_updated = dt.datetime.now() - dt.timedelta(days=30)
 
 
-def gettld(jenni, input):
+def gettld(kenni, input):
     '''.tld .sh -- displays information about a given top level domain.'''
     global soup
 
     text = input.group(2)
     if not text:
-        jenni.reply("You didn't provide any input.")
+        kenni.reply("You didn't provide any input.")
         return
     text = text.split()[0]
     if text and text.startswith('.'):
@@ -90,9 +89,9 @@ def gettld(jenni, input):
                 chomped = (chomped).decode('utf-8')
                 new_out[x] = chomped
 
-            return jenni.say('Entity: %s (Explanation: %s, Notes: %s). IDN: %s, DNSSEC: %s, SLD: %s, IPv6: %s' % (new_out['entity'], new_out['expl'], new_out['notes'], new_out['idn'], new_out['dnssec'], new_out['sld'], new_out['ipv6']))
+            return kenni.say('Entity: %s (Explanation: %s, Notes: %s). IDN: %s, DNSSEC: %s, SLD: %s, IPv6: %s' % (new_out['entity'], new_out['expl'], new_out['notes'], new_out['idn'], new_out['dnssec'], new_out['sld'], new_out['ipv6']))
 
-    return jenni.say('No matches found for TLD: %s' % (text))
+    return kenni.say('No matches found for TLD: %s' % (text))
 
 gettld.commands = ['tld']
 gettld.example = '.tld .it'
@@ -107,12 +106,12 @@ def reload_cache():
     soup = BS(page)
 
 
-def tld_cache(jenni, input):
-    jenni.say('TLD cache from Wikipedia last updated: ' + str(last_updated))
+def tld_cache(kenni, input):
+    kenni.say('TLD cache from Wikipedia last updated: ' + str(last_updated))
 
     reload_cache()
 
-    jenni.say('TLD cache is now current.')
+    kenni.say('TLD cache is now current.')
 tld_cache.commands = ['tld-cache']
 
 

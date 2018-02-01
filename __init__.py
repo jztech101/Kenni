@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 """
-__init__.py - jenni Init Module
+__init__.py - kenni Init Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)
 Copyright 2008-2013, Sean B. Palmer (inamidst.com)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import sys, os, time, threading, signal
@@ -30,13 +29,13 @@ class Watcher(object):
         try: os.kill(self.child, signal.SIGKILL)
         except OSError: pass
 
-def run_jenni(config):
+def run_kenni(config):
     if hasattr(config, 'delay'):
         delay = config.delay
     else: delay = 20
 
     def connect(config):
-        p = bot.Jenni(config)
+        p = bot.kenni(config)
         p.use_ssl = config.ssl
         p.use_sasl = config.sasl
         p.run(config.host, config.port)
@@ -58,7 +57,7 @@ def run_jenni(config):
         time.sleep(delay)
 
 def run(config):
-    t = threading.Thread(target=run_jenni, args=(config,))
+    t = threading.Thread(target=run_kenni, args=(config,))
     if hasattr(t, 'run'):
         t.run()
     else: t.start()

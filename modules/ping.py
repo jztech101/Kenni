@@ -1,32 +1,31 @@
 #!/usr/bin/env python
 """
-ping.py - jenni Ping Module
+ping.py - kenni Ping Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)
 Copyright 2008-2013, Sean B. Palmer (inamidst.com)
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import random
 
 
-def interjection(jenni, input):
+def interjection(kenni, input):
     """response to interjections"""
-    jenni.say(input.nick + '!')
+    kenni.say(input.nick + '!')
 interjection.rule = r'($nickname!)'
 interjection.priority = 'high'
 interjection.example = '$nickname!'
 
-def f_ping(jenni, input):
-    """ping jenni in a channel or pm"""
-    jenni.reply('pong')
+def f_ping(kenni, input):
+    """ping kenni in a channel or pm"""
+    kenni.reply('pong')
 f_ping.commands = ['ping']
 f_ping.priority = 'high'
 
-def f_pong(jenni, input):
-    jenni.reply('ping')
+def f_pong(kenni, input):
+    kenni.reply('ping')
 f_pong.commands = ['pong']
 f_pong.priority = 'high'
 

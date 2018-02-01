@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 """
-quote.py - jenni Quote Module
+quote.py - kenni Quote Module
 Copyright 2008-2013, Michael Yanovich (yanovich.net)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import random
@@ -21,21 +20,21 @@ def write_addquote(text):
     fn.close()
 
 
-def addquote(jenni, input):
+def addquote(kenni, input):
     '''.addquote <nick> something they said here -- adds the quote to the quote database.'''
     text = input.group(2)
     if not text:
-        return jenni.say('No quote provided')
+        return kenni.say('No quote provided')
 
     write_addquote(text)
 
-    jenni.reply('Quote added.')
+    kenni.reply('Quote added.')
 addquote.commands = ['addquote']
 addquote.priority = 'low'
 addquote.example = '.addquote'
 
 
-def retrievequote(jenni, input):
+def retrievequote(kenni, input):
     '''.quote <number | nick> -- displays a given quote'''
     NO_QUOTES = 'There are currently no quotes saved.'
     text = input.group(2)
@@ -46,11 +45,11 @@ def retrievequote(jenni, input):
     try:
         fn = open('quotes.txt', 'r')
     except:
-        return jenni.reply('Please add a quote first.')
+        return kenni.reply('Please add a quote first.')
 
     lines = fn.readlines()
     if len(lines) < 1:
-        return jenni.reply(NO_QUOTES)
+        return kenni.reply(NO_QUOTES)
     MAX = len(lines)
     fn.close()
     random.seed()
@@ -68,29 +67,29 @@ def retrievequote(jenni, input):
             filtered_indices = list(itertools.compress(indices, selectors))
 
             if len(filtered_indices) < 1:
-                return jenni.say('No quotes by that nick!')
+                return kenni.say('No quotes by that nick!')
 
             filtered_index_index = random.randint(1, len(filtered_indices))
             number = filtered_indices[filtered_index_index - 1]
     else:
         number = random.randint(1, MAX)
     if not (0 <= number <= MAX):
-        jenni.reply("I'm not sure which quote you would like to see.")
+        kenni.reply("I'm not sure which quote you would like to see.")
     else:
         if lines:
             if number == 0:
-                return jenni.say('There is no "0th" quote!')
+                return kenni.say('There is no "0th" quote!')
             else:
                 line = lines[number - 1]
-            jenni.say('Quote %s of %s: ' % (number, MAX) + line)
+            kenni.say('Quote %s of %s: ' % (number, MAX) + line)
         else:
-            jenni.reply(NO_QUOTES)
+            kenni.reply(NO_QUOTES)
 retrievequote.commands = ['quote']
 retrievequote.priority = 'low'
 retrievequote.example = '.quote'
 
 
-def delquote(jenni, input):
+def delquote(kenni, input):
     '''.rmquote <number> -- removes a given quote from the database. Can only be done by the owner of the bot.'''
     if not input.owner:
         return
@@ -100,7 +99,7 @@ def delquote(jenni, input):
     try:
         fn = open('quotes.txt', 'r')
     except:
-        return jenni.reply('No quotes to delete.')
+        return kenni.reply('No quotes to delete.')
 
     lines = fn.readlines()
     MAX = len(lines)
@@ -109,13 +108,13 @@ def delquote(jenni, input):
     try:
         number = int(text)
     except:
-        jenni.reply('Please enter the quote number you would like to delete.')
+        kenni.reply('Please enter the quote number you would like to delete.')
         return
 
     if number > 0:
         newlines = lines[:number - 1] + lines[number:]
     elif number == 0:
-        return jenni.reply('There is no "0th" quote!')
+        return kenni.reply('There is no "0th" quote!')
     elif number == -1:
         newlines = lines[:number]
     else:
@@ -129,27 +128,27 @@ def delquote(jenni, input):
             if txt[-1] != '\n':
                 fn.write('\n')
     fn.close()
-    jenni.reply('Successfully deleted quote %s.' % (number))
+    kenni.reply('Successfully deleted quote %s.' % (number))
 delquote.commands = ['rmquote', 'delquote']
 delquote.priority = 'low'
 delquote.example = '.rmquote'
 
 
-def grabquote(jenni, input):
+def grabquote(kenni, input):
     try:
         from modules import find
     except:
-        return jenni.say('Could not load "find" module.')
+        return kenni.say('Could not load "find" module.')
 
     txt = input.group(2)
 
     if not txt:
-        return jenni.say('Please provide a nick for me to look for recent activity.')
+        return kenni.say('Please provide a nick for me to look for recent activity.')
 
     parts = txt.split()
 
     if not parts:
-        return jenni.say('Please provide me with a valid nick.')
+        return kenni.say('Please provide me with a valid nick.')
 
     nick = parts[0]
     channel = input.sender
@@ -159,7 +158,7 @@ def grabquote(jenni, input):
     if quote_db and channel in quote_db and nick in quote_db[channel]:
         quotes_by_nick = quote_db[channel][nick]
     else:
-        return jenni.say('There are currently no existing quotes by the provided nick in this channel.')
+        return kenni.say('There are currently no existing quotes by the provided nick in this channel.')
 
     quote_by_nick = quotes_by_nick[-1]
 
@@ -167,7 +166,7 @@ def grabquote(jenni, input):
 
     write_addquote(quote)
 
-    jenni.say('quote added: %s' % (quote))
+    kenni.say('quote added: %s' % (quote))
 grabquote.commands = ['grab']
 
 

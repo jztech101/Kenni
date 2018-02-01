@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 """
-info.py - jenni Information Module
+info.py - kenni Information Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)
 Copyright 2008-2013, Sean B. Palmer (inamidst.com)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 from itertools import izip_longest
@@ -22,7 +21,7 @@ def fchannels():
     lines = lines.replace('\n', '')
     return lines.split(',')
 
-def stats(jenni, input):
+def stats(kenni, input):
     """Show information on command usage patterns."""
     if input.sender == '##uno':
         return
@@ -34,7 +33,7 @@ def stats(jenni, input):
     ignore = set(['f_note', 'startup', 'message', 'noteuri',
                   'say_it', 'collectlines', 'oh_baby', 'chat',
                   'collect_links', 'bb_collect', 'random_chat'])
-    for (name, user), count in jenni.stats.iteritems():
+    for (name, user), count in kenni.stats.iteritems():
         if name in ignore:
             continue
         if not user:
@@ -64,7 +63,7 @@ def stats(jenni, input):
     creply = 'most used commands: '
     for count, command in comrank[:10]:
         creply += '%s (%s), ' % (command, count)
-    jenni.say(creply.rstrip(', '))
+    kenni.say(creply.rstrip(', '))
 
     # most heavy users
     reply = 'power users: '
@@ -75,7 +74,7 @@ def stats(jenni, input):
             k += 1
             if k > 10:
                 break
-    jenni.say(reply.rstrip(', '))
+    kenni.say(reply.rstrip(', '))
 
     # most heavy channels
     chreply = 'power channels: '
@@ -84,7 +83,7 @@ def stats(jenni, input):
         if bchannels and channel in bchannels:
             continue
         chreply += '%s (%s), ' % (channel, count)
-    jenni.say(chreply.rstrip(', '))
+    kenni.say(chreply.rstrip(', '))
 stats.commands = ['stats']
 stats.priority = 'low'
 

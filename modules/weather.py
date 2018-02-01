@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 # vim: set fileencoding=UTF-8 :
 """
-weather.py - jenni Weather Module
+weather.py - kenni Weather Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)
 Copyright 2008-2013, Sean B. Palmer (inamidst.com)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import datetime
@@ -84,7 +83,7 @@ def local(icao, hour, minute):
     return str(hour) + ':' + str(minute) + 'Z'
 
 
-def code(jenni, search):
+def code(kenni, search):
     '''Find ICAO code in the provided database.py (findest the nearest one)'''
     if search.upper() in data:
         return search.upper()
@@ -118,13 +117,13 @@ def get_metar(icao_code):
     return True, page
 
 
-def get_icao(jenni, inc, command='weather'):
+def get_icao(kenni, inc, command='weather'):
     '''Provide the ICAO code for a given input'''
 
     if not inc:
         return False, 'Try .%s London, for example?' % (command)
 
-    icao_code = code(jenni, inc)
+    icao_code = code(kenni, inc)
 
     if not icao_code:
         return False, 'No ICAO code found, sorry.'
@@ -132,22 +131,22 @@ def get_icao(jenni, inc, command='weather'):
     return True, icao_code
 
 
-def show_metar(jenni, input):
+def show_metar(kenni, input):
     '''.metar <location> -- shows the raw METAR data for a given location'''
     txt = input.group(2)
 
     if not txt:
-        return jenni.say('Try .metar London, for example?')
+        return kenni.say('Try .metar London, for example?')
 
-    status, icao_code = get_icao(jenni, txt, 'metar')
+    status, icao_code = get_icao(kenni, txt, 'metar')
     if not status:
-        return jenni.say(icao_code)
+        return kenni.say(icao_code)
 
     status, metar = get_metar(icao_code)
     if not status:
-        return jenni.say(metar)
+        return kenni.say(metar)
 
-    return jenni.say(metar)
+    return kenni.say(metar)
 show_metar.commands = ['metar']
 show_metar.example = '.metar London'
 show_metar.priority = 'low'
@@ -211,22 +210,22 @@ def wind_dir(degrees):
     return degrees
 
 
-def f_weather(jenni, input):
+def f_weather(kenni, input):
     '''.weather <ICAO> - Show the weather at airport with the code <ICAO>.'''
 
     text = input.group(2)
 
-    status, icao_code = get_icao(jenni, text)
+    status, icao_code = get_icao(kenni, text)
     print 'status:', status
     print 'icao_code:', icao_code
     if not status:
-        return jenni.say(icao_code)
+        return kenni.say(icao_code)
 
     status, page = get_metar(icao_code)
     print 'status:', status
     print 'page:', page
     if not status:
-        return jenni.say(page)
+        return kenni.say(page)
 
     metar = page.splitlines().pop()
     metar = metar.split(' ')
@@ -242,7 +241,7 @@ def f_weather(jenni, input):
     if metar[0] == 'AUTO':
         metar = metar[1:]
     if metar[0] == 'VCU':
-        jenni.say(icao_code + ': no data provided')
+        kenni.say(icao_code + ': no data provided')
         return
 
     if metar[0].endswith('KT'):
@@ -285,7 +284,7 @@ def f_weather(jenni, input):
         metar = metar[1:]
 
     if not metar:
-        return jenni.say(icao_code + ': no data provided')
+        return kenni.say(icao_code + ': no data provided')
 
     cover = []
     while (metar[0].startswith('VV') or metar[0].startswith('SKC') or
@@ -295,7 +294,7 @@ def f_weather(jenni, input):
         cover.append(metar[0])
         metar = metar[1:]
         if not metar:
-            return jenni.say(icao_code + ': no data provided')
+            return kenni.say(icao_code + ': no data provided')
 
     if metar[0] == 'CAVOK':
         cover.append('CLR')
@@ -556,18 +555,18 @@ def f_weather(jenni, input):
     output += ' - %s, %s' % (str(icao_code), time)
 
 
-    jenni.say(output)
+    kenni.say(output)
 f_weather.rule = (['weather-noaa', 'wx-noaa'], r'(.*)')
 
 
-def windchill(jenni, input):
+def windchill(kenni, input):
     '''.windchill <temp> <wind speed> -- shows Windchill in F'''
     ## this is pretty hacky
     text = input.split()
 
     if len(text) == 1:
         ## show them what we want
-        return jenni.say(u'.windchill <temp> <wind speed> -- shows Windchill in \u00B0F')
+        return kenni.say(u'.windchill <temp> <wind speed> -- shows Windchill in \u00B0F')
 
     if len(text) >= 3:
         try:
@@ -576,25 +575,25 @@ def windchill(jenni, input):
             wind = float(text[2])
         except:
             ## well, shit, there weren't numbers
-            return jenni.say('Invalid arguments! Try, .windchill without any parameters.')
+            return kenni.say('Invalid arguments! Try, .windchill without any parameters.')
     else:
         ## why couldn't the input be valid? silly users
-        return jenni.say('Invalid arguments! Try, .windchill without any parameters.')
+        return kenni.say('Invalid arguments! Try, .windchill without any parameters.')
 
     if temp > 50:
-        return jenni.say(u'The windchill formula only works on temperatures below 50 \u00B0F')
+        return kenni.say(u'The windchill formula only works on temperatures below 50 \u00B0F')
 
     if wind < 0:
         ## yes, yes, I know about vectors, but this is a scalar equation
-        return jenni.say("You can't have negative wind speed!")
+        return kenni.say("You can't have negative wind speed!")
     elif wind >= 300:
         ## hehe
-        jenni.reply('Are you okay?')
+        kenni.reply('Are you okay?')
 
     ## cf. https://is.gd/mgLuzU
     wc = 35.74 + (0.6215 * temp) - (35.75 * (wind ** (0.16))) + (0.4275 * temp * (wind ** (0.16)))
 
-    jenni.say(u'Windchill: %2.f \u00B0F' % (wc))
+    kenni.say(u'Windchill: %2.f \u00B0F' % (wc))
 windchill.commands = ['windchill', 'wc']
 windchill.priority = 'low'
 windchill.rate = 10
@@ -658,13 +657,13 @@ def chomp_desc(txt):
     return out
 
 
-def forecast(jenni, input):
-    if not hasattr(jenni.config, 'forecastio_apikey'):
-        return jenni.say('Please sign up for a Dark Sky API key at https://darksky.net/ or try .wx-noaa or .weather-noaa')
+def forecast(kenni, input):
+    if not hasattr(kenni.config, 'forecastio_apikey'):
+        return kenni.say('Please sign up for a Dark Sky API key at https://darksky.net/ or try .wx-noaa or .weather-noaa')
 
     txt = input.group(2)
     if not txt:
-        return jenni.say('Please provide a location.')
+        return kenni.say('Please provide a location.')
 
     name, lat, lng = location(txt)
     if name == 'ImportError' and not lat and not lng:
@@ -672,23 +671,23 @@ def forecast(jenni, input):
 
     url = 'https://api.darksky.net/forecast/%s/%s,%s'
 
-    url = url % (jenni.config.forecastio_apikey, urllib.quote(lat), urllib.quote(lng))
+    url = url % (kenni.config.forecastio_apikey, urllib.quote(lat), urllib.quote(lng))
 
     ## do some error checking
     try:
         ## if this fails, we got bigger problems
         page = web.get(url)
     except:
-        return jenni.say('Could not acess https://api.darksky.net/')
+        return kenni.say('Could not acess https://api.darksky.net/')
 
     ## we want some tasty JSON
     try:
         data = json.loads(page)
     except:
-        return jenni.say('The server did not return anything that was readable as JSON.')
+        return kenni.say('The server did not return anything that was readable as JSON.')
 
     if 'daily' not in data or 'data' not in data['daily']:
-        return jenni.say('Cannot find usable info in information returned by the server.')
+        return kenni.say('Cannot find usable info in information returned by the server.')
 
     ## here we go...
 
@@ -705,7 +704,7 @@ def forecast(jenni, input):
     if 'alerts' in data:
         ## TODO: modularize the colourful parsing of alerts from nws.py so this can be colourized
         for alert in data['alerts']:
-            jenni.say(alert['title'] + ' Expires at: ' + str(datetime.datetime.fromtimestamp(int(alert['expires']))))
+            kenni.say(alert['title'] + ' Expires at: ' + str(datetime.datetime.fromtimestamp(int(alert['expires']))))
 
     k = 1
     units = data['flags']['units']
@@ -781,26 +780,26 @@ def forecast(jenni, input):
         output = output[:-3]
 
     ## say the first part
-    jenni.say(output)
+    kenni.say(output)
 
     if second_output.endswith(' | '):
         second_output = second_output[:-3]
 
     ## required according to ToS by darksky.net
     second_output += ' (Powered by Dark Sky, darksky.net)'
-    jenni.say(second_output)
+    kenni.say(second_output)
 forecast.commands = ['forecast', 'fct', 'fc']
 forecast.rate = 5
 forecast.priority = 'low'
 
 
-def forecastio_current_weather(jenni, input):
-    if not hasattr(jenni.config, 'forecastio_apikey'):
-        return jenni.say('Please sign up for a darksky.net API key at https://darksky.net/')
+def forecastio_current_weather(kenni, input):
+    if not hasattr(kenni.config, 'forecastio_apikey'):
+        return kenni.say('Please sign up for a darksky.net API key at https://darksky.net/')
 
     txt = input.group(2)
     if not txt:
-        return jenni.say('Please provide a location.')
+        return kenni.say('Please provide a location.')
 
     #name, county, region, countryName, lat, lng = location(txt)
     name, lat, lng = location(txt)
@@ -809,7 +808,7 @@ def forecastio_current_weather(jenni, input):
 
     url = 'https://api.darksky.net/forecast/%s/%s,%s'
 
-    url = url % (jenni.config.forecastio_apikey, urllib.quote(lat), urllib.quote(lng))
+    url = url % (kenni.config.forecastio_apikey, urllib.quote(lat), urllib.quote(lng))
 
     ## do some error checking
     try:
@@ -817,19 +816,19 @@ def forecastio_current_weather(jenni, input):
         page = web.get(url)
     except:
         ## well, crap, check your Internet, and if you can access darksky.net
-        return jenni.say('Could not acess https://api.darksky.net/')
+        return kenni.say('Could not acess https://api.darksky.net/')
 
     try:
         ## we want tasty JSON
         data = json.loads(page)
     except:
         ## that wasn't tasty
-        return jenni.say('The server did not return anything that was readable as JSON.')
+        return kenni.say('The server did not return anything that was readable as JSON.')
 
 
     if 'currently' not in data:
         ## doesn't happen until the GPS coords are completely bonkers
-        return jenni.say('No information obtained from darksky.net for the given location: %s,' % (name, lat, lng,) )
+        return kenni.say('No information obtained from darksky.net for the given location: %s,' % (name, lat, lng,) )
 
     ## let the fun begin!!
 
@@ -900,7 +899,7 @@ def forecastio_current_weather(jenni, input):
 
     ## required according to ToS by darksky.net
     output += ' (Powered by Dark Sky, darksky.net)'
-    jenni.say(output)
+    kenni.say(output)
 forecastio_current_weather.commands = ['wxi-ft', 'wx-ft', 'weather-ft', 'weather', 'wx']
 forecastio_current_weather.rate = 5
 forecastio_current_weather.priority = 'high'
@@ -942,16 +941,16 @@ def add_degree(txt):
     return ((txt).encode('utf-8')).decode('utf-8')
 
 
-def weather_wunderground(jenni, input):
-    if not hasattr(jenni.config, 'wunderground_apikey'):
-        return jenni.say('Please sign up for a wunderground.com API key at https://www.wunderground.com/weather/api/ or try .wx-noaa or .weather-noaa')
+def weather_wunderground(kenni, input):
+    if not hasattr(kenni.config, 'wunderground_apikey'):
+        return kenni.say('Please sign up for a wunderground.com API key at https://www.wunderground.com/weather/api/ or try .wx-noaa or .weather-noaa')
 
-    apikey = jenni.config.wunderground_apikey
+    apikey = kenni.config.wunderground_apikey
 
     url = 'https://api.wunderground.com/api/%s/conditions/geolookup/q/%s.json'
     txt = input.group(2)
     if not txt:
-        return jenni.say('No input provided. Please provide a locaiton.')
+        return kenni.say('No input provided. Please provide a locaiton.')
 
     txt = txt.encode('utf-8')
 
@@ -960,7 +959,7 @@ def weather_wunderground(jenni, input):
     try:
         page = web.get(url_new)
     except:
-        return jenni.say("We could not access wunderground.com's API at the moment.")
+        return kenni.say("We could not access wunderground.com's API at the moment.")
 
     useful = False
 
@@ -971,13 +970,13 @@ def weather_wunderground(jenni, input):
             txt = useful['response']['results'][0]['zmw']
             useful = json.loads(web.get(url % (apikey, 'zmw:'+txt)))
     except:
-        return jenni.say('We could not obtain useful information from the wunderground.com API.')
+        return kenni.say('We could not obtain useful information from the wunderground.com API.')
 
     if 'response' in useful and 'error' in useful['response'] and 'description' in useful['response']['error']:
-        return jenni.say(str(useful['response']['error']['description']))
+        return kenni.say(str(useful['response']['error']['description']))
 
     if 'current_observation' not in useful:
-        return jenni.say('No observations currently found.')
+        return kenni.say('No observations currently found.')
     current = useful['current_observation']
 
 
@@ -1021,7 +1020,7 @@ def weather_wunderground(jenni, input):
 
     output += ', (Powered by wunderground.com)'
 
-    jenni.say(output)
+    kenni.say(output)
 
 weather_wunderground.commands = ['wx-wg', 'weather-wg']
 weather_wunderground.rate = 10
@@ -1039,24 +1038,24 @@ def preface_location(ci, reg='', cty=''):
     return out
 
 
-def forecast_wg(jenni, input):
-    if not hasattr(jenni.config, 'wunderground_apikey'):
-        return jenni.say('Please sign up for a wunderground.com API key at https://www.wunderground.com/weather/api/ or try .wx-noaa or .weather-noaa')
+def forecast_wg(kenni, input):
+    if not hasattr(kenni.config, 'wunderground_apikey'):
+        return kenni.say('Please sign up for a wunderground.com API key at https://www.wunderground.com/weather/api/ or try .wx-noaa or .weather-noaa')
 
-    apikey = jenni.config.wunderground_apikey
+    apikey = kenni.config.wunderground_apikey
 
     url = 'https://api.wunderground.com/api/%s/forecast10day/geolookup/q/%s.json'
 
     txt = input.group(2)
     if not txt:
-        return jenni.say('No input provided. Please provide a locaiton.')
+        return kenni.say('No input provided. Please provide a locaiton.')
 
     url_new = url % (apikey, txt)
 
     try:
         page = web.get(url_new)
     except:
-        return jenni.say("We could not access wunderground.com's API at the moment.")
+        return kenni.say("We could not access wunderground.com's API at the moment.")
 
     try:
         useful = json.loads(page)
@@ -1064,13 +1063,13 @@ def forecast_wg(jenni, input):
             txt = useful['response']['results'][0]['zmw']
             useful = json.loads(web.get(url % (apikey, 'zmw:'+txt)))
     except:
-        return jenni.say('We could not obtain useful information from the wunderground.com API.')
+        return kenni.say('We could not obtain useful information from the wunderground.com API.')
 
     if 'response' in useful and 'error' in useful['response'] and 'description' in useful['response']['error']:
-        return jenni.say(str(useful['response']['error']['description']))
+        return kenni.say(str(useful['response']['error']['description']))
 
     if 'forecast' not in useful:
-        return jenni.say('We could not find a forecast for the given location.')
+        return kenni.say('We could not find a forecast for the given location.')
 
     days = useful['forecast']['simpleforecast']['forecastday']
     forecast_text = useful['forecast']['txt_forecast']['forecastday']
@@ -1127,16 +1126,16 @@ def forecast_wg(jenni, input):
     output = output[:-3]
     output_second = output_second[:-3]
 
-    jenni.say(output)
-    jenni.say(output_second)
+    kenni.say(output)
+    kenni.say(output_second)
 
 forecast_wg.commands = ['forecast-wg']
 forecast_wg.priority = 'low'
 forecast_wg.rate = 5
 
 
-def radar_us(jenni, input):
-    return jenni.say('https://radar.weather.gov/Conus/Loop/NatLoop.gif')
+def radar_us(kenni, input):
+    return kenni.say('https://radar.weather.gov/Conus/Loop/NatLoop.gif')
 radar_us.commands = ['radar_us',]
 radar_us.priority = 'low'
 

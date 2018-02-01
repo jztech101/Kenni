@@ -1,16 +1,15 @@
 #!/usr/bin/env python
 """
-configs.py - jenni IRC bot config manager
+configs.py - kenni IRC bot config manager
 Copyright 2009-2015, Michael Yanovich (yanovich.net)
 Copyright 2008-2013, Sean B. Palmer (inamidst.com)
 Licensed under the Eiffel Forum License 2.
 
 Written by kaneda (http://jbegleiter.com), is invoked in
-the jenni starter to store the config helper in jenni.config
+the kenni starter to store the config helper in kenni.config
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import imp, os, sys
@@ -29,7 +28,7 @@ class Configs():
                 module.prefix = r'\.'
 
             if not hasattr(module, 'name'):
-                module.name = 'Forked jenni: https://github.com/jztech101/jenni/'
+                module.name = 'Kenni: https://github.com/jztech101/kenni/'
 
             if not hasattr(module, 'port'):
                 module.port = 6667

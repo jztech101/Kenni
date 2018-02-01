@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 """
-scores.py - jenni Scores Module
+scores.py - kenni Scores Module
 Copyright 2010-2013, Michael Yanovich (yanovich.net) and Matt Meinwald,
     and Samuel Clements
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import codecs
@@ -18,7 +17,7 @@ import time
 
 class Scores:
     def __init__(self):
-        self.scores_filename = os.path.expanduser('~/jenni/config/scores.txt')
+        self.scores_filename = os.path.expanduser('~/Kenni/config/scores.txt')
         self.scores_dict = dict()
         self.load()
         self.STRINGS = {
@@ -37,14 +36,14 @@ class Scores:
                                     self.scores_dict[channel][nick][0] -
                                     self.scores_dict[channel][nick][1])
 
-    def editpoints(self, jenni, input, nick, points):
+    def editpoints(self, kenni, input, nick, points):
         if not nick:
             return
         nick = uc.encode(nick.lower())
         if not nick:
-            jenni.reply(self.STRINGS["cantadd"])
+            kenni.reply(self.STRINGS["cantadd"])
         elif (not input.admin) and (input.nick).lower() == nick:
-            jenni.reply(self.STRINGS["denied"])
+            kenni.reply(self.STRINGS["denied"])
         else:
             nick = nick.lower()
             chan = (input.sender).lower()
@@ -60,7 +59,7 @@ class Scores:
                 self.scores_dict[chan][nick][1] += 1
 
             self.save()
-            jenni.say(self.str_score(nick, chan))
+            kenni.say(self.str_score(nick, chan))
 
     def save(self):
         """ Save to file in comma seperated values """
@@ -91,7 +90,7 @@ class Scores:
             self.scores_dict = dict()
         sfile.close()
 
-    def view_scores(self, jenni, input):
+    def view_scores(self, kenni, input):
 
         def ten(channel, ranking):
             channel = channel.lower()
@@ -140,26 +139,26 @@ class Scores:
         if len(line) == 0 or (len(line) == 1 and line[0] == 'top'):
             ## .scores
             t10 = ten(current_channel, 't')
-            jenni.say(t10)
+            kenni.say(t10)
 
 
         elif len(line) == 2 and (not line[0].startswith("#")) and line[1].startswith("#") and line[0] == "bottom":
             ## .scores bottom <channel>
             b10 = ten(line[1], 'b')
-            jenni.say(b10)
+            kenni.say(b10)
 
         elif len(line) == 1 and not line[0].startswith("#"):
             ## .scores <nick>
-            jenni.say(given_user(line[0], current_channel))
+            kenni.say(given_user(line[0], current_channel))
 
         elif len(line) == 1 and line[0].startswith("#"):
             ## .scores <channel>
             t10_chan = ten(line[0], 't')
-            jenni.say(t10_chan)
+            kenni.say(t10_chan)
 
         elif len(line) == 2 and line[0].startswith("#") and line[1] != "all":
             ## .scores <channel> <nick>
-            jenni.say(given_user(line[1], line[0]))
+            kenni.say(given_user(line[1], line[0]))
 
         elif len(line) == 2:
             ## .scores <nick> all
@@ -178,9 +177,9 @@ class Scores:
                                                                 ))
             if outstr.endswith("| "):
                 outstr = outstr[:-2]
-            jenni.say(outstr)
+            kenni.say(outstr)
 
-    def setpoint(self, jenni, input, line):
+    def setpoint(self, kenni, input, line):
         if not input.admin:
             return
         line = line[10:].split()
@@ -192,11 +191,11 @@ class Scores:
             add = int(line[2])
             sub = int(line[3])
         except:
-            jenni.say(self.STRINGS["invalid"])
+            kenni.say(self.STRINGS["invalid"])
             return
 
         if add < 0 or sub < 0:
-            jenni.reply("You are doing it wrong.")
+            kenni.reply("You are doing it wrong.")
             return
 
         if channel not in self.scores_dict:
@@ -204,13 +203,13 @@ class Scores:
 
         self.scores_dict[channel][nick] = [int(add), int(sub)]
         self.save()
-        jenni.say(self.str_score(nick, channel))
+        kenni.say(self.str_score(nick, channel))
 
-    def rmuser(self, jenni, input, line):
+    def rmuser(self, kenni, input, line):
         if not input.admin:
             return
         if len(line) < 9:
-            jenni.reply("No input provided.")
+            kenni.reply("No input provided.")
             return
         line = line[8:].split()
         channel = uc.encode((input.sender).lower())
@@ -237,24 +236,24 @@ class Scores:
             result = check(line[1], nick)
             self.save()
 
-        jenni.say(result)
+        kenni.say(result)
 
-# jenni commands
+# kenni commands
 scores = Scores()
 
 
-def addpoint_command(jenni, input):
+def addpoint_command(kenni, input):
     """.addpoint <nick> - Adds 1 point to the score system for <nick>."""
     nick = input.group(2)
     if nick:
         nick = nick.strip().split()[0]
-    scores.editpoints(jenni, input, nick, True)
+    scores.editpoints(kenni, input, nick, True)
 addpoint_command.commands = ['addpoint']
 addpoint_command.priorty = 'high'
 addpoint_command.rate = 60 * 2
 
 
-def second_addpoint_command(jenni, input):
+def second_addpoint_command(kenni, input):
     """<nick>++ - Adds 1 point to the score system for <nick>."""
     nick = input.group(1)
     if nick:
@@ -267,24 +266,24 @@ def second_addpoint_command(jenni, input):
     for each in ['++', '--']:
         if each in nick:
             return
-    scores.editpoints(jenni, input, nick, True)
+    scores.editpoints(kenni, input, nick, True)
 second_addpoint_command.rule = r'^(\S+\+\+)($|\s)'
 second_addpoint_command.priority = 'high'
 second_addpoint_command.rate = 60 * 2
 
 
-def rmpoint_command(jenni, input):
+def rmpoint_command(kenni, input):
     """.rmpoint <nick> - Removes 1 point to the score system for <nick>."""
     nick = input.group(2)
     if nick:
         nick = nick.strip().split()[0]
-    scores.editpoints(jenni, input, nick, False)
+    scores.editpoints(kenni, input, nick, False)
 rmpoint_command.commands = ['rmpoint']
 rmpoint_command.priority = 'high'
 rmpoint_command.rate = 60 * 2
 
 
-def second_rmpoint_command(jenni, input):
+def second_rmpoint_command(kenni, input):
     """<nick>-- - Removes 1 point to the score system for <nick>."""
     nick = input.group(1)
     if nick:
@@ -297,36 +296,36 @@ def second_rmpoint_command(jenni, input):
     for each in ['++', '--']:
         if each in nick:
             return
-    scores.editpoints(jenni, input, nick, False)
+    scores.editpoints(kenni, input, nick, False)
 second_rmpoint_command.rule = r'^(\S+\-\-)($|\s)'
 second_rmpoint_command.priority = 'high'
 second_rmpoint_command.rate = 60 * 2
 
 
-def view_scores(jenni, input):
+def view_scores(kenni, input):
     """.scores <channel> <user> - Lists all users and their point values in the system. channel and user parameters are optional"""
-    scores.view_scores(jenni, input)
+    scores.view_scores(kenni, input)
 view_scores.commands = ['points', 'point', 'scores', 'score']
 view_scores.priority = 'medium'
 view_scores.rate = 60 * 2
 
 
-def setpoint(jenni, input):
+def setpoint(kenni, input):
     """.setpoint <channel> <nick> <number> <number> - Sets score for user."""
     line = input.group()
     if line:
         line = line.lstrip().rstrip()
-    scores.setpoint(jenni, input, line)
+    scores.setpoint(kenni, input, line)
 setpoint.commands = ['setpoint', 'setscore']
 setpoint.priority = 'medium'
 
 
-def removeuser(jenni, input):
+def removeuser(kenni, input):
     """.rmuser <nick> -- Removes a given user from the system."""
     line = input.group()
     if line:
         line = line.lstrip().rstrip()
-    scores.rmuser(jenni, input, line)
+    scores.rmuser(kenni, input, line)
 removeuser.commands = ['rmuser']
 removeuser.priority = 'medium'
 

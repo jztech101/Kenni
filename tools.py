@@ -1,18 +1,17 @@
 #!/usr/bin/env python
 """
-tools.py - Jenni Tools
+tools.py - kenni Tools
 Copyright 2009-2013, Michael Yanovich (yanovich.net)
 Copyright 2008-2013, Sean B. Palmer (inamidst.com)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 def deprecated(old):
-    def new(jenni, input, old=old):
-        self = jenni
+    def new(kenni, input, old=old):
+        self = kenni
         origin = type('Origin', (object,), {
             'sender': input.sender,
             'nick': input.nick

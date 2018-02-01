@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 """
-colours.py - jenni Colour Module
+colours.py - kenni Colour Module
 Copyright 2015, Michael Yanovich (yanovich.net)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 colours = {
@@ -38,7 +37,7 @@ colours = {
 }
 
 
-def test_colours(jenni, input):
+def test_colours(kenni, input):
     if not input.admin and input.sender.startswith('#'):
         return
     output = str()
@@ -54,8 +53,8 @@ def test_colours(jenni, input):
     output = output[:-2]
     bold_output = bold_output[:-2]
 
-    jenni.say(output)
-    jenni.say(bold_output)
+    kenni.say(output)
+    kenni.say(bold_output)
 test_colours.commands = ['color', 'colour', 'colors', 'colours']
 test_colours.priority = 'high'
 

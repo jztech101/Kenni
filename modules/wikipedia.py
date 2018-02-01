@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 """
-wikipedia.py - jenni Wikipedia Module
+wikipedia.py - kenni Wikipedia Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)
 Copyright 2008-2013, Sean B. Palmer (inamidst.com)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import re, urllib, gzip, StringIO
@@ -156,10 +155,10 @@ def wikipedia(term, language='en', last=False):
     term = term.decode('utf-8').encode('utf-8')
     return sentence + ' - ' + (wikiuri % (language, term))
 
-def wik(jenni, input):
+def wik(kenni, input):
     origterm = input.groups()[1]
     if not origterm:
-        return jenni.say('Perhaps you meant ".wik Zen"?')
+        return kenni.say('Perhaps you meant ".wik Zen"?')
     origterm = origterm.encode('utf-8')
     origterm = origterm.strip()
 
@@ -177,11 +176,11 @@ def wik(jenni, input):
     except IOError:
         args = (language, wikiuri % (language, term))
         error = "Can't connect to %s.wikipedia.org (%s)" % args
-        return jenni.say(error)
+        return kenni.say(error)
 
     if result is not None:
-        jenni.say(result)
-    else: jenni.say('Can\'t find anything in Wikipedia for "%s".' % origterm)
+        kenni.say(result)
+    else: kenni.say('Can\'t find anything in Wikipedia for "%s".' % origterm)
 
 wik.commands = ['w', 'wik', 'wiki']
 wik.priority = 'high'

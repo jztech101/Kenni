@@ -1,15 +1,15 @@
-Jenni
+kenni
 =====
 
 This is a fork of jenni which is a python IRC bot maintained and developed by Michael Yanovich. This project was originally created by Sean B. Palmer.
 
 Installation & Configuration
 ============================
-jenni requires python 2.7, jenni will not work with python 3.x.
+kenni requires python 2.7, kenni will not work with python 3.x.
 
-1. Run ./jenni - this creates a default config file
-2. Edit ~/jenni/config/default.py
-3. Run ./jenni - this now runs jenni with your settings
+1. Run ./kenni - this creates a default config file
+2. Edit ~/Kenni/config/default.py
+3. Run ./kenni - this now runs kenni with your settings
 
 Enjoy!
 
@@ -35,18 +35,18 @@ The YouTube module requires that you have a Google Developer API key in order to
 Best Practices
 ==============
 
-- Give jenni '@' (ops) at your risk. This software is provided without warranty, without exception.
-- You can no longer run jenni as the root user (euid = 0).
+- Give kenni '@' (ops) at your risk. This software is provided without warranty, without exception.
+- You can no longer run kenni as the root user (euid = 0).
   - This is a huge security risk, amplifying the impact of any potential vulnerability.
 
 Additional Info
 ===============
 
-See https://github.com/myano/jenni/wiki for information about jenni/Phenny modules
+See https://github.com/myano/kenni/wiki for information about kenni/Phenny modules
 
 Credits
 =======
 
-For a list of contributions to the jenni fork see the file CREDITS.
+For a list of contributions to the kenni fork see the file CREDITS.
 
 Sean B. Palmer, http://inamidst.com/sbp/ forked by Michael Yanovich, https://yanovich.net/

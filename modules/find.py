@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 """
-find.py - jenni Spell Checking Module
+find.py - kenni Spell Checking Module
 Copyright 2011-2013, Michael Yanovich (yanovich.net)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 
 Contributions from: Matt Meinwald and Morgan Goose
 This module will fix spelling errors if someone corrects them
@@ -76,13 +75,13 @@ def save_db(search_dict):
     search_file.close()
 
 # Create a temporary log of the most recent thing anyone says.
-def collectlines(jenni, input):
+def collectlines(kenni, input):
     """Creates a temporary storage of most recent lines for s///"""
     # don't log things in PM
     #channel = (input.sender).encode("utf-8")
-    if not hasattr(jenni.config, 'sed_enable'):
+    if not hasattr(kenni.config, 'sed_enable'):
         return
-    if not input.sender in jenni.config.sed_enable:
+    if not input.sender in kenni.config.sed_enable:
         return
     channel = uc.decode(input.sender)
     channel = uc.encode(channel)
@@ -108,12 +107,12 @@ def collectlines(jenni, input):
 collectlines.rule = r'.*'
 collectlines.priority = 'low'
 
-def findandreplace(jenni, input):
+def findandreplace(kenni, input):
     """s/old text/new text/ -- allows you to replace text from something you previously said"""
     # don't bother in PM
-    if not hasattr(jenni.config, 'sed_enable'):
+    if not hasattr(kenni.config, 'sed_enable'):
        return
-    if not input.sender in jenni.config.sed_enable:    
+    if not input.sender in kenni.config.sed_enable:    
        return
     channel = (input.sender).encode("utf-8")
     nick = (input.nick).encode("utf-8")
@@ -170,7 +169,7 @@ def findandreplace(jenni, input):
     # output
     phrase = nick + (input.group(1) and ' thinks ' + rnick or '') + (me and ' ' or " \x02meant\x02 to say: ") + new_phrase
     if me and not input.group(1): phrase = '\x02' + phrase + '\x02'
-    jenni.say(phrase)
+    kenni.say(phrase)
 
 # Matches optional whitespace + 's' + optional whitespace + separator character.
 # The separator can be any non-alphanumeric character except for '_', '.', ':' and '-'.

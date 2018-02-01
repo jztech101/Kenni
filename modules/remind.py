@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 """
-remind.py - jenni Reminder Module
+remind.py - kenni Reminder Module
 Copyright 2011-2013, Michael Yanovich (yanovich.net)
 Copyright 2011-2013, Sean B. Palmer (inamidst.com)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 from datetime import datetime, timedelta
@@ -59,7 +58,7 @@ scaling = {
 
 def filename(self):
     name = self.nick + '-' + self.config.host + '.reminders.db'
-    return os.path.join(os.path.expanduser('~/jenni/config'), name)
+    return os.path.join(os.path.expanduser('~/Kenni/config'), name)
 
 def load_database(name):
     data = {}
@@ -82,7 +81,7 @@ def dump_database(name, data):
             f.write('%s\t%s\t%s\t%s\n' % (unixtime, channel, nick, message))
     f.close()
 
-def setup(jenni):
+def setup(kenni):
     global r_command
 
     periods = '|'.join(scaling.keys())
@@ -91,39 +90,39 @@ def setup(jenni):
     )
     r_command = re.compile(p_command)
 
-    jenni.rfn = filename(jenni)
+    kenni.rfn = filename(kenni)
 
-    # jenni.sending.acquire()
-    jenni.rdb = load_database(jenni.rfn)
-    # jenni.sending.release()
+    # kenni.sending.acquire()
+    kenni.rdb = load_database(kenni.rfn)
+    # kenni.sending.release()
 
-    def monitor(jenni):
+    def monitor(kenni):
         time.sleep(5)
         while True:
             now = int(time.time())
-            unixtimes = [int(key) for key in jenni.rdb]
+            unixtimes = [int(key) for key in kenni.rdb]
             oldtimes = [t for t in unixtimes if t <= now]
             if oldtimes:
                 for oldtime in oldtimes:
-                    for (channel, nick, message) in jenni.rdb[oldtime]:
+                    for (channel, nick, message) in kenni.rdb[oldtime]:
                         if message:
-                            jenni.msg(channel, nick + ': ' + message)
-                        else: jenni.msg(channel, nick + '!')
-                    del jenni.rdb[oldtime]
+                            kenni.msg(channel, nick + ': ' + message)
+                        else: kenni.msg(channel, nick + '!')
+                    del kenni.rdb[oldtime]
 
-                # jenni.sending.acquire()
-                dump_database(jenni.rfn, jenni.rdb)
-                # jenni.sending.release()
+                # kenni.sending.acquire()
+                dump_database(kenni.rfn, kenni.rdb)
+                # kenni.sending.release()
             time.sleep(2.5)
 
-    targs = (jenni,)
+    targs = (kenni,)
     t = threading.Thread(target=monitor, args=targs)
     t.start()
 
-def remind(jenni, input):
+def remind(kenni, input):
     m = r_command.match(input.bytes)
     if not m:
-        return jenni.reply("Sorry, didn't understand the input.")
+        return kenni.reply("Sorry, didn't understand the input.")
     length, scale, message = m.groups()
 
     length = float(length)
@@ -138,10 +137,10 @@ def remind(jenni, input):
     message += ' | Set on: ' + str(datetime.now().isoformat())
     reminder = (input.sender, input.nick, message)
 
-    try: jenni.rdb[t].append(reminder)
-    except KeyError: jenni.rdb[t] = [reminder]
+    try: kenni.rdb[t].append(reminder)
+    except KeyError: kenni.rdb[t] = [reminder]
 
-    dump_database(jenni.rfn, jenni.rdb)
+    dump_database(kenni.rfn, kenni.rdb)
 
     if duration >= 60:
         try:
@@ -149,10 +148,10 @@ def remind(jenni, input):
             if duration >= 3600 * 12:
                 w += time.strftime(' on %d %b %Y', time.gmtime(t))
             w += time.strftime(' at %H:%MZ', time.gmtime(t))
-            jenni.reply('Okay, will remind%s' % w)
+            kenni.reply('Okay, will remind%s' % w)
         except:
-            jenni.reply('Please enter a more realistic time-frame.')
-    else: jenni.reply('Okay, will remind in %s secs' % duration)
+            kenni.reply('Please enter a more realistic time-frame.')
+    else: kenni.reply('Okay, will remind in %s secs' % duration)
 remind.commands = ['remind','in']
 
 r_time = re.compile(r'.*([0-9]{2}[:.][0-9]{2}).*')
@@ -162,7 +161,7 @@ r_date = re.compile(r'([\d]{4})-([\d]{2})-([\d]{2})')
 import calendar
 from modules import clock
 
-def at(jenni, input):
+def at(kenni, input):
     '''.at YYYY-MM-DD HH:MM TZ -- remind at a specific time.'''
     ## input can be just a HH:MM TZ if you want the same day
 
@@ -170,7 +169,7 @@ def at(jenni, input):
 
     txt = input.groups(2)
     if not txt:
-        return jenni.say(help_txt)
+        return kenni.say(help_txt)
 
     ## remove the ".at " part
     ## yea, yea, there are better ways at doing this
@@ -185,7 +184,7 @@ def at(jenni, input):
     if not m:
         ## even if a date is specified, if we couldn't find a specific time
         ## we don't know *when* to remind the user
-        return jenni.reply("Sorry, I couldn't find the time. " + help_txt)
+        return kenni.reply("Sorry, I couldn't find the time. " + help_txt)
 
     ## : are better than .
     ## but we should still accept .
@@ -196,7 +195,7 @@ def at(jenni, input):
     m = r_zone.findall(bytes)
 
     if not m:
-        return jenni.reply("Sorry, I couldn't figure out what date you wanted. " + help_txt)
+        return kenni.reply("Sorry, I couldn't figure out what date you wanted. " + help_txt)
 
     ## pluck out the [A-Za-z]+|[+-]\d\d?
     z = m[0][0]
@@ -280,22 +279,22 @@ def at(jenni, input):
         phrase = 'seconds'
     else:
         ## well crap, the duration must be negative!
-        return jenni.reply('Sorry, but that occurs in the past! Please select a time in the future.')
+        return kenni.reply('Sorry, but that occurs in the past! Please select a time in the future.')
 
     ## who do we need to remind? and where? and what?
     reminder = (input.sender, input.nick, bytes)
 
     ## store such information
-    try: jenni.rdb[unix_stamp_event].append(reminder)
-    except KeyError: jenni.rdb[unix_stamp_event] = [reminder]
+    try: kenni.rdb[unix_stamp_event].append(reminder)
+    except KeyError: kenni.rdb[unix_stamp_event] = [reminder]
 
     ## threading/reminding voodoo
-    jenni.sending.acquire()
-    dump_database(jenni.rfn, jenni.rdb)
-    jenni.sending.release()
+    kenni.sending.acquire()
+    dump_database(kenni.rfn, kenni.rdb)
+    kenni.sending.release()
 
     ## communicate to the user!
-    jenni.reply('Reminding at %s %s - in %s %s' % (t, z, t_duration, phrase))
+    kenni.reply('Reminding at %s %s - in %s %s' % (t, z, t_duration, phrase))
 at.commands = ['remindat','at']
 
 if __name__ == '__main__':

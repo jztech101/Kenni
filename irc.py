@@ -6,8 +6,7 @@ Copyright 2008-2013, Sean B. Palmer (inamidst.com)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import sys, re, time, traceback
@@ -55,7 +54,7 @@ def create_logdir():
     except Exception, e:
         print >> sys.stderr, 'There was a problem creating the logs directory.'
         print >> sys.stderr, e.__class__, str(e)
-        print >> sys.stderr, 'Please fix this and then run jenni again.'
+        print >> sys.stderr, 'Please fix this and then run kenni again.'
         sys.exit(1)
 
 def check_logdir():

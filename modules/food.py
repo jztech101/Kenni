@@ -7,16 +7,15 @@ Copyright 2013 Unknown
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni-misc: https://github.com/freeboson/jenni-misc/
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+ * kenni-misc: https://github.com/freeboson/kenni-misc/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 '''
 
 import re
 import web
 re_mark = re.compile('<dt><a href="(.*?)" target="_blank">(.*?)</a></dt>')
 
-def food(jenni, input):
+def food(kenni, input):
     '''.fd -- provide suggestions for dinner'''
     txt = input.group(2)
     url = 'http://www.whatthefuckshouldimakefordinner.com'
@@ -31,11 +30,11 @@ def food(jenni, input):
         dish = results[0][1].upper()
         long_url = results[0][0]
 
-        jenni.say("WHY DON'T YOU EAT SOME FUCKING " + dish +
+        kenni.say("WHY DON'T YOU EAT SOME FUCKING " + dish +
                   ", HERE IS THE RECIPE: " + long_url)
 
     else:
-        jenni.say("I DON'T FUCKING KNOW, EAT PIZZA.")
+        kenni.say("I DON'T FUCKING KNOW, EAT PIZZA.")
 
 food.commands = ['food','breakfast','lunch', 'brunch','fucking_dinner', 'fuckingdinner', 'dinner', 'fd', 'wtfsimfd']
 food.priority = 'low'

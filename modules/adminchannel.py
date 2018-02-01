@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 """
-admin.py - jenni Admin Module
+admin.py - kenni Admin Module
 Copyright 2010-2015, Michael Yanovich (yanovich.net), Alek Rollyson, Josh Begleiter (jbegleiter.com)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 
 Beefed up by Alek Rollyson, Josh Begleiter.
 * Added functions for op, deop, voice, devoice
@@ -17,18 +16,18 @@ Beefed up by Alek Rollyson, Josh Begleiter.
 
 import re
 
-def is_chan_admin(jenni, input, a):
+def is_chan_admin(kenni, input, a):
     if input.admin:
         return True
-    elif hasattr(jenni.config, 'helpers'):
-        if a in jenni.config.helpers and input.host in jenni.config.helpers[a]:
+    elif hasattr(kenni.config, 'helpers'):
+        if a in kenni.config.helpers and input.host in kenni.config.helpers[a]:
             return True
     return False
 
-def voice(jenni, input):
+def voice(kenni, input):
     """
     Command to voice users in a room. If no nick is given,
-    jenni will voice the nick who sent the command
+    kenni will voice the nick who sent the command
     """
     text = input.group().split()
     argc = len(text)
@@ -44,17 +43,17 @@ def voice(jenni, input):
         else:
             nick = text[1]
     if channel is not None:
-        if not is_chan_admin(jenni,input,channel):
-            return jenni.say('You must be an admin to perform this operation')
-        jenni.write(['MODE', channel, "+v", nick])
+        if not is_chan_admin(kenni,input,channel):
+            return kenni.say('You must be an admin to perform this operation')
+        kenni.write(['MODE', channel, "+v", nick])
 voice.commands = ['voice']
 voice.priority = 'low'
 voice.example = '.voice ##example or .voice ##example nick'
 
-def devoice(jenni, input):
+def devoice(kenni, input):
     """
     Command to devoice users in a room. If no nick is given,
-    jenni will devoice the nick who sent the command
+    kenni will devoice the nick who sent the command
     """
     text = input.group().split()
     argc = len(text)
@@ -70,17 +69,17 @@ def devoice(jenni, input):
         else:
             nick = text[1]
     if channel is not None:
-        if not is_chan_admin(jenni,input,channel):
-            return jenni.say('You must be an admin to perform this operation')
-        jenni.write(['MODE', channel, "-v", nick])
+        if not is_chan_admin(kenni,input,channel):
+            return kenni.say('You must be an admin to perform this operation')
+        kenni.write(['MODE', channel, "-v", nick])
 devoice.commands = ['devoice']
 devoice.priority = 'low'
 devoice.example = '.devoice ##example or .devoice ##example nick'
 
-def op(jenni, input):
+def op(kenni, input):
     """
     Command to op users in a room. If no nick is given,
-    jenni will op the nick who sent the command
+    kenni will op the nick who sent the command
     """
     text = input.group().split()
     argc = len(text)
@@ -96,14 +95,14 @@ def op(jenni, input):
         else:
             nick = text[1]
     if channel is not None:
-        if not is_chan_admin(jenni,input,channel):
-            return jenni.say('You must be an admin to perform this operation')
-        jenni.write(['MODE', channel, "+o", nick])
+        if not is_chan_admin(kenni,input,channel):
+            return kenni.say('You must be an admin to perform this operation')
+        kenni.write(['MODE', channel, "+o", nick])
 op.commands = ['op']
 op.priority = 'low'
 op.example = '.op ##example or .op ##example nick'
 
-def deop(jenni, input):
+def deop(kenni, input):
     text = input.group().split()
     argc = len(text)
     nick = input.nick
@@ -118,14 +117,14 @@ def deop(jenni, input):
         else:
             nick = text[1]
     if channel is not None:
-        if not is_chan_admin(jenni,input,channel):
-            return jenni.say('You must be an admin to perform this operation')
-        jenni.write(['MODE', channel, "-o", nick])
+        if not is_chan_admin(kenni,input,channel):
+            return kenni.say('You must be an admin to perform this operation')
+        kenni.write(['MODE', channel, "-o", nick])
 deop.commands = ['deop']
 deop.priority = 'low'
 deop.example = '.deop ##example or .deop ##example nick'
 
-def kick(jenni, input):
+def kick(kenni, input):
     text = input.group().split()
     argc = len(text)
     channel = input.sender
@@ -140,15 +139,15 @@ def kick(jenni, input):
     else:
         if (argc > 2):
             reasonidx = " ".join(text[2:])
-    if not is_chan_admin(jenni, input, channel):
-        return jenni.say('You must be an admin to perform this operation')
-    jenni.write(['KICK', channel, nick, ' :', "[" + input.nick + "] " + reasonidx])
+    if not is_chan_admin(kenni, input, channel):
+        return kenni.say('You must be an admin to perform this operation')
+    kenni.write(['KICK', channel, nick, ' :', "[" + input.nick + "] " + reasonidx])
 kick.commands = ['kick']
 kick.priority = 'high'
 
-def configureHostMask (mask, jenni):
+def configureHostMask (mask, kenni):
     if mask == '*!*@*': return mask
-    if re.match('^[^.@!/]+$', mask) is not None: return '*!*@%s' % jenni.hostmasks[mask]
+    if re.match('^[^.@!/]+$', mask) is not None: return '*!*@%s' % kenni.hostmasks[mask]
     if re.match('^[^@!]+$', mask) is not None: return '*!*@%s' % mask
 
     m = re.match('^([^!@]+)@$', mask)
@@ -161,7 +160,7 @@ def configureHostMask (mask, jenni):
     if m is not None: return '%s!%s@*' % (m.group(1), m.group(2))
     return ''
 
-def ban (jenni, input):
+def ban (kenni, input):
     """
     This give admins the ability to ban a user.
     The bot must be a Channel Operator for this command to work.
@@ -176,15 +175,15 @@ def ban (jenni, input):
         if argc < 3: return
         channel = opt
         banmask = text[2]
-    if not is_chan_admin(jenni,input,channel):
-        return jenni.say('You must be an admin to perform this operation')
-    banmask = configureHostMask(banmask, jenni)
+    if not is_chan_admin(kenni,input,channel):
+        return kenni.say('You must be an admin to perform this operation')
+    banmask = configureHostMask(banmask, kenni)
     if banmask == '': return
-    jenni.write(['MODE', channel, '+b', banmask])
+    kenni.write(['MODE', channel, '+b', banmask])
 ban.commands = ['ban']
 ban.priority = 'high'
 
-def unban (jenni, input):
+def unban (kenni, input):
     """
     This give admins the ability to unban a user.
     The bot must be a Channel Operator for this command to work.
@@ -199,15 +198,15 @@ def unban (jenni, input):
         if argc < 3: return
         channel = opt
         banmask = text[2]
-    if not is_chan_admin(jenni,input,channel):
-        return jenni.say('You must be an admin to perform this operation')
-    banmask = configureHostMask(banmask, jenni)
+    if not is_chan_admin(kenni,input,channel):
+        return kenni.say('You must be an admin to perform this operation')
+    banmask = configureHostMask(banmask, kenni)
     if banmask == '': return
-    jenni.write(['MODE', channel, '-b', banmask])
+    kenni.write(['MODE', channel, '-b', banmask])
 unban.commands = ['unban']
 unban.priority = 'high'
 
-def quiet (jenni, input):
+def quiet (kenni, input):
    """
    This gives admins the ability to quiet a user.
    The bot must be a Channel Operator for this command to work
@@ -222,15 +221,15 @@ def quiet (jenni, input):
        if argc < 3: return
        channel = opt
        banmask = text[2]
-   if not is_chan_admin(jenni, input, channel):
-       return jenni.say('You must be an admin to perform this operation')
-   quietmask = configureHostMask(banmask, jenni)
+   if not is_chan_admin(kenni, input, channel):
+       return kenni.say('You must be an admin to perform this operation')
+   quietmask = configureHostMask(banmask, kenni)
    if quietmask == '': return
-   jenni.write(['MODE', channel, '+q', quietmask])
+   kenni.write(['MODE', channel, '+q', quietmask])
 quiet.commands = ['quiet']
 quiet.priority = 'high'
 
-def unquiet (jenni, input):
+def unquiet (kenni, input):
    """
    This gives admins the ability to unquiet a user.
    The bot must be a Channel Operator for this command to work
@@ -245,15 +244,15 @@ def unquiet (jenni, input):
        if argc < 3: return
        channel = opt
        banmask = text[2]
-   if not is_chan_admin(jenni, input, channel):
-       return jenni.say('You must be an admin to perform this operation')
-   quietmask = configureHostMask(banmask, jenni)
+   if not is_chan_admin(kenni, input, channel):
+       return kenni.say('You must be an admin to perform this operation')
+   quietmask = configureHostMask(banmask, kenni)
    if quietmask == '': return
-   jenni.write(['MODE', channel, '-q', quietmask])
+   kenni.write(['MODE', channel, '-q', quietmask])
 unquiet.commands = ['unquiet']
 unquiet.priority = 'high'
 
-def kickban (jenni, input):
+def kickban (kenni, input):
    """
    This gives admins the ability to kickban a user.
    The bot must be a Channel Operator for this command to work
@@ -273,16 +272,16 @@ def kickban (jenni, input):
    else:
        if(argc >2):
            reasonidx = " ".join(text[2:])
-   if not is_chan_admin(jenni, input, channel):
-       return jenni.say('You must be an admin to perform this operation')
-   mask = configureHostMask(nick,jenni)
+   if not is_chan_admin(kenni, input, channel):
+       return kenni.say('You must be an admin to perform this operation')
+   mask = configureHostMask(nick,kenni)
    if mask == '': return
-   jenni.write(['MODE', channel, '+b', mask])
-   jenni.write(['KICK', channel, nick, ' :', "[" + input.nick + "] " + reasonidx])
+   kenni.write(['MODE', channel, '+b', mask])
+   kenni.write(['KICK', channel, nick, ' :', "[" + input.nick + "] " + reasonidx])
 kickban.commands = ['kickban', 'kb', 'kban']
 kickban.priority = 'high'
 
-def topic(jenni, input):
+def topic(kenni, input):
     """
     This gives admins the ability to change the topic.
     Note: One does *NOT* have to be an OP, one just has to be on the list of
@@ -296,11 +295,11 @@ def topic(jenni, input):
         if argc < 2: return
         channel = text[1]
         topic = ' '.join(text[2:])
-    if not is_chan_admin(jenni,input,channel):
-        return jenni.say('You must be an admin to perform this operation')
+    if not is_chan_admin(kenni,input,channel):
+        return kenni.say('You must be an admin to perform this operation')
     if topic == '':
         return
-    jenni.write(['TOPIC', channel], topic)
+    kenni.write(['TOPIC', channel], topic)
     return
 topic.commands = ['topic']
 topic.priority = 'low'

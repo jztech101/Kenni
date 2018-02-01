@@ -7,8 +7,7 @@ Partially re-written by Paul Schellin (paulschellin@gmail.com) 2014
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 '''
 
 import json
@@ -51,18 +50,18 @@ Each comic contains the following JSON keys:
 random.seed()
 
 
-def xkcd(jenni, input):
+def xkcd(kenni, input):
     '''.xkcd - Print all available information about the most recent (or specified) XKCD clip.'''
 
     def tryToGetJSON (site_url):
         try:
             page = web.get(xkcd_url)
         except:
-            return jenni.say('Failed to access xkcd.com: <' + xkcd_url + '>')
+            return kenni.say('Failed to access xkcd.com: <' + xkcd_url + '>')
         try:
             body = json.loads(page)
         except:
-            return jenni.say('Failed to make use of data loaded by xkcd.com: <' + xkcd_url + '>')
+            return kenni.say('Failed to make use of data loaded by xkcd.com: <' + xkcd_url + '>')
         return body
 
 
@@ -78,7 +77,7 @@ def xkcd(jenni, input):
         elif any([line.lower() in ['r', 'ran', 'rand', 'random']]):
             show_random_comic = True
         else:
-            jenni.say(u'Incorrect argument for .xkcd: ' + line)
+            kenni.say(u'Incorrect argument for .xkcd: ' + line)
 
 
     body = tryToGetJSON(xkcd_url)
@@ -92,18 +91,18 @@ def xkcd(jenni, input):
 
     comic_date_str = body['year'] + u'-' + str(body['month']).zfill(2) + u'-' + str(body['day']).zfill(2)
     header_str = u'\x02xkcd #\x02' + str(body['num']) + u' (' + comic_date_str + u') \x02' + body['title'] + u'\x02'
-    jenni.say(header_str)
+    kenni.say(header_str)
 
     if body['transcript'].encode('UTF-8'):
         transcript_text = '\x02Transcript:\x02 ' + body['transcript']
-        jenni.say(transcript_text)
+        kenni.say(transcript_text)
 
 
     alt_text = u'\x02Alt text\x02: ' + body['alt']
-    jenni.say(alt_text)
+    kenni.say(alt_text)
 
     img_ssl_link = u'[ ' + re.sub(r'http://', 'https://ssl', body['img']) + u' ]'
-    jenni.say(img_ssl_link)
+    kenni.say(img_ssl_link)
 
 
 xkcd.commands = ['xkcd']

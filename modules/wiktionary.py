@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 """
-wiktionary.py - jenni Wiktionary Module
+wiktionary.py - kenni Wiktionary Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)
 Copyright 2009-2013, Sean B. Palmer (inamidst.com)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import re
@@ -74,15 +73,15 @@ def format(word, definitions, number=2):
             result += ', '.join(n)
     return result.strip(' .,')
 
-def define(jenni, input):
+def define(kenni, input):
     word = input.group(2)
     if not word:
-        jenni.reply("You want the definition for what?")
+        kenni.reply("You want the definition for what?")
         return
     word = (word).lower()
     etymology, definitions = wiktionary(word)
     if not definitions:
-        jenni.say("Couldn't get any definitions for %s at Wiktionary." % word)
+        kenni.say("Couldn't get any definitions for %s at Wiktionary." % word)
         return
 
     result = format(word, definitions)
@@ -93,7 +92,7 @@ def define(jenni, input):
 
     if len(result) > 300:
         result = result[:295] + '[...]'
-    jenni.say(result)
+    kenni.say(result)
 define.commands = ['dict', 'define', 'word']
 define.example = '.w bailiwick'
 

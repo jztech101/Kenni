@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 """
-search.py - jenni Web Search Module
+search.py - kenni Web Search Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)
 Copyright 2013, Edward Powell (embolalia.net)
 Copyright 2008-2013 Sean B. Palmer (inamidst.com)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import json
@@ -37,7 +36,7 @@ def bing_search(query, lang='en-GB'):
     if m: return m.group(1)
 
 
-def bing(jenni, input):
+def bing(kenni, input):
     """Queries Bing for the specified input."""
     query = input.group(2)
     if query.startswith(':'):
@@ -45,20 +44,20 @@ def bing(jenni, input):
         lang = lang[1:]
     else: lang = 'en-GB'
     if not query:
-        return jenni.reply('.bing what?')
+        return kenni.reply('.bing what?')
 
     query = query.encode('utf-8')
     uri = bing_search(query, lang)
     if uri:
         passs, title = find_title(uri)
         if passs:
-            jenni.say("[" + title +"] " + uri)
+            kenni.say("[" + title +"] " + uri)
         else:
-            jenni.say(uri)
-        if not hasattr(jenni, 'last_seen_uri'):
-            jenni.last_seen_uri = {}
-        jenni.last_seen_uri[input.sender] = uri
-    else: jenni.reply("No results found for '%s'." % query)
+            kenni.say(uri)
+        if not hasattr(kenni, 'last_seen_uri'):
+            kenni.last_seen_uri = {}
+        kenni.last_seen_uri[input.sender] = uri
+    else: kenni.reply("No results found for '%s'." % query)
 bing.commands = ['bing']
 bing.example = '.bing swhack'
 
@@ -130,25 +129,25 @@ def duck_api(query):
     results = json.loads(results)
     return results
 
-def duck(jenni, input):
+def duck(kenni, input):
     '''Perform a DuckDuckGo Search and Zero-Click lookup'''
     query = input.group(2)
     if not query:
-        return jenni.reply('.ddg what?')
+        return kenni.reply('.ddg what?')
 
     #query = query.encode('utf-8')
-    #jenni.say('query: ' + query)
+    #kenni.say('query: ' + query)
 
     ## try to find a search result via the API
     uri = duck_search(query)
     if uri:
         passs, title = find_title(uri)
         if passs:
-            jenni.say("[" + title +"] " + uri)
+            kenni.say("[" + title +"] " + uri)
         else:
-            jenni.say(uri)
+            kenni.say(uri)
     else:
-        return jenni.reply("No results found for '%s'." % query)
+        return kenni.reply("No results found for '%s'." % query)
 duck.commands = ['duck', 'ddg', 'g', 'search']
 
 if __name__ == '__main__':

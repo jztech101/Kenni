@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 """
-countdown.py - jenni Countdown Module
+countdown.py - kenni Countdown Module
 Copyright 2011-2013, Michael Yanovich (yanovich.net)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 from datetime import datetime, timedelta
@@ -106,7 +105,7 @@ def three(inc):
     return str(inc).zfill(3)
 
 
-def generic_countdown(jenni, input):
+def generic_countdown(kenni, input):
     """ .countdown <year> <month> <day> - displays a countdown to a given date. """
     ending = "%s %s-%s-%sT%s"
     text = input.group(2)
@@ -118,7 +117,7 @@ def generic_countdown(jenni, input):
         day = text[2]
 
         if not year.isdigit() and not month.isdigit() and not day.isdigit():
-            return jenni.reply('What are you even trying to do?')
+            return kenni.reply('What are you even trying to do?')
 
         try:
             offset = text[3]
@@ -136,14 +135,14 @@ def generic_countdown(jenni, input):
     try:
         float(offset)
     except:
-        #return jenni.reply(':-(')
+        #return kenni.reply(':-(')
         offset = 0
 
 
     if text and len(text) >= 3 and year.isdigit() and month.isdigit() and day.isdigit():
         calculate_date = datetime(int(year), int(month), int(day), 0, 0, 0)
         if abs(float(offset)) >= 14:
-            return jenni.reply('Do you not love me anymore?')
+            return kenni.reply('Do you not love me anymore?')
         today = datetime.now() + timedelta(hours=float(offset))
         nye = False
     elif -14 <= int(offset) <= 14:
@@ -155,7 +154,7 @@ def generic_countdown(jenni, input):
         today = datetime.now() + timedelta(hours=int(offset))
         nye = True
     else:
-        return jenni.say(bad_format)
+        return kenni.say(bad_format)
 
     output = get_output(calculate_date, today, nye)
 
@@ -183,7 +182,7 @@ def generic_countdown(jenni, input):
 
 
     output = ending % (output, two(year), two(month), two(day), off)
-    jenni.say(output)
+    kenni.say(output)
 generic_countdown.commands = ['countdown', 'cd', 'nye']
 generic_countdown.priority = 'low'
 

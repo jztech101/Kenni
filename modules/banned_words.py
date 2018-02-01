@@ -1,47 +1,46 @@
 #!/usr/bin/env python
 """
-banned_words.py - jenni banned words module
+banned_words.py - kenni banned words module
 Copyright 2015, Josh Begleiter (jbegleiter.com)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import imp, os, re, time
 
 current_warnings = {}
 
-def ban_user(jenni, full_ident, channel, bad_nick):
+def ban_user(kenni, full_ident, channel, bad_nick):
     mask = full_ident
     reason = "You have violated the banned word policy."
-    jenni.write(['MODE', channel, '+b', mask])
-    jenni.write(['KICK', channel, bad_nick, ' :{0}'.format(reason)])
+    kenni.write(['MODE', channel, '+b', mask])
+    kenni.write(['KICK', channel, bad_nick, ' :{0}'.format(reason)])
 
     # Reset the warnings
     try: del current_warnings[bad_nick]
     except: pass
 
-def banned_words(jenni, input):
+def banned_words(kenni, input):
     """
     Listens to a channel for bad words. If one is found it first
     warns a user, then after X warnings kickbans them, where
     X defaults to 0, meaning instant ban.
 
     User warnings are stored only in memory, and as a result
-    restarting jenni will eliminate any warnings.
+    restarting kenni will eliminate any warnings.
 
     Currently bad words must be added to the config, as a future
     addition bad words will be editable by admins using a command.
     """
     global current_warnings
 
-    if not hasattr(jenni.config, 'bad_word_limit') or not hasattr(jenni.config, 'bad_words'):
+    if not hasattr(kenni.config, 'bad_word_limit') or not hasattr(kenni.config, 'bad_words'):
         return
 
-    bad_word_limit = jenni.config.bad_word_limit or 0
-    bad_words = jenni.config.bad_words or {}
+    bad_word_limit = kenni.config.bad_word_limit or 0
+    bad_words = kenni.config.bad_words or {}
 
     if len(bad_words) == 0:
         return
@@ -75,17 +74,17 @@ def banned_words(jenni, input):
     chan_ops = []
     chan_hops = []
     chan_voices = []
-    if channel in jenni.ops:
-        chan_ops = jenni.ops[channel]
+    if channel in kenni.ops:
+        chan_ops = kenni.ops[channel]
 
-    if channel in jenni.hops:
-        chan_hops = jenni.hops[channel]
+    if channel in kenni.hops:
+        chan_hops = kenni.hops[channel]
 
-    if channel in jenni.voices:
-        chan_voices = jenni.voices[channel]
+    if channel in kenni.voices:
+        chan_voices = kenni.voices[channel]
 
-    # First ensure jenni is an op
-    if jenni.nick not in chan_ops:
+    # First ensure kenni is an op
+    if kenni.nick not in chan_ops:
         return
 
     # Next ensure the sender isn't op, half-op, or voice
@@ -95,29 +94,29 @@ def banned_words(jenni, input):
 
     full_ident = input.full_ident
     if bad_word_limit == 0:
-        ban_user(jenni, full_ident, channel, bad_nick)
+        ban_user(kenni, full_ident, channel, bad_nick)
     elif bad_nick in current_warnings:
         if current_warnings[bad_nick] >= bad_word_limit:
-            ban_user(jenni, full_ident, channel, bad_nick)
+            ban_user(kenni, full_ident, channel, bad_nick)
         else:
             current_warnings[bad_nick] += 1
-            jenni.say(bad_word_warning(bad_nick, bad_word_limit, current_warnings[bad_nick]))
+            kenni.say(bad_word_warning(bad_nick, bad_word_limit, current_warnings[bad_nick]))
     else:
         current_warnings[bad_nick] = 1
-        jenni.say(bad_word_warning(bad_nick, bad_word_limit, 1))
+        kenni.say(bad_word_warning(bad_nick, bad_word_limit, 1))
 banned_words.rule = r'(.*)'
 banned_words.priority = 'high'
 
-def list_banned_words(jenni, input):
+def list_banned_words(kenni, input):
     # Only executable in channel
     if not input.sender.startswith('#'):
         return
 
-    if input.sender not in jenni.config.bad_words:
-        jenni.say('There are no banned words in this channel.')
+    if input.sender not in kenni.config.bad_words:
+        kenni.say('There are no banned words in this channel.')
     else:
-        chan_words = ', '.join(jenni.config.bad_words[input.sender])
-        jenni.say('Banned words: {0}'.format(chan_words))
+        chan_words = ', '.join(kenni.config.bad_words[input.sender])
+        kenni.say('Banned words: {0}'.format(chan_words))
 list_banned_words.commands = ["list_banned_words"]
 list_banned_words.example = '.list_banned_words'
 list_banned_words.priority = 'low'

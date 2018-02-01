@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 """
-clock.py - jenni Clock Module
+clock.py - kenni Clock Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)
 Copyright 2008-2013, Sean B. Palmer (inamidst.com)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/
+* Phenny: http://inamidst.com/phenny/
 """
 
 import re, math, time, urllib, locale, socket, struct, datetime
@@ -282,11 +282,11 @@ f_time.name = 't'
 f_time.example = '.t UTC'
 
 
-def beats(jenni, input):
+def beats(kenni, input):
     """Shows the internet time in Swatch beats."""
     beats = ((time.time() + 3600) % 86400) / 86.4
     beats = int(math.floor(beats))
-    jenni.say('@%03i' % beats)
+    kenni.say('@%03i' % beats)
 beats.commands = ['beats']
 beats.priority = 'low'
 
@@ -295,29 +295,29 @@ def divide(input, by):
     return (input / by), (input % by)
 
 
-def yi(jenni, input):
+def yi(kenni, input):
     """Shows whether it is currently yi or not."""
     quadraels, remainder = divide(int(time.time()), 1753200)
     raels = quadraels * 4
     extraraels, remainder = divide(remainder, 432000)
     if extraraels == 4:
-        return jenni.say('Yes! PARTAI!')
-    else: jenni.say('Not yet...')
+        return kenni.say('Yes! PARTAI!')
+    else: kenni.say('Not yet...')
 yi.commands = ['yi']
 yi.priority = 'low'
 
 
-def tock(jenni, input):
+def tock(kenni, input):
     """Shows the time from the USNO's atomic clock."""
     u = urllib.urlopen('http://tycho.usno.navy.mil/cgi-bin/timer.pl')
     info = u.info()
     u.close()
-    jenni.say('"' + info['Date'] + '" - tycho.usno.navy.mil')
+    kenni.say('"' + info['Date'] + '" - tycho.usno.navy.mil')
 tock.commands = ['tock']
 tock.priority = 'high'
 
 
-def npl(jenni, input):
+def npl(kenni, input):
     """Shows the time from NPL's SNTP server."""
     # for server in ('ntp1.npl.co.uk', 'ntp2.npl.co.uk'):
     client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -332,14 +332,14 @@ def npl(jenni, input):
         a, b = str(d).split('.')
         f = '%Y-%m-%d %H:%M:%S'
         result = datetime.datetime.fromtimestamp(d).strftime(f) + '.' + b[:6]
-        jenni.say(result + ' - ntp1.npl.co.uk')
-    else: jenni.say('No data received, sorry')
+        kenni.say(result + ' - ntp1.npl.co.uk')
+    else: kenni.say('No data received, sorry')
 npl.commands = ['npl']
 npl.priority = 'high'
 npl.rate = 30
 
 
-def easter(jenni, input):
+def easter(kenni, input):
     """.easter <yyyy> -- calculate the date for Easter given a year"""
     bad_input = "Please input a valid year!"
     text = input.group(2)
@@ -348,12 +348,12 @@ def easter(jenni, input):
     elif text and len(text.split()) == 1:
         year = text
     else:
-        jenni.reply(bad_input)
+        kenni.reply(bad_input)
         return
     try:
         year = int(year)
     except:
-        jenni.reply(bad_input)
+        kenni.reply(bad_input)
         return
 
     month, day = IanTaylorEasterJscr(year)
@@ -369,10 +369,10 @@ def easter(jenni, input):
     elif month == 4:
         month = "April"
     else:
-        jenni.reply("Calculation of Easter failed.")
+        kenni.reply("Calculation of Easter failed.")
         return
 
-    jenni.reply("In the year %s, (Western) Easter %s: %s %s" % (year, verb, day, month))
+    kenni.reply("In the year %s, (Western) Easter %s: %s %s" % (year, verb, day, month))
 easter.commands = ['easter']
 
 

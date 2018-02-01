@@ -12,9 +12,8 @@ Copyright 2012-2013, Elad Alfassa, <elad@fedoraproject.org>
 Copyright 2012, Edward Powell, embolalia.net
 
 More info:
- * jenni-misc: https://github.com/freeboson/jenni-misc/
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+ * kenni-misc: https://github.com/freeboson/kenni-misc/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 '''
 
 import json
@@ -31,12 +30,12 @@ def colorize(text):
     return '\x02\x0306' + text + '\x03\x02'
 
 
-def ytsearch(jenni, trigger):
+def ytsearch(kenni, trigger):
     """Search YouTube"""
     #modified from ytinfo: Copyright 2010-2011, Michael Yanovich, yanovich.net, Kenneth Sham.
-    if not hasattr(jenni.config, 'google_dev_apikey'):
-        return jenni.say('Please sign up for a Google Developer API key to use this function.')
-    key = jenni.config.google_dev_apikey
+    if not hasattr(kenni.config, 'google_dev_apikey'):
+        return kenni.say('Please sign up for a Google Developer API key to use this function.')
+    key = kenni.config.google_dev_apikey
 
     query = trigger.group(2).encode('utf-8').strip()
     uri = BASE_URL + "search?part=snippet&type=video&q=" + query + "&key=" + key
@@ -71,18 +70,18 @@ def ytsearch(jenni, trigger):
     if int(num_results) > 0:
       all_entries = ', '.join(entry_text[1:])
 
-    jenni.say(return_text + all_entries)
+    kenni.say(return_text + all_entries)
 
 
-def youtube_search(jenni, input):
+def youtube_search(kenni, input):
     origterm = input.groups()[1]
     if not origterm:
-        return jenni.say('Perhaps you meant ".yt pugs"?')
+        return kenni.say('Perhaps you meant ".yt pugs"?')
 
     error = None
 
     try:
-        ytsearch(jenni, input)
+        ytsearch(kenni, input)
     except IOError:
         error = "An error occurred connecting to YouTube"
         traceback.print_exc()
@@ -91,14 +90,14 @@ def youtube_search(jenni, input):
         traceback.print_exc()
 
     if error is not None:
-        jenni.say(error)
+        kenni.say(error)
 youtube_search.commands = ['yt', 'youtube', 'youtube_search', 'yt_search']
 youtube_search.priority = 'high'
 youtube_search.rate = 10
 
 
-def ytinfo(jenni, input):
-    video_entry = ytget(jenni, input)
+def ytinfo(kenni, input):
+    video_entry = ytget(kenni, input)
 
     title = video_entry['title'].encode('utf8')
     if len(title) > 50:
@@ -118,18 +117,18 @@ def ytinfo(jenni, input):
 
     entry_text = "{0} by {1} ({2}). Description: {3}; Duration: {4}; Favorites: {5}; Views: {6}".format(title, author, link, description, duration, favorites, views)
 
-    jenni.say(entry_text)
+    kenni.say(entry_text)
 
 
-def youtube_info(jenni, input):
+def youtube_info(kenni, input):
     origterm = input.groups()[1]
     if not origterm:
-        return jenni.say('Perhaps you meant ".youtube_info pzPxhaYQQK8"?')
+        return kenni.say('Perhaps you meant ".youtube_info pzPxhaYQQK8"?')
 
     error = None
 
     try:
-        ytinfo(jenni, input)
+        ytinfo(kenni, input)
     except IOError:
         error = "An error occurred connecting to YouTube"
         traceback.print_exc()
@@ -138,7 +137,7 @@ def youtube_info(jenni, input):
         traceback.print_exc()
 
     if error is not None:
-        jenni.say(error)
+        kenni.say(error)
 
 youtube_info.commands = ['youtube_info', 'yt_info']
 youtube_info.priority = 'high'
@@ -159,16 +158,16 @@ def process_title(inc):
     return out
 
 
-def title(jenni, match):
+def title(kenni, match):
     """
     Get information about the latest video uploaded by the channel provided.
     """
-    if not hasattr(jenni.config, 'google_dev_apikey'):
+    if not hasattr(kenni.config, 'google_dev_apikey'):
         return
     if match is None:
         return
 
-    video_info = ytget(jenni, match)
+    video_info = ytget(kenni, match)
     if video_info is 'err':
         return
 
@@ -183,16 +182,16 @@ def title(jenni, match):
               ' | Dislikes: ' + video_info['dislikes'] + \
               ' | Link: ' + video_info['link']
 
-    jenni.say(HTMLParser().unescape(message))
+    kenni.say(HTMLParser().unescape(message))
 
     return True
 
 
-def ytget(jenni, trigger):
-    if not hasattr(jenni.config, 'google_dev_apikey'):
+def ytget(kenni, trigger):
+    if not hasattr(kenni.config, 'google_dev_apikey'):
         return 'err'
 
-    key = jenni.config.google_dev_apikey
+    key = kenni.config.google_dev_apikey
 
     try:
         vid_id = trigger.group(2)
@@ -201,10 +200,10 @@ def ytget(jenni, trigger):
         result = json.loads(bytes)
         video_entry = result['items'][0]
     except IndexError:
-        jenni.say('Video not found through the YouTube API.')
+        kenni.say('Video not found through the YouTube API.')
         return 'err'
     except Exception:
-        jenni.say('Something went wrong when accessing the YouTube API.')
+        kenni.say('Something went wrong when accessing the YouTube API.')
         traceback.print_exc()
         return 'err'
 
@@ -291,10 +290,10 @@ def ytget(jenni, trigger):
     return vid_info
 
 
-def yt_title(jenni, trigger):
+def yt_title(kenni, trigger):
     yt_catch = re.compile('http[s]*:\/\/[w\.]*(youtube.com/watch\S*v=|youtu.be/)([\w-]+)')
     yt_match = yt_catch.match(trigger.group(2))
-    title(jenni, yt_match)
+    title(kenni, yt_match)
 yt_title.commands = ['ytitle']
 
 

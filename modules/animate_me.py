@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-image_me.py - jenni Animated GIF Fetcher Module
+image_me.py - kenni Animated GIF Fetcher Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)
 Copyright 2008-2013, Sean B. Palmer (inamidst.com)
 Licensed under the Eiffel Forum License 2.
@@ -8,8 +8,7 @@ Licensed under the Eiffel Forum License 2.
 Developed by kaneda (https://josh.myhugesite.com / https://github.com/kaneda)
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import random
@@ -47,10 +46,10 @@ def animate_me(term):
         return giphy_image % data_id
 
 
-def gif(jenni, input):
+def gif(kenni, input):
     origterm = input.groups()[1]
     if not origterm:
-        return jenni.say('Perhaps you meant ".animate_me pugs"?')
+        return kenni.say('Perhaps you meant ".animate_me pugs"?')
     origterm = origterm.encode('utf-8')
     origterm = origterm.strip()
 
@@ -66,11 +65,11 @@ def gif(jenni, input):
         traceback.print_exc()
 
     if error is not None:
-        jenni.say(error)
+        kenni.say(error)
     elif result is not None:
-        jenni.say(result)
+        kenni.say(result)
     else:
-        jenni.say('Can\'t find anything in Giphy for "%s".' % origterm)
+        kenni.say('Can\'t find anything in Giphy for "%s".' % origterm)
 
 gif.commands = ['animate_me', 'gif','nm8_me']
 gif.priority = 'high'

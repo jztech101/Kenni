@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 """
-bot.py - jenni IRC Bot
+bot.py - kenni IRC Bot
 Copyright 2009-2013, Michael Yanovich (yanovich.net)
 Copyright 2008-2013, Sean B. Palmer (inamidst.com)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import time, sys, os, re, threading, imp
@@ -23,7 +22,7 @@ def decode(bytes):
             text = bytes.decode('cp1252')
     return text
 
-class Jenni(irc.Bot):
+class kenni(irc.Bot):
     def __init__(self, config):
         lc_pm = None
         if hasattr(config, "logchan_pm"): lc_pm = config.logchan_pm
@@ -200,9 +199,9 @@ class Jenni(irc.Bot):
                 for command in func.commands:
                     bind_command(self, func.priority, command, func)
     def wrapped(self, origin, text, match):
-        class JenniWrapper(object):
-            def __init__(self, jenni):
-                self._bot = jenni
+        class kenniWrapper(object):
+            def __init__(self, kenni):
+                self._bot = kenni
 
             def __getattr__(self, attr):
                 sender = origin.sender or text
@@ -212,8 +211,8 @@ class Jenni(irc.Bot):
                 elif attr == 'say':
                     return lambda msg: self._bot.msg(sender, msg)
                 elif attr == 'bot':
-                    # Allow deprecated usage of jenni.bot.foo but print a warning to the console
-                    print "Warning: Direct access to jenni.bot.foo is deprecated.  Please use jenni.foo instead."
+                    # Allow deprecated usage of kenni.bot.foo but print a warning to the console
+                    print "Warning: Direct access to kenni.bot.foo is deprecated.  Please use kenni.foo instead."
                     import traceback
                     traceback.print_stack()
                     # Let this keep working by passing it transparently to _bot
@@ -223,12 +222,12 @@ class Jenni(irc.Bot):
             def __setattr__(self, attr, value):
                 if attr in ('_bot',):
                     # Explicitly allow the wrapped class to be set during __init__()
-                    return super(JenniWrapper, self).__setattr__(attr, value)
+                    return super(kenniWrapper, self).__setattr__(attr, value)
                 else:
                     # All other attributes will be set on the wrapped class transparently
                     return setattr(self._bot, attr, value)
 
-        return JenniWrapper(self)
+        return kenniWrapper(self)
 
     def input(self, origin, text, bytes, match, event, args):
         class CommandInput(unicode):
@@ -269,7 +268,7 @@ class Jenni(irc.Bot):
 
         return CommandInput(text, origin, bytes, match, event, args)
 
-    def call(self, func, origin, jenni, input):
+    def call(self, func, origin, kenni, input):
         nick = (input.nick).lower()
         try:
             if hasattr(self, 'excludes'):
@@ -286,12 +285,12 @@ class Jenni(irc.Bot):
             self.error(origin)
 
         try:
-            func(jenni, input)
+            func(kenni, input)
         except Exception, e:
             self.error(origin)
 
     def dispatchcommand(self,origin,args, bytes,  text, match, event, func):
-        jenni = self.wrapped(origin, text, match)
+        kenni = self.wrapped(origin, text, match)
         input = self.input(origin, text, bytes, match, event, args)
 
         nick = (input.nick).lower()
@@ -358,11 +357,11 @@ class Jenni(irc.Bot):
 
         # stats
         if func.thread:
-            targs = (func, origin, jenni, input)
+            targs = (func, origin, kenni, input)
             t = threading.Thread(target=self.call, args=targs)
             t.start()
         else:
-            self.call(func, origin, jenni, input)
+            self.call(func, origin, kenni, input)
 
         for source in [origin.sender, origin.nick]:
             try:

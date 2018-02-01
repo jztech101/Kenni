@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-url.py - jenni 
+url.py - kenni
 Bitly Module
 Copyright 2015, Sujeet Akula (sujeet@freeboson.org)
 Copyright 2010-2013, Michael Yanovich (yanovich.net)
@@ -8,8 +8,7 @@ Copyright 2010-2013, Kenneth Sham
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 
 This module will record all URLs to bitly via an api key and account.
 It also automatically displays the "title" of any URL pasted into the channel.
@@ -25,7 +24,7 @@ import urllib2
 import web
 import sys
 
-# Place a file in your ~/jenni/ folder named, bitly.txt
+# Place a file in your ~/Kenni/ folder named, bitly.txt
 # and inside this file place your API key followed by a ','
 # and then your username. For example, the only line in that
 # file should look like this:
@@ -46,11 +45,11 @@ INVALID_WEBSITE = 0x01
 HTML_ENTITIES = { 'apos': "'" }
 
 
-def noteuri(jenni, input):
+def noteuri(kenni, input):
     uri = input.group(1).encode('utf-8')
-    if not hasattr(jenni, 'last_seen_uri'):
-        jenni.last_seen_uri = {}
-    jenni.last_seen_uri[input.sender] = uri
+    if not hasattr(kenni, 'last_seen_uri'):
+        kenni.last_seen_uri = {}
+    kenni.last_seen_uri[input.sender] = uri
 noteuri.rule = r'(?u).*(http[s]?://[^<> "\x01]+)[,.]?'
 noteuri.priority = 'low'
 
@@ -234,7 +233,7 @@ def remove_nonprint(text):
             new += char
     return new
 
-def show_title_demand(jenni, input):
+def show_title_demand(kenni, input):
     '''.title http://google.com/ -- forcibly show titles for a given URL'''
     uri = input.group(2)
 
@@ -242,43 +241,43 @@ def show_title_demand(jenni, input):
         uri = 'http://' + uri
     if not uri:
         channel = input.sender
-        if not hasattr(jenni, 'last_seen_uri'):
-            jenni.last_seen_uri = dict()
-        if channel in jenni.last_seen_uri:
-            uri = jenni.last_seen_uri[channel]
+        if not hasattr(kenni, 'last_seen_uri'):
+            kenni.last_seen_uri = dict()
+        if channel in kenni.last_seen_uri:
+            uri = kenni.last_seen_uri[channel]
         else:
-            return jenni.say('No recent links seen in this channel.')
+            return kenni.say('No recent links seen in this channel.')
     passs, page_title = find_title(uri)
     if passs:
         response = page_title
     else:
         response = "No Title Found"
-    jenni.say(response)
+    kenni.say(response)
 show_title_demand.commands = ['title']
 show_title_demand.priority = 'high'
 
 
-def collect_links(jenni, input):
+def collect_links(kenni, input):
     link = input.groups()
     channel = input.sender
     link = link[0]
-    if not hasattr(jenni, 'last_seen_uri'):
-        jenni.last_seen_uri = dict()
-    jenni.last_seen_uri[channel] = link
+    if not hasattr(kenni, 'last_seen_uri'):
+        kenni.last_seen_uri = dict()
+    kenni.last_seen_uri[channel] = link
 collect_links.rule = '(?iu).*(%s?(http|https)(://\S+)).*'
 collect_links.priority = 'low'
 
 re_meta = re.compile('(?i)content="\S+;\s*?url=(\S+)"\s*?>')
 
 
-def unbitly(jenni, input):
+def unbitly(kenni, input):
     '''.longurl <link> -- obtain the final destination URL from a short URL'''
     url = input.group(2)
     if not url:
-        if hasattr(jenni, 'last_seen_uri') and input.sender in jenni.last_seen_uri:
-            url = jenni.last_seen_uri[input.sender]
+        if hasattr(kenni, 'last_seen_uri') and input.sender in kenni.last_seen_uri:
+            url = kenni.last_seen_uri[input.sender]
         else:
-            return jenni.say('No URL provided')
+            return kenni.say('No URL provided')
     if not url.startswith(('http://', 'https://')):
         url = 'http://' + url
 
@@ -286,7 +285,7 @@ def unbitly(jenni, input):
     try:
         new_url = re_meta.findall(useful['read'])
     except:
-        return jenni.say(str(useful))
+        return kenni.say(str(useful))
 
     if new_url:
         new_url = new_url[0]
@@ -296,27 +295,27 @@ def unbitly(jenni, input):
             status, results = proxy.get_more(url)
             new_url = results['geturl']
         except:
-            return jenni.say('Failed to grab URL: %s' % (url))
+            return kenni.say('Failed to grab URL: %s' % (url))
 
     channel = input.sender
-    if not hasattr(jenni, 'last_seen_uri'):
-        jenni.last_seen_uri = dict()
-    jenni.last_seen_uri[channel] = new_url
+    if not hasattr(kenni, 'last_seen_uri'):
+        kenni.last_seen_uri = dict()
+    kenni.last_seen_uri[channel] = new_url
 
     if new_url.startswith(('http://', 'https://')):
-        jenni.say(new_url)
+        kenni.say(new_url)
     else:
-        jenni.say('Failed to obtain final destination.')
+        kenni.say('Failed to obtain final destination.')
 unbitly.commands = ['unbitly', 'untiny', 'longurl', 'st', 'short']
 unbitly.priority = 'low'
 unbitly.example = '.unbitly http://git.io/6fY4OQ'
 
 
-def puny(jenni, input):
+def puny(kenni, input):
     '''.puny -- convert to xn-- code for URLs'''
     text = input.group(2)
     if not text:
-        return jenni.say('No input provided.')
+        return kenni.say('No input provided.')
 
     if text.startswith('xn--'):
         text = text[4:]
@@ -324,7 +323,7 @@ def puny(jenni, input):
         try:
             text_unpuny = (text_ascii).decode('punycode')
         except:
-            return jenni.say('Stop being a twat.')
+            return kenni.say('Stop being a twat.')
         output = (text_unpuny).encode('utf-8')
         output = (output).decode('utf-8')
     else:
@@ -335,7 +334,7 @@ def puny(jenni, input):
 
         output = 'xn--' + text_puny
 
-    return jenni.say(output)
+    return kenni.say(output)
 puny.commands = ['puny', 'idn', 'idna']
 
 

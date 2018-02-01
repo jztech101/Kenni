@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 '''
-admin.py - jenni Admin Module
+admin.py - kenni Admin Module
 Copyright 2010-2013, Sean B. Palmer (inamidst.com) and Michael Yanovich (yanovich.net)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 '''
 
 import os
@@ -14,48 +13,48 @@ import time
 
 intentional_part = False
 
-def join(jenni, input):
+def join(kenni, input):
     '''Join the specified channel. This is an owner-only command.'''
     if not input.owner:
-        return jenni.say('You do not have owner privs.')
+        return kenni.say('You do not have owner privs.')
     incoming = input.group(2)
     if not incoming:
-        return jenni.say('Please provide some channels to join.')
+        return kenni.say('Please provide some channels to join.')
     inc = incoming.split(' ')
     if len(inc) > 2:
         ## 3 or more inputs
-        return jenni.say('Too many inputs.')
+        return kenni.say('Too many inputs.')
     if input.owner:
         channel = inc[0]
         key = str()
         if len(inc) > 1:
             ## 2 inputs
             key = inc[1]
-        jenni.join(channel, key)
+        kenni.join(channel, key)
 join.commands = ['join']
 join.priority = 'low'
 join.example = '.join #example or .join #example key'
 
-def part(jenni, input):
+def part(kenni, input):
     '''Part the specified channel. This is an admin-only command.'''
     global intentional_part
     if input.admin:
         intentional_part = True
-        jenni.write(['PART'], input.group(2))
+        kenni.write(['PART'], input.group(2))
 part.commands = ['part']
 part.priority = 'low'
 part.example = '.part #example'
 
-def quit(jenni, input):
+def quit(kenni, input):
     '''Quit from the server. This is an owner-only command.'''
     if input.owner:
-        jenni.write(['QUIT'])
+        kenni.write(['QUIT'])
         __import__('os')._exit(0)
 quit.commands = ['quit']
 quit.priority = 'low'
 
 
-def msg(jenni, input):
+def msg(kenni, input):
     if input.owner:
         text = input.group().split()
         argc = len(text)
@@ -64,11 +63,11 @@ def msg(jenni, input):
         if argc > 2 and (text[1].startswith("#") or (not text[1][0].isalnum() and text[1][1] == "#")):
             channel = text[1]
             msg = ' '.join(text[2:])
-        jenni.write(['PRIVMSG', channel], msg)
+        kenni.write(['PRIVMSG', channel], msg)
 msg.commands = ['say']
 msg.priority = 'low'
 
-def act(jenni, input):
+def act(kenni, input):
     if input.owner:
         text = input.group().split()
         argc = len(text)
@@ -77,47 +76,47 @@ def act(jenni, input):
         if argc > 2 and text[1].startswith("#"):
             channel = text[1]
             msg = ' '.join(text[2:])
-        jenni.write(['PRIVMSG', channel], '\x01ACTION ' + msg + '\x01')
+        kenni.write(['PRIVMSG', channel], '\x01ACTION ' + msg + '\x01')
 act.commands = ['act', 'do']
 act.priority = 'low'
 
 
-def defend_ground(jenni, input):
+def defend_ground(kenni, input):
     '''
-    This function monitors all kicks across all channels jenni is in. If she
+    This function monitors all kicks across all channels kenni is in. If she
     detects that she is the one kicked she'll automatically join that channel.
 
-    WARNING: This may not be needed and could cause problems if jenni becomes
+    WARNING: This may not be needed and could cause problems if kenni becomes
     annoying. Please use this with caution.
     '''
     channel = input.sender
-    jenni.join(channel, None)
+    kenni.join(channel, None)
     time.sleep(10)
-    jenni.join(channel, None)
+    kenni.join(channel, None)
 defend_ground.event = 'KICK'
 defend_ground.rule = '.*'
 defend_ground.priority = 'low'
 
 
-def defend_ground2(jenni, input):
+def defend_ground2(kenni, input):
     global intentional_part
-    if not intentional_part and input.nick == jenni.config.nick:
+    if not intentional_part and input.nick == kenni.config.nick:
         intentional_part = False
         channel = input.sender
-        jenni.join(channel, None)
+        kenni.join(channel, None)
         time.sleep(10)
-        jenni.join(channel, None)
+        kenni.join(channel, None)
 defend_ground2.event = 'PART'
 defend_ground2.rule = '.*'
 defend_ground2.priority = 'low'
 
 
-def blocks(jenni, input):
+def blocks(kenni, input):
     if not input.admin: return
 
-    if hasattr(jenni.config, 'logchan_pm') and input.sender != jenni.config.logchan_pm:
+    if hasattr(kenni.config, 'logchan_pm') and input.sender != kenni.config.logchan_pm:
         # BLOCKS USED - user in ##channel - text
-        jenni.msg(jenni.config.logchan_pm, 'BLOCKS USED - %s in %s -- %s' % (input.nick, input.sender, input))
+        kenni.msg(kenni.config.logchan_pm, 'BLOCKS USED - %s in %s -- %s' % (input.nick, input.sender, input))
 
     STRINGS = {
             'success_del' : 'Successfully deleted block: %s',
@@ -125,7 +124,7 @@ def blocks(jenni, input):
             'no_nick' : 'No matching nick block found for: %s',
             'no_host' : 'No matching hostmask block found for: %s',
             'no_ident': 'No matching ident block found for: %s',
-            'invalid' : 'Invalid format for %s a block. Try: .blocks add (nick|hostmask|ident) jenni',
+            'invalid' : 'Invalid format for %s a block. Try: .blocks add (nick|hostmask|ident) kenni',
             'invalid_display' : 'Invalid input for displaying blocks.',
             'nonelisted' : 'No %s listed in the blocklist.',
             'huh' : 'I could not figure out what you wanted to do.',
@@ -159,28 +158,28 @@ def blocks(jenni, input):
             if len(masks) > 0 and masks.count('') == 0:
                 for each in masks:
                     if len(each) > 0:
-                        jenni.say('blocked hostmask: ' + each)
+                        kenni.say('blocked hostmask: ' + each)
             else:
-                jenni.reply(STRINGS['nonelisted'] % ('hostmasks'))
+                kenni.reply(STRINGS['nonelisted'] % ('hostmasks'))
 
         ## Nicks
         elif text[2] == 'nick':
             if len(nicks) > 0 and nicks.count('') == 0:
                 for each in nicks:
                     if len(each) > 0:
-                        jenni.say('blocked nick: ' + each)
+                        kenni.say('blocked nick: ' + each)
             else:
-                jenni.reply(STRINGS['nonelisted'] % ('nicks'))
+                kenni.reply(STRINGS['nonelisted'] % ('nicks'))
 
         elif text[2] == 'ident':
             if len(idents) > 0 and idents.count('') == 0:
                 for each in idents:
                     if len(each) > 0:
-                        jenni.say('blocked ident: ' + each)
+                        kenni.say('blocked ident: ' + each)
 
         ## Couldn't display anything
         else:
-            jenni.reply(STRINGS['invalid_display'])
+            kenni.reply(STRINGS['invalid_display'])
 
     elif len(text) == 4 and text[1] == 'add':
         ## Add blocks...
@@ -192,10 +191,10 @@ def blocks(jenni, input):
         elif text[2] == 'ident':
             idents.append(text[3])
         else:
-            jenni.reply(STRINGS['invalid'] % ('adding'))
+            kenni.reply(STRINGS['invalid'] % ('adding'))
             return
 
-        jenni.reply(STRINGS['success_add'] % (text[3]))
+        kenni.reply(STRINGS['success_add'] % (text[3]))
 
     elif len(text) == 4 and text[1] == 'del':
         ## Delete a block...
@@ -204,33 +203,33 @@ def blocks(jenni, input):
         if text[2] == 'nick':
             try:
                 nicks.remove(text[3])
-                jenni.reply(STRINGS['success_del'] % (text[3]))
+                kenni.reply(STRINGS['success_del'] % (text[3]))
             except:
-                jenni.reply(STRINGS['no_nick'] % (text[3]))
+                kenni.reply(STRINGS['no_nick'] % (text[3]))
                 return
 
         ## Hostmask
         elif text[2] == 'hostmask':
             try:
                 masks.remove(text[3])
-                jenni.reply(STRINGS['success_del'] % (text[3]))
+                kenni.reply(STRINGS['success_del'] % (text[3]))
             except:
-                jenni.reply(STRINGS['no_host'] % (text[3]))
+                kenni.reply(STRINGS['no_host'] % (text[3]))
                 return
 
         ## Ident
         elif text[2] == 'ident':
             try:
                 idents.remove(text[3])
-                jenni.reply(STRINGS['success_del'] % (text[3]))
+                kenni.reply(STRINGS['success_del'] % (text[3]))
             except:
-                jenni.reply(STRINGS['no_ident'] % (text[3]))
+                kenni.reply(STRINGS['no_ident'] % (text[3]))
                 return
         else:
-            jenni.reply(STRINGS['invalid'] % ('deleting'))
+            kenni.reply(STRINGS['invalid'] % ('deleting'))
             return
     else:
-        jenni.reply(STRINGS['huh'])
+        kenni.reply(STRINGS['huh'])
 
     os.remove('blocks')
     blocks = open('blocks', 'w')
@@ -266,7 +265,7 @@ char_replace = {
         r'\x03': chr(3),
         }
 
-def write_raw(jenni, input):
+def write_raw(kenni, input):
     if not input.owner: return
     txt = input.bytes[7:]
     txt = txt.encode('utf-8')
@@ -277,14 +276,14 @@ def write_raw(jenni, input):
         for x in char_replace:
             if x in newstr:
                 newstr = newstr.replace(x, char_replace[x])
-        jenni.write(a[0].split(), newstr, raw=True)
+        kenni.write(a[0].split(), newstr, raw=True)
         status = True
     elif a:
         b = a[0].split()
-        jenni.write([b[0].strip()], u' '.join(b[1:]), raw=True)
+        kenni.write([b[0].strip()], u' '.join(b[1:]), raw=True)
         status = True
     if status:
-        jenni.say('Message sent to server.')
+        kenni.say('Message sent to server.')
 write_raw.commands = ['write']
 write_raw.priority = 'high'
 write_raw.thread = False

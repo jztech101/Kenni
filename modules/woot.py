@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 """
-why.py - jenni Why Module
+why.py - kenni Why Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import feedparser
@@ -14,12 +13,12 @@ import feedparser
 api = "https://api.woot.com/1/sales/current.rss/www.woot.com"
 
 
-def woot(jenni, input):
+def woot(kenni, input):
     """ .woot -- pulls the latest information from woot.com """
     output = str()
     parsed = feedparser.parse(api)
     if not parsed['entries']:
-        jenni.reply("No item currently available.")
+        kenni.reply("No item currently available.")
         return
     item = parsed['entries'][0]['woot_products']
     link = parsed['entries'][0]['link']
@@ -41,7 +40,7 @@ def woot(jenni, input):
 
     output = base.format(item, price, soldout, condition, quantity,
             woot_off, link.replace("http:", "https:"))
-    jenni.reply(output)
+    kenni.reply(output)
 woot.commands = ['woot']
 woot.priority = 'low'
 woot.rate = 30

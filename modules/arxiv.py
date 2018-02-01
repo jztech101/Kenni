@@ -5,9 +5,8 @@ Copyright 2014 Sujeet Akula (sujeet@freeboson.org)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni-misc: https://github.com/freeboson/jenni-misc/
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+ * kenni-misc: https://github.com/freeboson/kenni-misc/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 '''
 
 import web, re, feedparser
@@ -59,17 +58,17 @@ def get_arxiv(query):
 
     return (arxivid, authors, title, abstract, abs_link)
 
-def summary(jenni, input):
+def summary(kenni, input):
 
     query = input.group(2)
 
     if not query:
-        return jenni.say('Please provide an input to lookup via arXiv.')
+        return kenni.say('Please provide an input to lookup via arXiv.')
 
     try:
         (arxivid, authors, title, abstract, url) = get_arxiv(query)
     except:
-        return jenni.say("[arXiv] Could not lookup " + query + " in the arXiv.")
+        return kenni.say("[arXiv] Could not lookup " + query + " in the arXiv.")
 
     arxiv_summary = "[arXiv:" + arxivid + "] " + authors + ', "' \
                     + title + '" :: ' + abstract
@@ -81,7 +80,7 @@ def summary(jenni, input):
     else:
         clipped = long_summary
 
-    jenni.say(clipped)
+    kenni.say(clipped)
 
 summary.commands = ['arxiv']
 summary.priority = 'high'

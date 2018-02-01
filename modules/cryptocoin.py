@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 '''
-units.py - jenni Units Module
+units.py - kenni Units Module
 Copyright 2013, Michael Yanovich (yanovich.net)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 '''
 
 from modules import proxy
@@ -32,19 +31,19 @@ def nicedeci(c):
     else:
         return locale.format("%.5f", float(c))
 
-def cryptocoin(jenni, input): 
+def cryptocoin(kenni, input): 
     try:
         page = proxy.get("https://files.coinmarketcap.com/generated/search/quick_search.json")
     except:
-        return jenni.say('[CryptoCoin] Connection to API did not succeed.')
+        return kenni.say('[CryptoCoin] Connection to API did not succeed.')
     try:
         data = json.loads(page)
     except:
-        return jenni.say("[CryptoCoin] Couldn't make sense of information from API")
+        return kenni.say("[CryptoCoin] Couldn't make sense of information from API")
     currency = None
     text = input.group(2)
     if not text:
-        return jenni.say("You must enter a currency to proceed")
+        return kenni.say("You must enter a currency to proceed")
     for x in data:
         if x["name"].lower() == text.lower():
             currency = x["slug"]
@@ -58,23 +57,23 @@ def cryptocoin(jenni, input):
                     currency = x["slug"]
                     break
     if currency is None:
-        jenni.say("Currency not found")
+        kenni.say("Currency not found")
     else:
         try:
             page = proxy.get("https://api.coinmarketcap.com/v1/ticker/" + currency +"/")
         except:
-            return jenni.say('[CryptoCoin] Connection to API did not succeed.')
+            return kenni.say('[CryptoCoin] Connection to API did not succeed.')
         try:
             data = json.loads(page)
         except:
-            return jenni.say("[CryptoCoin] Couldn't make sense of information from API")
+            return kenni.say("[CryptoCoin] Couldn't make sense of information from API")
         data=data[0]
         sevdchange = data['percent_change_7d']
         if not sevdchange:
             sevdchange = "Data Not Found"
         else:
             sevdchange = sevdchange + "%"
-        jenni.say(data["name"] + " (" + data["symbol"] + ") - Price (USD): " + nicecurrency(data['price_usd']) + " - Price (BTC): " + nicedeci(data['price_btc']) + " - Market Cap (USD): " + nicecurrency(data['market_cap_usd']) + " - In Circulation: " + nicenum(data["available_supply"]) + " - Volume (24 hours - USD): " + nicecurrency(data['24h_volume_usd']) + " - 1 hour: " + data['percent_change_1h'] + "% - 24 hours: " + data['percent_change_24h'] + "% - 7 days: " + sevdchange)
+        kenni.say(data["name"] + " (" + data["symbol"] + ") - Price (USD): " + nicecurrency(data['price_usd']) + " - Price (BTC): " + nicedeci(data['price_btc']) + " - Market Cap (USD): " + nicecurrency(data['market_cap_usd']) + " - In Circulation: " + nicenum(data["available_supply"]) + " - Volume (24 hours - USD): " + nicecurrency(data['24h_volume_usd']) + " - 1 hour: " + data['percent_change_1h'] + "% - 24 hours: " + data['percent_change_24h'] + "% - 7 days: " + sevdchange)
 cryptocoin.commands = ['cryptocoin', 'cc']
 cryptocoin.example = '.cryptocoin'
 cryptocoin.rate = 20

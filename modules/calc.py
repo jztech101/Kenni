@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 # coding=utf-8
 """
-calc.py - jenni Calculator Module
+calc.py - kenni Calculator Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)
 Copyright 2008-2013, Sean B. Palmer (inamidst.com)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import HTMLParser
@@ -45,12 +44,12 @@ def clean_up_answer(answer):
     return answer
 
 
-def c(jenni, input):
+def c(kenni, input):
     '''.c -- Google calculator.'''
 
     ## let's not bother if someone doesn't give us input
     if not input.group(2):
-        return jenni.reply('Nothing to calculate.')
+        return kenni.reply('Nothing to calculate.')
 
     ## handle some unicode conversions
     q = input.group(2).encode('utf-8')
@@ -82,7 +81,7 @@ def c(jenni, input):
         ## if the regex finding found a match we want the first result
         answer = answer[0]
         answer = clean_up_answer(answer)
-        jenni.say(answer)
+        kenni.say(answer)
     else:
         #### Attempt #1a
         uri = uri_base + web.urllib.quote(q)
@@ -99,7 +98,7 @@ def c(jenni, input):
         if answer:
             answer = answer[0]
             answer = clean_up_answer(answer)
-            jenni.say(answer)
+            kenni.say(answer)
         else:
             #### Attempt #2 (DuckDuckGo's API)
             ddg_uri = 'https://api.duckduckgo.com/?format=json&q='
@@ -137,43 +136,43 @@ def c(jenni, input):
                 ## If we have found answer with Attempt #2
                 ## go ahead and display it
                 answer += ' [DDG API]'
-                return jenni.say(answer)
+                return kenni.say(answer)
 
             else:
                 #### Attempt #3 (Wolfram Alpha)
-                if not hasattr(jenni.config, 'wolframalpha_apikey'):
-                    return jenni.say(WAKEY_NOTFOUND)
+                if not hasattr(kenni.config, 'wolframalpha_apikey'):
+                    return kenni.say(WAKEY_NOTFOUND)
 
-                answer = get_wa(q, jenni.config.wolframalpha_apikey)
+                answer = get_wa(q, kenni.config.wolframalpha_apikey)
 
-                return jenni.say(answer + ' [WA]')
+                return kenni.say(answer + ' [WA]')
 
 c.commands = ['c', 'cal', 'calc']
 c.example = '.c 5 + 3'
 
 
-def py(jenni, input):
+def py(kenni, input):
     """.py <code> -- evaluates python code"""
     code = input.group(2)
     if not code:
-        return jenni.reply('No code provided.')
+        return kenni.reply('No code provided.')
     query = code.encode('utf-8')
     uri = 'https://tumbolia-two.appspot.com/py/'
     try:
         answer = web.get(uri + web.urllib.quote(query))
         if answer is not None and answer != "\n":
-            jenni.say(answer)
+            kenni.say(answer)
         else:
-            jenni.reply('Sorry, no result.')
+            kenni.reply('Sorry, no result.')
     except Exception, e:
-        jenni.reply('The server did not return an answer.')
+        kenni.reply('The server did not return an answer.')
 py.commands = ['py', 'python']
 py.example = '.py print "Hello world, %s!" % ("James")'
 
 
-def math(jenni, input):
+def math(kenni, input):
     if not input.group(2):
-        return jenni.reply("No search term.")
+        return kenni.reply("No search term.")
 
     txt = input.group(2)
     txt = txt.encode('utf-8')
@@ -190,9 +189,9 @@ def math(jenni, input):
     results = re_answer.findall(page)
 
     if results:
-        jenni.say(results[0])
+        kenni.say(results[0])
     else:
-        jenni.say('No results found on gamma.sympy.org!')
+        kenni.say('No results found on gamma.sympy.org!')
 math.commands = ['math']
 
 
@@ -230,14 +229,14 @@ def get_wa(search, appid):
     return answer
 
 
-def wa(jenni, input):
-    if not hasattr(jenni.config, 'wolframalpha_apikey'):
-        return jenni.say(WAKEY_NOTFOUND)
+def wa(kenni, input):
+    if not hasattr(kenni.config, 'wolframalpha_apikey'):
+        return kenni.say(WAKEY_NOTFOUND)
 
-    appid = jenni.config.wolframalpha_apikey
+    appid = kenni.config.wolframalpha_apikey
 
     if not input.group(2):
-        return jenni.reply("No search term.")
+        return kenni.reply("No search term.")
 
     txt = input.group(2)
     txt = txt.encode('utf-8')
@@ -247,9 +246,9 @@ def wa(jenni, input):
     result = get_wa(txt, appid)
 
     if not result:
-        return jenni.say("No results found.")
+        return kenni.say("No results found.")
 
-    return jenni.say(result)
+    return kenni.say(result)
 wa.commands = ['wa']
 
 if __name__ == '__main__':

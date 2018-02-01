@@ -2,13 +2,12 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=UTF-8 :
 """
-ham.py - jenni Ham Radio Module
+ham.py - kenni Ham Radio Module
 Copyright 2011-2013, Michael Yanovich (yanovich.net)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 
 This contains a collection of lookups and calls for ham radio enthusiasts.
 """
@@ -115,14 +114,14 @@ def reverse_lookup(v, d=morse):
             result = k
     return result
 
-def cs(jenni, input):
+def cs(kenni, input):
     '''.cs <callsign> -- queries qth.com for call sign information'''
     cs = input.group(2).upper()
     try:
         link = "http://www.qth.com/callsign.php?cs=" + uc.decode(web.quote(cs))
     except Exception, e:
         print e
-        return jenni.say('Failed to obtain data from qth.com')
+        return kenni.say('Failed to obtain data from qth.com')
     page = web.get(link)
     info = re_look.findall(page)
     more_info = re_more.findall(page)
@@ -147,15 +146,15 @@ def cs(jenni, input):
         response += 'More information is available at: %s' % (link)
     else:
         response = 'No matches found.'
-    jenni.say(response)
+    kenni.say(response)
 cs.commands = ['cs', 'callsign']
 cs.example = '.cs W8LT'
 
-def cw(jenni, input):
+def cw(kenni, input):
     re_cw = re.compile("[/\.\- ]+")
     re_noncw = re.compile("[^/\.\- ]+")
     if not input.group(2):
-        return jenni.say('Please provide some input.')
+        return kenni.say('Please provide some input.')
     text = input.group(2).lower().rstrip().lstrip()
     temp = text.split(" ")
     output = str()
@@ -178,7 +177,7 @@ def cw(jenni, input):
                 output = "Non morse code character used."
                 break
             output += " "
-    jenni.reply(output)
+    kenni.reply(output)
 cw.commands = ['cw', 'morse', 'm']
 cw.thread = True
 

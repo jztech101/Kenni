@@ -1,11 +1,10 @@
 #1/usr/bin/env/python
 """
-food.py - Jenni Food Module
+food.py - kenni Food Module
 by afuhrtrumpet
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 from urllib2 import HTTPError
@@ -33,17 +32,17 @@ def request(host, path, api_key, url_params=None):
 
     return response.json()
 
-def yelp(jenni, input):
-    if not hasattr(jenni.config, 'yelp_apikey'):
-        return jenni.say('Please sign up for a Yelp API key to use this function.')
-    key = jenni.config.yelp_apikey
+def yelp(kenni, input):
+    if not hasattr(kenni.config, 'yelp_apikey'):
+        return kenni.say('Please sign up for a Yelp API key to use this function.')
+    key = kenni.config.yelp_apikey
     API_HOST = 'https://api.yelp.com'
     SEARCH_PATH = '/v3/businesses/search'
     BUSINESS_PATH = '/v3/businesses/'
 
     location = input.group(2)
     if not location:
-        jenni.say("Please enter a location.")
+        kenni.say("Please enter a location.")
         return
     url_params = {
         'location': location.replace(' ', '+'),
@@ -55,7 +54,7 @@ def yelp(jenni, input):
     businesses = response.get('businesses')
 
     if not businesses:
-        jenni.say('No businesses in ' + location + ' found.')
+        kenni.say('No businesses in ' + location + ' found.')
         return
     finalresponse=""
     for x in range(3):
@@ -68,9 +67,9 @@ def yelp(jenni, input):
 
                 finalresponse = finalresponse + ", " + businesses[x]['name']
     if len(businesses) <= 3:
-        jenni.say(str(len(businesses))+ " found: " + finalresponse)
+        kenni.say(str(len(businesses))+ " found: " + finalresponse)
     else:
-        jenni.say(str(len(businesses))+ " found, showing first 3: " + finalresponse)
+        kenni.say(str(len(businesses))+ " found, showing first 3: " + finalresponse)
 
 yelp.commands = ["yelp"]
 yelp.priority = 'medium'

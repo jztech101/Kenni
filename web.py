@@ -8,8 +8,7 @@ Copyright 2008-2013, Sean B. Palmer (inamidst.com)
 
 More info:
  * Willie: https://willie.dftba.net
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import re
@@ -139,7 +138,7 @@ def get_urllib_object(uri, timeout):
     except:
         pass
     while True:
-        req = urllib2.Request(uri, headers={'Accept': '*/*', 'User-Agent': 'Mozilla/5.0 (Jenni)'})
+        req = urllib2.Request(uri, headers={'Accept': '*/*', 'User-Agent': 'Mozilla/5.0 (kenni)'})
         try:
             u = urllib2.urlopen(req, None, timeout)
         except urllib2.HTTPError, e:

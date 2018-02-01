@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 """
-unicode.py - jenni Unicode Module
+unicode.py - kenni Unicode Module
 Copyright 2010-2013, Michael Yanovich (yanovich.net)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import re
@@ -17,7 +16,7 @@ control_chars = ''.join(map(unichr, range(0,32) + range(127,160)))
 control_char_re = re.compile(u'[%s]' % re.escape(control_chars))
 
 
-def supercombiner(jenni, input):
+def supercombiner(kenni, input):
     """.sc -- displays the infamous supercombiner"""
     s = 'u'
     for i in xrange(1, 3000):
@@ -25,7 +24,7 @@ def supercombiner(jenni, input):
             s += unichr(i)
         if len(s) > 100:
             break
-    jenni.say(s)
+    kenni.say(s)
 supercombiner.commands = ['sc']
 supercombiner.rate = 30
 

@@ -6,8 +6,7 @@ Copyright 2010-2013 Peter Norvig (norvig.com)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 ################ Scheme Interpreter in Python
@@ -326,7 +325,7 @@ eval(parse("""(begin
 
 )"""))
 
-def f_lisp(jenni, input):
+def f_lisp(kenni, input):
     if not input.owner:
         return
     '''.lisp <lisp code> -- execute arbitrary lisp code'''
@@ -337,7 +336,7 @@ def f_lisp(jenni, input):
         output = eval(output)
         output = to_string(output)
     except Exception, e:
-        jenni.reply('Scheme Lisp ERROR: %s' % (str(e)))
+        kenni.reply('Scheme Lisp ERROR: %s' % (str(e)))
         return
     response = str()
     if type(list()) == type(output):
@@ -346,7 +345,7 @@ def f_lisp(jenni, input):
         response = output
     else:
         response = str(output)
-    jenni.reply(response)
+    kenni.reply(response)
 f_lisp.commands = ['lisp']
 f_lisp.example = '.lisp (+ 2 2)'
 

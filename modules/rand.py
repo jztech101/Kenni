@@ -1,21 +1,20 @@
 #!/usr/bin/env python
 """
-rand.py - jenni Rand Module
+rand.py - kenni Rand Module
 Copyright 2010-2013, Michael Yanovich (yanovich.net)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import random
 import re
 
-def rand(jenni, input):
+def rand(kenni, input):
     """.rand <arg1> <arg2> - Generates a random integer between <arg1> and <arg2>."""
     if input.group(2) == " " or not input.group(2):
-        jenni.reply("I'm sorry, but you must enter at least one number.")
+        kenni.reply("I'm sorry, but you must enter at least one number.")
     else:
         random.seed()
         li_integers = input.group(2)
@@ -34,9 +33,9 @@ def rand(jenni, input):
                     a = li_integers_str
                     a = int(a)
                     randinte = random.randint(0, a)
-                jenni.reply("your random integer is: " + str(randinte))
+                kenni.reply("your random integer is: " + str(randinte))
             else:
-                jenni.reply("lolwut")
+                kenni.reply("lolwut")
         else:
             ln = li_integers.split()
             if len(ln) == 2:
@@ -53,9 +52,9 @@ def rand(jenni, input):
                     randinte = random.randint(a, b)
                 else:
                     randinte = random.randint(b, a)
-                jenni.reply("your random integer is: " + str(randinte))
+                kenni.reply("your random integer is: " + str(randinte))
             else:
-                jenni.reply("I'm not sure what you want me to do!")
+                kenni.reply("I'm not sure what you want me to do!")
 
 rand.commands = ['rand', 'randnum','randominteger']
 rand.priority = 'medium'

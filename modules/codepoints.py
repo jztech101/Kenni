@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 """
-codepoints.py - jenni Codepoints Module
+codepoints.py - kenni Codepoints Module
 Copyright 2009-2014, Michael Yanovich (yanovich.net)
 Copyright 2008-2013, Sean B. Palmer (inamidst.com)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import re, unicodedata
@@ -148,15 +147,15 @@ def codepoint_extended(arg):
             yield about(u, cp, name)
 
 
-def u(jenni, input):
+def u(kenni, input):
     '''Look up unicode information.'''
     arg = input.bytes[3:]
-    # jenni.msg('#inamidst', '%r' % arg)
+    # kenni.msg('#inamidst', '%r' % arg)
     if not arg:
-        return jenni.reply('You gave me zero length input.')
+        return kenni.reply('You gave me zero length input.')
     elif not arg.strip(' '):
-        if len(arg) > 1: return jenni.reply('%s SPACEs (U+0020)' % len(arg))
-        return jenni.reply('1 SPACE (U+0020)')
+        if len(arg) > 1: return kenni.reply('%s SPACEs (U+0020)' % len(arg))
+        return kenni.reply('1 SPACE (U+0020)')
 
     # @@ space
     if set(arg.upper()) - set(
@@ -179,44 +178,44 @@ def u(jenni, input):
         if 4 <= len(arg) <= 6:
             try: u = unichr(int(arg, 16))
             except ValueError: pass
-            else: return jenni.say(about(u))
+            else: return kenni.say(about(u))
 
         if extended:
             # look up a codepoint with regexp
             results = list(islice(codepoint_extended(arg), 4))
             for i, result in enumerate(results):
                 if (i < 2) or ((i == 2) and (len(results) < 4)):
-                    jenni.say(result)
+                    kenni.say(result)
                 elif (i == 2) and (len(results) > 3):
-                    jenni.say(result + ' [...]')
+                    kenni.say(result + ' [...]')
             if not results:
-                jenni.reply('Sorry, no results')
+                kenni.reply('Sorry, no results')
         else:
             # look up a codepoint freely
             result = codepoint_simple(arg)
             if result is not None:
-                jenni.say(result)
-            else: jenni.reply('Sorry, no results for %r.' % arg)
+                kenni.say(result)
+            else: kenni.reply('Sorry, no results for %r.' % arg)
     else:
         text = arg.decode('utf-8')
         if len(text) <= 3:
             ## look up less than three podecoints
             for u in text:
-                jenni.say(about(u))
+                kenni.say(about(u))
         elif len(text) <= 10:
             ## look up more than three podecoints
-            jenni.reply(' '.join('U+%04X' % ord(c) for c in text))
+            kenni.reply(' '.join('U+%04X' % ord(c) for c in text))
         else:
             ## oh baby
-            jenni.reply('Sorry, your input is too long!')
+            kenni.reply('Sorry, your input is too long!')
 u.commands = ['u', 'unicode']
 u.example = '.u 203D'
 
 
-def bytes(jenni, input):
+def bytes(kenni, input):
     '''Show the input as pretty printed bytes.'''
     b = input.bytes
-    jenni.reply('%r' % b[b.find(' ') + 1:])
+    kenni.reply('%r' % b[b.find(' ') + 1:])
 bytes.commands = ['bytes']
 bytes.example = '.bytes \xe3\x8b\xa1'
 

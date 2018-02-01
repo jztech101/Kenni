@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 """
-roulette.py - jenni Roulette Game Module
+roulette.py - kenni Roulette Game Module
 Copyright 2010-2013, Kenneth Sham
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import random
@@ -38,40 +37,40 @@ ROULETTE_TMP = {
     'LAST-ACTIVITY' : None,
 }
 
-def roulette (jenni, input):
+def roulette (kenni, input):
     global ROULETTE_SETTINGS, ROULETTE_STRINGS, ROULETTE_TMP
     if ROULETTE_TMP['NUMBER'] is None:
         ROULETTE_TMP['NUMBER'] = random.randint(0,ROULETTE_SETTINGS['MAX_RANGE'])
         ROULETTE_TMP['LAST-PLAYER'] = input.nick
         ROULETTE_TMP['LAST-ACTIVITY'] = datetime.now()
-        jenni.reply(ROULETTE_STRINGS['TICK'])
+        kenni.reply(ROULETTE_STRINGS['TICK'])
         return
     if ROULETTE_TMP['LAST-PLAYER'] == input.nick:
         return
     ROULETTE_TMP['LAST-ACTIVITY'] = datetime.now()
     ROULETTE_TMP['LAST-PLAYER'] = input.nick
     if ROULETTE_TMP['NUMBER'] == random.randint(0,ROULETTE_SETTINGS['MAX_RANGE']):
-        jenni.write(['KICK', '%s %s :%s' % (input.sender, input.nick, ROULETTE_STRINGS['KICK_REASON'])])
+        kenni.write(['KICK', '%s %s :%s' % (input.sender, input.nick, ROULETTE_STRINGS['KICK_REASON'])])
         ROULETTE_TMP['LAST-PLAYER'] = None
         ROULETTE_TMP['NUMBER'] = None
         ROULETTE_TMP['LAST-ACTIVITY'] = None
     else:
-        jenni.reply(ROULETTE_STRINGS['TICK'])
+        kenni.reply(ROULETTE_STRINGS['TICK'])
 roulette.commands = ['roulette']
 roulette.priority = 'low'
 roulette.rate = 60
 
-def rouletteStop (jenni, input):
+def rouletteStop (kenni, input):
     global ROULETTE_TMP, ROULETTE_STRINGS
     if ROULETTE_TMP['LAST-PLAYER'] is None:
         return
     if datetime.now() - ROULETTE_TMP['LAST-ACTIVITY'] > ROULETTE_TMP['TIMEOUT']:
-        jenni.reply(ROULETTE_STRINGS['GAME_END'])
+        kenni.reply(ROULETTE_STRINGS['GAME_END'])
         ROULETTE_TMP['LAST-ACTIVITY'] = None
         ROULETTE_TMP['LAST-PLAYER'] = None
         ROULETTE_TMP['NUMBER'] = None
     else:
-        jenni.reply(ROULETTE_STRINGS['GAME_END_FAIL'] % (input.nick, ROULETTE_TMP['TIMEOUT'].seconds - (datetime.now() - ROULETTE_TMP['LAST-ACTIVITY']).seconds))
+        kenni.reply(ROULETTE_STRINGS['GAME_END_FAIL'] % (input.nick, ROULETTE_TMP['TIMEOUT'].seconds - (datetime.now() - ROULETTE_TMP['LAST-ACTIVITY']).seconds))
 rouletteStop.commands = ['roulette-stop']
 roulette.priority = 'low'
 roulette.rate = 60

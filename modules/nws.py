@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 '''
-warnings.py -- jenni NWS Alert Module
+warnings.py -- kenni NWS Alert Module
 Copyright 2011-2013, Michael Yanovich (yanovich.net)
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 
 This module allows one to query the National Weather Service for active
 watches, warnings, and advisories that are present.
@@ -154,11 +153,11 @@ def colourize(text):
     return text
 
 
-def nws_lookup(jenni, input):
+def nws_lookup(kenni, input):
     ''' Look up weather watches, warnings, and advisories. '''
     text = input.group(2)
     if not text:
-        return jenni.reply('You need to provide some input.')
+        return kenni.reply('You need to provide some input.')
     bits = text.split(',')
     master_url = False
     if len(bits) == 2:
@@ -174,7 +173,7 @@ def nws_lookup(jenni, input):
             if reverse_lookup:
                 state = reverse_lookup[0]
         if state not in states and len(reverse_lookup) < 1:
-            jenni.reply('State not found.')
+            kenni.reply('State not found.')
             return
         url1 = county_list.format(states[state])
         page1 = web.get(url1).split('\n')
@@ -189,7 +188,7 @@ def nws_lookup(jenni, input):
             prev2 = prev1
             prev1 = line
         if not url_part2:
-            return jenni.reply('Could not find county.')
+            return kenni.reply('Could not find county.')
         master_url = 'https://alerts.weather.gov/cap/' + url_part2
         location = text
     elif len(bits) == 1:
@@ -198,12 +197,12 @@ def nws_lookup(jenni, input):
             zip_code = bits[0]
             zips = re_zip.findall(zip_code)
             if not zips:
-                return jenni.reply('ZIP is invalid.')
+                return kenni.reply('ZIP is invalid.')
             else:
                 try:
                     zip_code = zips[0][0]
                 except:
-                    return jenni.reply('ZIP could not be validated.')
+                    return kenni.reply('ZIP could not be validated.')
             urlz = zip_code_lookup.format(zip_code)
             pagez = web.get(urlz)
             fips = re_fips.findall(pagez)
@@ -211,7 +210,7 @@ def nws_lookup(jenni, input):
                 state = re_state.findall(pagez)
                 city = re_city.findall(pagez)
                 if not state and not city:
-                    return jenni.reply('Could not match ZIP code to a state')
+                    return kenni.reply('Could not match ZIP code to a state')
                 try:
                     state = state[0].lower()
                     state = states[state].upper()
@@ -219,18 +218,18 @@ def nws_lookup(jenni, input):
                     fips_combo = unicode(state) + 'C' + unicode(fips[0])
                     master_url = alerts.format(fips_combo)
                 except:
-                    return jenni.reply('Could not parse state or city from database.')
+                    return kenni.reply('Could not parse state or city from database.')
             else:
-                return jenni.reply('ZIP code does not exist.')
+                return kenni.reply('ZIP code does not exist.')
 
     if not master_url:
-        return jenni.reply('Invalid input. Please enter a ZIP code or a county and state pairing, such as \'Franklin, Ohio\'')
+        return kenni.reply('Invalid input. Please enter a ZIP code or a county and state pairing, such as \'Franklin, Ohio\'')
 
     feed = feedparser.parse(master_url)
     warnings_dict = dict()
     for item in feed.entries:
         if nomsg[:51] == colourize(item['title']):
-            return jenni.say(nomsg.format(location))
+            return kenni.say(nomsg.format(location))
         else:
             warnings_dict[colourize(unicode(item['title']))] = unicode(item['summary'])
 
@@ -262,38 +261,38 @@ def nws_lookup(jenni, input):
         if input.sender.startswith('#') and not (input.group(1)).startswith('nws-more'):
             ## if queried in channel
             for key in warn_list_dt:
-                jenni.say(key)
-            jenni.say(more_info.format(location, master_url))
+                kenni.say(key)
+            kenni.say(more_info.format(location, master_url))
         else:
             ## if queried in private message
             for key in warn_list_dt:
-                jenni.say(key)
-                jenni.say(warnings_dict[key])
-            jenni.say(more_info.format(location, master_url))
+                kenni.say(key)
+                kenni.say(warnings_dict[key])
+            kenni.say(more_info.format(location, master_url))
 nws_lookup.commands = ['nws', 'nws-more']
 nws_lookup.priority = 'high'
 nws_lookup.thread = True
 nws_lookup.rate = 10
 
 
-def warns_control(jenni, input):
+def warns_control(kenni, input):
     global stop
     if not input.admin:
-        return jenni.reply('You need to be an admin to use this!')
+        return kenni.reply('You need to be an admin to use this!')
 
     if input.group(2) == 'start':
         stop = False
-        jenni.reply('Starting...')
-        weather_feed(jenni)
+        kenni.reply('Starting...')
+        weather_feed(kenni)
     elif input.group(2) == 'stop':
         stop = True
-        jenni.reply('Stopping...')
+        kenni.reply('Stopping...')
 warns_control.commands = ['warns']
 warns_control.priority = 'high'
 warns_control.thread = True
 
 
-def weather_feed(jenni):
+def weather_feed(kenni):
     global stop
     conn = sqlite3.connect('nws.db')
     c = conn.cursor()
@@ -315,7 +314,7 @@ def weather_feed(jenni):
                 conn.commit()
                 c.close()
                 stop = False
-                return jenni.reply('Checking... I\'m comleteply stopped. (stopped in "Master")')
+                return kenni.reply('Checking... I\'m comleteply stopped. (stopped in "Master")')
             parsed = feedparser.parse(warning_list)
             if not len(parsed['entries']) > 0:
                 continue
@@ -325,7 +324,7 @@ def weather_feed(jenni):
                     conn.commit()
                     c.close()
                     stop = False
-                    return jenni.reply('Checking... I\'m completely stopped. (stopped inside XML Parse)')
+                    return kenni.reply('Checking... I\'m completely stopped. (stopped inside XML Parse)')
                 entry = entity
                 try:
                     area = entry['cap_areadesc']
@@ -338,7 +337,7 @@ def weather_feed(jenni):
                     status = entry['cap_status']
                     urgency = entry['cap_urgency']
                 except Exception, e:
-                    jenni.msg(jenni.logchan_pm, 'No entry available. See stdout for more information.')
+                    kenni.msg(kenni.logchan_pm, 'No entry available. See stdout for more information.')
                     print time.time(), str(e)
                     print str(entry)
                     print ''
@@ -370,16 +369,16 @@ def weather_feed(jenni):
                     len_areas = len(areas)
                     counter_areas = 1
                     for each in areas:
-                        jenni.msg(ch_state, line1.format(each, state, str(counter_areas).zfill(2), str(len_areas).zfill(2)))
+                        kenni.msg(ch_state, line1.format(each, state, str(counter_areas).zfill(2), str(len_areas).zfill(2)))
                         counter_areas += 1
 
-                    jenni.msg(ch_state, line2.format(title, cert, severity, status, urgency))
+                    kenni.msg(ch_state, line2.format(title, cert, severity, status, urgency))
 
                     summaries = textwrap.wrap(summary, 450)
                     len_summaries = len(summaries)
                     counter_summaries = 1
                     for each in summaries:
-                        jenni.msg(ch_state, 'Part %s of %s: %s' % (str(counter_summaries).zfill(2), str(len_summaries).zfill(2), each))
+                        kenni.msg(ch_state, 'Part %s of %s: %s' % (str(counter_summaries).zfill(2), str(len_summaries).zfill(2), each))
                         counter_summaries += 1
 
             conn.commit()

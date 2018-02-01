@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 '''
-imdb.py - jenni Movie Information Module
+imdb.py - kenni Movie Information Module
 Copyright 2014-2015, Michael Yanovich, yanovich.net
 Copyright 2012, Elad Alfassa, <elad@fedoraproject.org>
 Licensed under the Eiffel Forum License 2.
@@ -8,8 +8,7 @@ Licensed under the Eiffel Forum License 2.
 This module relies on omdbapi.com
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 '''
 
 from modules import proxy
@@ -27,11 +26,11 @@ def prep_title(txt):
     return txt
 
 
-def movie(jenni, input):
+def movie(kenni, input):
     '''.imdb movie/show title -- displays information about a production'''
 
     if not input.group(2):
-        return jenni.say('Please enter a movie or TV show title. '
+        return kenni.say('Please enter a movie or TV show title. '
                          'Year is optional.')
 
     word = input.group(2).rstrip()
@@ -50,12 +49,12 @@ def movie(jenni, input):
     try:
         page = proxy.get(uri)
     except:
-        return jenni.say('[IMDB] Connection to API did not succeed.')
+        return kenni.say('[IMDB] Connection to API did not succeed.')
 
     try:
         data = json.loads(page)
     except:
-        return jenni.say("[IMDB] Couldn't make sense of information from API")
+        return kenni.say("[IMDB] Couldn't make sense of information from API")
 
     message = '[IMDB] '
 
@@ -90,7 +89,7 @@ def movie(jenni, input):
 
         message = pre_plot + new_plot + after_plot
 
-    jenni.say(message)
+    kenni.say(message)
 movie.commands = ['imdb', 'movie', 'movies', 'show', 'tv', 'television']
 movie.example = '.imdb Movie Title, 2015'
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-wikiquote.py - jenni Random Quote Module
+wikiquote.py - kenni Random Quote Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)
 Copyright 2008-2013, Sean B. Palmer (inamidst.com)
 Licensed under the Eiffel Forum License 2.
@@ -8,8 +8,7 @@ Licensed under the Eiffel Forum License 2.
 Developed by kaneda (https://jbegleiter.com / https://github.com/kaneda)
 
 More info:
- * jenni: https://github.com/myano/jenni/
- * Phenny: http://inamidst.com/phenny/
+* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
 import json
@@ -22,12 +21,12 @@ except ImportError:
     raise ImportError("Could not find BeautifulSoup library,"
                       "please install to use the wikiquote module")
 
-USER_AGENT = "JenniBot/1.0 (https://github.com/myano/jenni) JenniBot/1.0"
+USER_AGENT = "kenniBot/1.0 (https://github.com/myano/kenni) kenniBot/1.0"
 
-class JenniURLopener(urllib.FancyURLopener):
+class kenniURLopener(urllib.FancyURLopener):
     version = USER_AGENT
 
-urllib._urlopener = JenniURLopener()
+urllib._urlopener = kenniURLopener()
 
 BASE_URL = "https://en.wikiquote.org/w/api.php?format=json&"
 
@@ -82,10 +81,10 @@ def choose_random_section(sections):
 
     return random_section
 
-def random_quote(jenni, cat):
+def random_quote(kenni, cat):
     if cat is not None:
         if cat not in CATS:
-            jenni.say("I don't know that category, please select from one of: {0}".format(', '.join(CATS)))
+            kenni.say("I don't know that category, please select from one of: {0}".format(', '.join(CATS)))
             return
     else:
         cat = CATS[randrange(len(CATS))]
@@ -102,7 +101,7 @@ def random_quote(jenni, cat):
             # Select at random
             random_member = choose_random_member(cat_members)
             if random_member is None:
-                jenni.say("An error occurred fetching a subcategory")
+                kenni.say("An error occurred fetching a subcategory")
                 return
             
             if random_member["type"] == "subcat":
@@ -112,7 +111,7 @@ def random_quote(jenni, cat):
                 page_id = random_member["pageid"]
                 break
         except Exception as e:
-            jenni.say("An error occurred fetching a quote: {0}".format(e))
+            kenni.say("An error occurred fetching a quote: {0}".format(e))
             return
 
     # Next select a random quote from the page
@@ -127,7 +126,7 @@ def random_quote(jenni, cat):
             section = choose_random_section(sections)
     
             if section is None:
-                jenni.say("We accidentally chose a page with no quotes, sorry about that!")
+                kenni.say("We accidentally chose a page with no quotes, sorry about that!")
                 return
     
             section_index = randrange(len(sections)) + 1
@@ -151,15 +150,15 @@ def random_quote(jenni, cat):
                 quote = all_quotes[randrange(len_all_quotes)]
     
         if quote is None:
-          jenni.say("We accidentally chose a section of a page with no quotes, sorry about that!")
+          kenni.say("We accidentally chose a section of a page with no quotes, sorry about that!")
           return
 
-        jenni.say("{0}: {1}".format(section_title, quote.encode('utf-8')))
+        kenni.say("{0}: {1}".format(section_title, quote.encode('utf-8')))
     except Exception as e:
-        jenni.say("An error occurred fetching a quote: {0}".format(e))
+        kenni.say("An error occurred fetching a quote: {0}".format(e))
         return
 
-def wikiquote(jenni, input):
+def wikiquote(kenni, input):
     origterm = input.groups()[1]
     if origterm:
         origterm = origterm.encode('utf-8')
@@ -167,13 +166,13 @@ def wikiquote(jenni, input):
 
     error = None
 
-    random_quote(jenni, origterm)
+    random_quote(kenni, origterm)
 wikiquote.commands = ['wq', 'wikiquote']
 wikiquote.priority = 'low'
 wikiquote.rate = 10
 
-def list_cats(jenni, input):
-    jenni.say("WikiQuote categories I know: {0}".format(", ".join(CATS)))
+def list_cats(kenni, input):
+    kenni.say("WikiQuote categories I know: {0}".format(", ".join(CATS)))
 list_cats.commands = ['list_quote_cats', 'list_wikiquote_cats', 'ls_wq_cats']
 list_cats.priority = 'low'
 
