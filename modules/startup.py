@@ -21,7 +21,7 @@ def setup(kenni):
         except: pass
 
         def close():
-            print "Nobody PONGed our PING, restarting"
+            print("Nobody PONGed our PING, restarting")
             kenni.handle_close()
 
         def pingloop():
@@ -147,4 +147,4 @@ track_priv_change.event = 'MODE'
 track_priv_change.priority = 'high'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

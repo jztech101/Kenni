@@ -11,7 +11,7 @@ More info:
 import BeautifulSoup
 import datetime as dt
 import re
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import web
 
 BS = BeautifulSoup.BeautifulSoup
@@ -116,4 +116,4 @@ tld_cache.commands = ['tld-cache']
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

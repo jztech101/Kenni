@@ -42,7 +42,7 @@ class Configs():
             if module.host == 'irc.example.net':
                 error = ('Error: you must edit the config file first!\n' +
                             "You're currently using %s" % module.filename)
-                print >> sys.stderr, error
+                print(error, file=sys.stderr)
                 sys.exit(1)
 
             config_modules.append(module)

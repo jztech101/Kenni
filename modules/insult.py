@@ -7,7 +7,7 @@ More info:
 * jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 import os, random
-from modules import unicode as uc
+from modules import str as uc
 
 def insult(kenni, input):
     """ insults <target> with configured language insult """
@@ -73,4 +73,4 @@ def generateDatabase(kenni, insultFilename):
     kenni.say(kenni.config.insult_lang + " insult database created.")
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

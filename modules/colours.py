@@ -42,7 +42,7 @@ def test_colours(kenni, input):
         return
     output = str()
 
-    keys = colours.keys()
+    keys = list(colours.keys())
     keys.sort()
     bold_output = str()
     for colour in keys:
@@ -60,4 +60,4 @@ test_colours.priority = 'high'
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

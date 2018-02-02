@@ -26,7 +26,7 @@ def f_reload(kenni, input):
         kenni.setup()
         return kenni.reply('done')
 
-    if not sys.modules.has_key(name):
+    if name not in sys.modules:
         return kenni.reply('%s: no such module!' % name)
 
     # Thanks to moot for prodding me on this
@@ -57,4 +57,4 @@ f_reload.priority = 'low'
 f_reload.thread = False
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())
