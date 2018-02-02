@@ -10,15 +10,10 @@ More info:
 * jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
-import html.parser
 import json
 import re
-import string
 import urllib.request, urllib.parse, urllib.error
 import web
-
-from modules import str as uc
-
 
 c_pattern = r'(?ims)<(?:h2 class="r"|div id="aoba")[^>]*>(.*?)</(?:h2|div)>'
 c_answer = re.compile(c_pattern)

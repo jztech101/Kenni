@@ -70,7 +70,7 @@ class kenni(irc.Bot):
             #     del sys.modules[name]
             try: module = imp.load_source(name, filename)
             except Exception as e:
-                print("Error loading %s: %s (in bot.py)" % (name, e), file=sys.stderr)
+                print("Error loading %s: %s (in bot.py)" % (name, e.with_traceback(self)), file=sys.stderr)
             else:
                 if hasattr(module, 'setup'):
                     module.setup(self)

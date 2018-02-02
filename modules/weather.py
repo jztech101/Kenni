@@ -17,7 +17,7 @@ import urllib.request, urllib.parse, urllib.error
 import web
 import sys
 from tools import deprecated
-from modules import str as uc
+
 from icao import data
 
 install_geopy = "Please install geopy via 'pip' to use weather.py"

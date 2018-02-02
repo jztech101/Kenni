@@ -13,7 +13,7 @@ More info:
 This module has been imported from Willie.
 """
 
-from modules import str as uc
+
 import json
 import re
 import socket

@@ -7,7 +7,7 @@ More info:
 * jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 import os, random
-from modules import str as uc
+
 
 def insult(kenni, input):
     """ insults <target> with configured language insult """

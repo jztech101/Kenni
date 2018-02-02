@@ -12,7 +12,7 @@ More info:
 This contains a collection of lookups and calls for ham radio enthusiasts.
 """
 
-from modules import str as uc
+
 import re
 import web
 

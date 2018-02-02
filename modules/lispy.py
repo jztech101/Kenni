@@ -17,7 +17,7 @@ More info:
 
 
 import re, sys, io
-from modules import str as uc
+
 
 class Symbol(str): pass
 
@@ -169,7 +169,7 @@ def add_globals(self):
     self.update(vars(math))
     self.update(vars(cmath))
     self.update({
-     '+':op.add, '-':op.sub, '*':op.mul, '/':op.div, 'not':op.not_,
+     '+':op.add, '-':op.sub, '*':op.mul, '/':op.floordiv, 'not':op.not_,
      '>':op.gt, '<':op.lt, '>=':op.ge, '<=':op.le, '=':op.eq,
      'equal?':op.eq, 'eq?':op.is_, 'length':len, 'cons':cons,
      'car':lambda x:x[0], 'cdr':lambda x:x[1:], 'append':op.add,

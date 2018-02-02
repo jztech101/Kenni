@@ -10,7 +10,7 @@ More info:
 
 import random
 import itertools
-from modules import str as uc
+
 
 def write_addquote(text):
     fn = open('quotes.txt', 'a')

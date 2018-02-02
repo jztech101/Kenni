@@ -18,10 +18,9 @@ import urllib.request, urllib.parse, urllib.error
 import urllib.parse
 
 try:
-    from BeautifulSoup import BeautifulSoup as Soup
+    from bs4 import BeautifulSoup
 except ImportError:
-    raise ImportError("Could not find BeautifulSoup library,"
-                      "please install to use the image_me module.")
+    raise ImportError("Please install 'bs4', also known as BeautifulSoup via pip to use WolframAlpha.")
 
 giphy_uri = 'http://giphy.com/search/%s'
 alpha_pattern = re.compile('[^ A-Za-z0-9_-]*')

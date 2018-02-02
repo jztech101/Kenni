@@ -16,10 +16,9 @@ from random import randrange
 import urllib.request, urllib.parse, urllib.error
 
 try:
-    from BeautifulSoup import BeautifulSoup as Soup
+    from bs4 import BeautifulSoup
 except ImportError:
-    raise ImportError("Could not find BeautifulSoup library,"
-                      "please install to use the wikiquote module")
+    raise ImportError("Please install 'bs4', also known as BeautifulSoup via pip to use WolframAlpha.")
 
 USER_AGENT = "kenniBot/1.0 (https://github.com/myano/kenni) kenniBot/1.0"
 

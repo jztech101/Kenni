@@ -8,13 +8,16 @@ More info:
 * jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 """
 
-import BeautifulSoup
 import datetime as dt
 import re
 import urllib.request, urllib.error, urllib.parse
 import web
+try:
+    from bs4 import BeautifulSoup
+except ImportError:
+    raise ImportError("Please install 'bs4', also known as BeautifulSoup via pip to use WolframAlpha.")
 
-BS = BeautifulSoup.BeautifulSoup
+BS = BeautifulSoup
 
 uri = 'https://en.wikipedia.org/wiki/List_of_Internet_top-level_domains'
 r_tag = re.compile(r'<(?!!)[^>]+>')

@@ -9,7 +9,7 @@ More info:
 """
 
 import codecs
-from modules import str as uc
+
 import pickle
 import os
 import time

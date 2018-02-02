@@ -14,7 +14,7 @@ import json
 import random
 import web
 import re
-from modules import str as uc
+
 
 '''
 Randall Munroe is nice and provides a simple JSON API for fetching comics.
