@@ -14,13 +14,6 @@ import irc
 
 home = os.getcwd()
 
-def decode(bytes):
-    try: text = bytes.decode('utf-8')
-    except UnicodeDecodeError:
-        try: text = bytes.decode('iso-8859-1')
-        except UnicodeDecodeError:
-            text = bytes.decode('cp1252')
-    return text
 
 class kenni(irc.Bot):
     def __init__(self, config):
@@ -370,9 +363,7 @@ class kenni(irc.Bot):
                 self.stats[(func.name, source)] = 1
 
     def dispatch(self, origin, args):
-        bytes, event, args = args[0], args[1], args[2:]
-        text = decode(bytes)
-
+        text, event, args = args[0], args[1], args[2:]
         for priority in ('high', 'medium', 'low'):
             items = list(self.rules[priority].items())
             for regexp, funcs in items:

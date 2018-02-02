@@ -152,9 +152,9 @@ def create_configfile(dotdir):
     if not os.path.isdir(dotdir):
         print('Creating a config directory at ~/Kenni/config...')
         try: os.mkdir(dotdir)
-        except Exception:
+        except Exception as e:
             sys.stderr.write('There was a problem creating %s:' % dotdir)
-            sys.stderr.write(e.__class__, str(Exception))
+            sys.stderr.write(e.__class__, str(e))
             sys.stderr.write('Please fix this and then run kenni again.')
             sys.exit(1)
 
