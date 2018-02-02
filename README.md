@@ -39,10 +39,6 @@ Best Practices
 - You can no longer run kenni as the root user (euid = 0).
   - This is a huge security risk, amplifying the impact of any potential vulnerability.
 
-Additional Info
-===============
-
-See https://github.com/myano/kenni/wiki for information about kenni/Phenny modules
 
 Credits
 =======
