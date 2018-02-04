@@ -167,7 +167,8 @@ class Bot(asynchat.async_chat):
     def join(self, channel, key):
         if not key:
             self.write(['JOIN'], channel)
-        else: self.write(['JOIN', channel, key])
+        else:
+            self.write(['JOIN', channel, key])
         self.write(['WHO', channel])
 
 

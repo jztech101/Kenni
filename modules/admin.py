@@ -34,18 +34,44 @@ def join(kenni, input):
             key = inc[1]
         kenni.join(channel, key)
 join.commands = ['join']
-join.priority = 'low'
+join.priority = 'medium'
 join.example = '.join #example or .join #example key'
 
 def part(kenni, input):
     '''Part the specified channel. This is an admin-only command.'''
     global intentional_part
     if input.admin:
+        sendmessage = input.group(2)
+        sendmessage2 = []
+        if sendmessage:
+            sendmessage2 = sendmessage.split(" ")
         intentional_part = True
-        kenni.write(['PART'], input.group(2))
+        if input.sender.startswith("#") and (not sendmessage or not sendmessage2[0].startswith("#")):
+            kenni.write(['PART', input.sender])
+        else:
+            kenni.write(['PART', sendmessage2[0] + " :" ' '.join(sendmessage2[1:])])
 part.commands = ['part']
-part.priority = 'low'
+part.priority = 'medium'
 part.example = '.part #example'
+
+def cycle(kenni, input):
+    '''Part the specified channel. This is an admin-only command.'''
+    global intentional_part
+    if input.admin:
+        sendmessage = input.group(2)
+        sendmessage2 = []
+        if sendmessage:
+            sendmessage2 = sendmessage.split(" ")
+        intentional_part = True
+        if input.sender.startswith("#") and (not sendmessage or not sendmessage2[0].startswith("#")):
+            kenni.write(['PART'], input.sender)
+            kenni.join(input.sender, None)
+        else:
+            kenni.write(['PART', sendmessage2[0]])
+            kenni.join(sendmessage2[0], None)
+cycle.commands = ['cycle']
+cycle.priority = 'medium'
+cycle.example = '.cycle #example'
 
 def quit(kenni, input):
     '''Quit from the server. This is an owner-only command.'''
