@@ -29,6 +29,10 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 [18:03] [Notice] -unobot- Next: hatcher (5 cards) - Lako (2 cards)
 [18:03] <TopMobil> :O
 [18:03] <Lako> :O
+
+More info:
+* Kenni: https://github.com/JZTech101/Kenni
+* jenni: https://github.com/myano/jenni/
 """
 
 import random

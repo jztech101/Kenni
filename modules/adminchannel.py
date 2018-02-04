@@ -5,7 +5,9 @@ Copyright 2010-2015, Michael Yanovich (yanovich.net), Alek Rollyson, Josh Beglei
 Licensed under the Eiffel Forum License 2.
 
 More info:
-* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
+* Kenni: https://github.com/JZTech101/Kenni
+* jenni: https://github.com/myano/jenni/ 
+* Phenny: http://inamidst.com/phenny/
 
 Beefed up by Alek Rollyson, Josh Begleiter.
 * Added functions for op, deop, voice, devoice

@@ -6,7 +6,9 @@ Copyright 2008-2015, Sean B. Palmer (inamidst.com)
 Copyright 2015, Jonathan Arnett (j3rn.com)
 
 More info:
-* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
+* Kenni: https://github.com/JZTech101/Kenni
+* jenni: https://github.com/myano/jenni/ 
+* Phenny: http://inamidst.com/phenny/
 """
 
 import re

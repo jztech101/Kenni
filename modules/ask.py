@@ -5,7 +5,9 @@ Copyright 2011-2013, Michael Yanovich (yanovich.net)
 Licensed under the Eiffel Forum License 2.
 
 More info:
-* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
+* Kenni: https://github.com/JZTech101/Kenni
+* jenni: https://github.com/myano/jenni/ 
+* Phenny: http://inamidst.com/phenny/
 '''
 
 import random, time

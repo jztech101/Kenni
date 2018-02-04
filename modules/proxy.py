@@ -3,8 +3,10 @@
 proxy.py - Web Facilities
 
 More info:
- * Willie: https://willie.dftba.net
-* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
+* Kenni: https://github.com/JZTech101/Kenni
+* Willie: https://willie.dftba.net
+* jenni: https://github.com/myano/jenni/
+* Phenny: http://inamidst.com/phenny/
 """
 
 import json

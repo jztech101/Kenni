@@ -4,7 +4,9 @@ insult.py - kenni Insult Module
 by alekhin0w
 
 More info:
-* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
+* Kenni: https://github.com/JZTech101/Kenni
+* jenni: https://github.com/myano/jenni/
+* Phenny: http://inamidst.com/phenny/
 """
 import os, random
 from modules import unicode as uc

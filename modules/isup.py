@@ -8,8 +8,10 @@ Licensed under the Eiffel Forum License 2.
 This allows users to check if a website is up through isup.me.
 
 More info:
- * Willie: http://willie.dftba.net/
-* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
+* Kenni: https://github.com/JZTech101/Kenni
+* Willie: http://willie.dftba.net/
+* jenni: https://github.com/myano/jenni/
+* Phenny: http://inamidst.com/phenny/
 """
 
 from modules import proxy

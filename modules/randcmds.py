@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+'''
+More Info:
+* Kenni: https://github.com/JZTech101/Kenni
+'''
+
 def potato(kenni, input):
     kenni.write(['PRIVMSG', input.sender], '\x01ACTION is a potato\x01')
 potato.commands = ['potato']

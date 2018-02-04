@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 """
 sasl.py - kenni SASL Authentication module
+
+More info:
+* Kenni: https://github.com/JZTech101/Kenni
+* jenni: https://github.com/myano/jenni/
 """
 import base64
 

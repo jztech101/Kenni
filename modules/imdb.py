@@ -8,7 +8,9 @@ Licensed under the Eiffel Forum License 2.
 This module relies on omdbapi.com
 
 More info:
-* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
+* Kenni: https://github.com/JZTech101/Kenni
+* jenni: https://github.com/myano/jenni/
+* Phenny: http://inamidst.com/phenny/
 '''
 
 from modules import proxy

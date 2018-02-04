@@ -4,7 +4,9 @@ warnings.py -- kenni NWS Alert Module
 Copyright 2011-2013, Michael Yanovich (yanovich.net)
 
 More info:
-* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
+* Kenni: https://github.com/JZTech101/Kenni
+* jenni: https://github.com/myano/jenni/ 
+* Phenny: http://inamidst.com/phenny/
 
 This module allows one to query the National Weather Service for active
 watches, warnings, and advisories that are present.

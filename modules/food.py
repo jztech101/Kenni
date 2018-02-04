@@ -6,9 +6,7 @@ Copyright 2013 Michael Yanovich (yanovich.net)
 Copyright 2013 Unknown
 Licensed under the Eiffel Forum License 2.
 
-More info:
- * kenni-misc: https://github.com/freeboson/kenni-misc/
-* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
+More info:* Kenni: https://github.com/JZTech101/Kenni* jenni-misc: https://github.com/freeboson/jenni-misc/* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
 '''
 
 import re

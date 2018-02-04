@@ -7,7 +7,9 @@ Partially re-written by Paul Schellin (paulschellin@gmail.com) 2014
 Licensed under the Eiffel Forum License 2.
 
 More info:
-* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
+* Kenni: https://github.com/JZTech101/Kenni
+* jenni: https://github.com/myano/jenni/
+* Phenny: http://inamidst.com/phenny/
 '''
 
 import json

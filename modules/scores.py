@@ -5,7 +5,9 @@ Copyright 2010-2013, Michael Yanovich (yanovich.net) and Matt Meinwald,
     and Samuel Clements
 
 More info:
-* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
+* Kenni: https://github.com/JZTech101/Kenni
+* jenni: https://github.com/myano/jenni/
+* Phenny: http://inamidst.com/phenny/
 """
 
 import codecs

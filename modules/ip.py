@@ -7,8 +7,10 @@ Copyright 2011, Dimitri Molenaars (TyRope.nl)
 Licensed under the Eiffel Forum License 2.
 
 More info:
- * Willie: http://willie.dftba.net
-* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
+* Kenni: https://github.com/JZTech101/Kenni
+* Willie: http://willie.dftba.net
+* jenni: https://github.com/myano/jenni/
+* Phenny: http://inamidst.com/phenny/
 
 This module has been imported from Willie.
 """

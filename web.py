@@ -7,8 +7,10 @@ Copyright 2012, Elad Alfassa (elad@fedoraproject.org)
 Copyright 2008-2013, Sean B. Palmer (inamidst.com)
 
 More info:
- * Willie: https://willie.dftba.net
-* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
+* Willie: https://willie.dftba.net
+* Kenni: https://github.com/JZTech101/Kenni
+* jenni: https://github.com/myano/jenni/
+* Phenny: http://inamidst.com/phenny/
 """
 
 import re

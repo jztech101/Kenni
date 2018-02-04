@@ -9,7 +9,9 @@ Written by kaneda (http://jbegleiter.com), is invoked in
 the kenni starter to store the config helper in kenni.config
 
 More info:
-* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
+* Kenni: https://github.com/JZTech101/Kenni
+* jenni: https://github.com/myano/jenni/ 
+* Phenny: http://inamidst.com/phenny/
 """
 
 import imp, os, sys

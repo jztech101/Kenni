@@ -9,7 +9,9 @@ This works by hashing the user's input and seeding it with the current date (as 
 the same question will always have the same answer on a given day.
 
 More info:
-* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
+* Kenni: https://github.com/JZTech101/Kenni
+* jenni: https://github.com/myano/jenni/
+* Phenny: http://inamidst.com/phenny/
 '''
 
 import random
