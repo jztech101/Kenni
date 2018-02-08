@@ -40,9 +40,9 @@ Best Practices
   - This is a huge security risk, amplifying the impact of any potential vulnerability.
 
 
-Credits
-=======
+Credits to jenni (The project from which this was forked from)
+==============================================================
 
-For a list of contributions to the kenni fork see the file CREDITS.
+For a list of contributions to jenni, see the file CREDITS.
 
 Sean B. Palmer, http://inamidst.com/sbp/ forked by Michael Yanovich, https://yanovich.net/
