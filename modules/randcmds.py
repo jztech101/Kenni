@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 
 '''
+Copyright 2018 Julian Zhou (2018)
+Licensed under the Eiffel Forum License 2.
+
 More Info:
 * Kenni: https://github.com/JZTech101/Kenni
 '''
