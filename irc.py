@@ -313,7 +313,7 @@ class Bot(asynchat.async_chat):
                 if len(dlist) >= 3:
                     if (not tools.isChan(dlist[2],True) or dlist[1].strip() == 'NOTICE') and dlist[1].strip() not in IRC_CODES:
                         if dlist[1].strip() == 'NOTICE':
-                            if not tools.isChan(dlist[2],True):
+                            if tools.isChan(dlist[2],True):
                                 self.msg(self.logchan_pm, '[Notice] ' + dlist[0].replace(':','') + ': (' + dlist[2] + ') ' + ' '.join(dlist[3:]).replace(":",""), True)
                             else:
                                 self.msg(self.logchan_pm, '[Notice] ' + dlist[0].replace(":","") + ': ' + ' '.join(dlist[3:]).replace(":",""), True)
