@@ -10,11 +10,13 @@ More info:
 """
 
 import random
+import tools
+
 
 def slap(kenni, input):
     """.slap <target> - Slaps <target>"""
     text = input.group().split()
-    if len(text) < 2 or text[1].startswith('#'): return
+    if len(text) < 2 or tools.isChan(text[1], False): return
     if text[1] == kenni.nick:
         if (input.nick not in kenni.config.admins):
             text[1] = input.nick

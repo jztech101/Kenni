@@ -17,6 +17,7 @@ Beefed up by Alek Rollyson, Josh Begleiter.
 """
 
 import re
+import tools
 
 def is_chan_admin(kenni, input, a):
     if input.admin:
@@ -35,10 +36,10 @@ def voice(kenni, input):
     argc = len(text)
     nick = input.nick
     channel = input.sender
-    if not input.sender.startswith('#'):
+    if not tools.isChan(input.sender, False):
         channel = None
     if argc >= 2 and text[1] is not None:
-        if text[1].startswith('#'):
+        if tools.isChan(text[1], False):
             channel = text[1]
             if argc >= 3 and text[2] is not None:
                 nick = text[2]
@@ -61,10 +62,10 @@ def devoice(kenni, input):
     argc = len(text)
     nick = input.nick
     channel = input.sender
-    if not input.sender.startswith('#'):
+    if not tools.isChan(input.sender, False):
         channel = None
     if argc >= 2 and text[1] is not None:
-        if text[1].startswith('#'):
+        if tools.isChan(text[1], False):
             channel = text[1]
             if argc >= 3 and text[2] is not None:
                 nick = text[2]
@@ -87,10 +88,10 @@ def op(kenni, input):
     argc = len(text)
     nick = input.nick
     channel = input.sender
-    if not input.sender.startswith('#'):
+    if not tools.isChan(input.sender, False):
         channel = None
     if argc >= 2 and text[1] is not None:
-        if text[1].startswith('#'):
+        if tools.isChan(text[1], False):
             channel = text[1]
             if argc >= 3 and text[2] is not None:
                 nick = text[2]
@@ -109,10 +110,10 @@ def deop(kenni, input):
     argc = len(text)
     nick = input.nick
     channel = input.sender
-    if not input.sender.startswith('#'):
+    if not tools.isChan(input.sender, False):
         channel = None
     if argc >= 2 and text[1] is not None:
-        if text[1].startswith('#'):
+        if tools.isChan(text[1], False):
             channel = text[1]
             if argc >= 3 and text[2] is not None:
                 nick = text[2]
@@ -133,7 +134,7 @@ def kick(kenni, input):
     opt = text[1]
     nick = opt
     reasonidx = "Your behavior is not conductive to the desired environment"
-    if opt.startswith('#'):
+    if tools.isChan(opt, False):
         channel = opt
         nick = text[2]
         if (argc > 3):
@@ -173,7 +174,7 @@ def ban (kenni, input):
     opt = text[1]
     banmask = opt
     channel = input.sender
-    if opt.startswith('#'):
+    if tools.isChan(opt, False):
         if argc < 3: return
         channel = opt
         banmask = text[2]
@@ -196,7 +197,7 @@ def unban (kenni, input):
     opt = text[1]
     banmask = opt
     channel = input.sender
-    if opt.startswith('#'):
+    if tools.isChan(opt, False):
         if argc < 3: return
         channel = opt
         banmask = text[2]
@@ -219,7 +220,7 @@ def quiet (kenni, input):
    opt = text[1]
    banmask = opt
    channel = input.sender
-   if opt.startswith('#'):
+   if tools.isChan(opt, False):
        if argc < 3: return
        channel = opt
        banmask = text[2]
@@ -242,7 +243,7 @@ def unquiet (kenni, input):
    opt = text[1]
    banmask = opt
    channel = input.sender
-   if opt.startswith('#'):
+   if tools.isChan(opt, False):
        if argc < 3: return
        channel = opt
        banmask = text[2]
@@ -266,7 +267,7 @@ def kickban (kenni, input):
    opt = text[1]
    nick = opt
    reasonidx = "Your behavior is not conductive to the desired environment"
-   if opt.startswith('#'):
+   if tools.isChan(opt, False):
        channel = opt
        nick = text[2]
        if(argc >3):
@@ -293,7 +294,7 @@ def topic(kenni, input):
     argc = len(text)
     channel = input.sender
     topic = ' '.join(text[1:])
-    if text[1].startswith('#'):
+    if tools.isChan(text[1], False):
         if argc < 2: return
         channel = text[1]
         topic = ' '.join(text[2:])

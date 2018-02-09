@@ -11,6 +11,7 @@ More info:
 """
 
 import imp, os, re, time
+import tools
 
 current_warnings = {}
 
@@ -48,7 +49,7 @@ def banned_words(kenni, input):
         return
 
     # We only want to execute in a channel for which we have a wordlist
-    if not input.sender.startswith("#") or input.sender not in bad_words:
+    if not tools.isChan(input.sender, False) or input.sender not in bad_words:
         return
 
     # Find which word triggered the event
@@ -111,7 +112,7 @@ banned_words.priority = 'high'
 
 def list_banned_words(kenni, input):
     # Only executable in channel
-    if not input.sender.startswith('#'):
+    if not tools.isChan(input.sender, False):
         return
 
     if input.sender not in kenni.config.bad_words:

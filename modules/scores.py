@@ -15,7 +15,7 @@ from modules import unicode as uc
 import pickle
 import os
 import time
-
+import tools
 
 class Scores:
     def __init__(self):
@@ -144,21 +144,21 @@ class Scores:
             kenni.say(t10)
 
 
-        elif len(line) == 2 and (not line[0].startswith("#")) and line[1].startswith("#") and line[0] == "bottom":
+        elif len(line) == 2 and (not tools.isChan(line[0], False)) and tools.isChan(line[1], False) and line[0] == "bottom":
             ## .scores bottom <channel>
             b10 = ten(line[1], 'b')
             kenni.say(b10)
 
-        elif len(line) == 1 and not line[0].startswith("#"):
+        elif len(line) == 1 and not tools.isChan(line[0], False):
             ## .scores <nick>
             kenni.say(given_user(line[0], current_channel))
 
-        elif len(line) == 1 and line[0].startswith("#"):
+        elif len(line) == 1 and tools.isChan(line[0], False):
             ## .scores <channel>
             t10_chan = ten(line[0], 't')
             kenni.say(t10_chan)
 
-        elif len(line) == 2 and line[0].startswith("#") and line[1] != "all":
+        elif len(line) == 2 and tools.isChan(line[0], False) and line[1] != "all":
             ## .scores <channel> <nick>
             kenni.say(given_user(line[1], line[0]))
 

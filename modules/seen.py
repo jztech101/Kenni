@@ -12,6 +12,8 @@ More info:
 """
 
 import time
+import tools
+
 
 ## TODO: Make it save .db to disk
 
@@ -39,7 +41,7 @@ def f_note(kenni, input):
     try:
         if not hasattr(kenni, 'seen'):
             kenni.seen = dict()
-        if input.sender.startswith('#'):
+        if tools.isChan(input.sender, False):
             kenni.seen[input.nick.lower()] = (input.sender, time.time())
     except Exception, e: print e
 f_note.rule = r'(.*)'

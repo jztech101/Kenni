@@ -15,6 +15,7 @@ import sys, re, time, traceback
 import socket, asyncore, asynchat, ssl, select
 import os, codecs
 import errno
+import tools
 
 IRC_CODES = ('001', '002', '003','004', '005', '253', '251', '252', '254', '255', '265', '266', '250', '315', '328', '332', '333', '352', '353', '366', '372', '375', '376', 'QUIT', 'NICK', 'JOIN')
 cwd = os.getcwd()
@@ -310,9 +311,9 @@ class Bot(asynchat.async_chat):
                 ## send stuff in PM to logging channel
                 dlist = line.split()
                 if len(dlist) >= 3:
-                    if ("#" not in dlist[2] or dlist[1].strip() == 'NOTICE') and dlist[1].strip() not in IRC_CODES:
+                    if (tools.isChan(dlist[2],True) or dlist[1].strip() == 'NOTICE') and dlist[1].strip() not in IRC_CODES:
                         if dlist[1].strip() == 'NOTICE':
-                            if not dlist[2].isalnum():
+                            if not tools.isChan(dlist[2],True):
                                 self.msg(self.logchan_pm, '[Notice] ' + dlist[0].replace(':','') + ': (' + dlist[2] + ') ' + ' '.join(dlist[3:]).replace(":",""), True)
                             else:
                                 self.msg(self.logchan_pm, '[Notice] ' + dlist[0].replace(":","") + ': ' + ' '.join(dlist[3:]).replace(":",""), True)

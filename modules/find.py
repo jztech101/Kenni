@@ -16,6 +16,7 @@ using the sed notation (s///) commonly found in vi/vim.
 
 from modules import unicode as uc
 import os, re
+import tools
 
 
 def load_db():
@@ -88,7 +89,7 @@ def collectlines(kenni, input):
     channel = uc.decode(input.sender)
     channel = uc.encode(channel)
     nick = (input.nick).encode("utf-8")
-    if not channel.startswith('#'): return
+    if not tools.isChan(channel, False): return
     search_dict = load_db()
     if channel not in search_dict:
         search_dict[channel] = dict()
@@ -119,7 +120,7 @@ def findandreplace(kenni, input):
     channel = (input.sender).encode("utf-8")
     nick = (input.nick).encode("utf-8")
 
-    if not channel.startswith('#'): return
+    if not tools.isChan(channel, False): return
 
     search_dict = load_db()
 

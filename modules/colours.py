@@ -9,7 +9,7 @@ More info:
 * jenni: https://github.com/myano/jenni/
 * Phenny: http://inamidst.com/phenny/
 """
-
+import tools
 colours = {
     "00": "white",
     "01": "black",
@@ -40,7 +40,7 @@ colours = {
 
 
 def test_colours(kenni, input):
-    if not input.admin and input.sender.startswith('#'):
+    if not input.admin and tools.isChan(input.sender, False):
         return
     output = str()
 

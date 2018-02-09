@@ -13,6 +13,8 @@ More info:
 
 import os, re, time, random
 import threading
+import tools
+
 
 maximum = 4
 
@@ -162,7 +164,7 @@ def getReminders(kenni, channel, key, tellee):
 
 
 def message(kenni, input):
-    #if not input.sender.startswith('#'): return
+    #if not tools.isChan(input.sender, False): return
 
     tellee = input.nick
     channel = input.sender

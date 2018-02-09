@@ -12,6 +12,7 @@ More info:
 """
 
 from itertools import izip_longest
+import tools
 
 def fchannels():
     try:
@@ -41,7 +42,7 @@ def stats(kenni, input):
         if not user:
             continue
 
-        if not user.startswith('#'):
+        if not tools.isChan(user, False):
             try:
                 users[user] += count
             except KeyError:

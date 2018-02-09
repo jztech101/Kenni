@@ -23,6 +23,7 @@ import textwrap
 import time
 import urllib
 import web
+import tools
 
 states = {
         'alabama': 'al',
@@ -260,7 +261,7 @@ def nws_lookup(kenni, input):
         warn_list_dt = sorted(warn_keys_dt, key=warn_keys_dt.get, reverse=True)
         #print 'warn_list_dt', warn_list_dt
 
-        if input.sender.startswith('#') and not (input.group(1)).startswith('nws-more'):
+        if tools.isChan(input.sender, False) and not (input.group(1)).startswith('nws-more'):
             ## if queried in channel
             for key in warn_list_dt:
                 kenni.say(key)

@@ -12,6 +12,7 @@ More info:
 
 import os
 import time
+import tools
 
 intentional_part = False
 
@@ -46,7 +47,7 @@ def part(kenni, input):
         if sendmessage:
             sendmessage2 = sendmessage.split(" ")
         intentional_part = True
-        if input.sender.startswith("#") and (not sendmessage or not sendmessage2[0].startswith("#")):
+        if tools.isChan(input.sender, False) and (not sendmessage or not tools.isChan(sendmessage2[0], False)):
             kenni.write(['PART', input.sender])
         else:
             kenni.write(['PART', sendmessage2[0] + " :" ' '.join(sendmessage2[1:])])
@@ -63,7 +64,7 @@ def cycle(kenni, input):
         if sendmessage:
             sendmessage2 = sendmessage.split(" ")
         intentional_part = True
-        if input.sender.startswith("#") and (not sendmessage or not sendmessage2[0].startswith("#")):
+        if tools.isChan(input.sender, False) and (not sendmessage or not tools.isChan(sendmessage2[0], False)):
             kenni.write(['PART'], input.sender)
             kenni.join(input.sender, None)
         else:
@@ -88,7 +89,7 @@ def msg(kenni, input):
         argc = len(text)
         channel = input.sender
         msg = ' '.join(text[1:])
-        if argc > 2 and (text[1].startswith("#") or (not text[1][0].isalnum() and text[1][1] == "#")):
+        if argc > 2 and tools.isChan(text[1], True):
             channel = text[1]
             msg = ' '.join(text[2:])
         kenni.write(['PRIVMSG', channel], msg)
@@ -101,7 +102,7 @@ def act(kenni, input):
         argc = len(text)
         channel = input.sender
         msg = ' '.join(text[1:])
-        if argc > 2 and text[1].startswith("#"):
+        if argc > 2 and tools.isChan(text[1], False):
             channel = text[1]
             msg = ' '.join(text[2:])
         kenni.write(['PRIVMSG', channel], '\x01ACTION ' + msg + '\x01')

@@ -29,3 +29,11 @@ def deprecated(old):
 if __name__ == '__main__':
     print __doc__.strip()
 
+def isChan(chan, checkprefix):
+    if chan.startswith("#"):
+        return True
+    elif checkprefix and not chan[0].isalnum() and chan[1] == "#":
+        return True
+    else:
+        return False
+

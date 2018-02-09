@@ -38,6 +38,8 @@ More info:
 import random
 from datetime import datetime, timedelta
 import time
+import tools
+
 
 away_last = 0
 
@@ -619,7 +621,7 @@ uno.thread = False
 uno.rate = 0
 
 def unostop(kenni, input):
-    if not (input.sender).startswith('#'):
+    if not tools.isChan(input.sender, False):
         return
     unobot.stop(kenni, input)
 unostop.commands = ['unostop']
@@ -628,7 +630,7 @@ unostop.thread = False
 unostop.rate = 0
 
 def unojoin(kenni, input):
-    if not (input.sender).startswith('#'):
+    if not tools.isChan(input.sender, False):
         return
     if input.sender == CHANNEL:
         unobot.join(kenni, input)
@@ -638,7 +640,7 @@ unojoin.thread = False
 unojoin.rate = 0
 
 def deal(kenni, input):
-    if not (input.sender).startswith('#'):
+    if not tools.isChan(input.sender, False):
         return
     unobot.deal(kenni, input)
 deal.commands = ['deal']
@@ -647,7 +649,7 @@ deal.thread = False
 deal.rate = 0
 
 def play(kenni, input):
-    if not (input.sender).startswith('#'):
+    if not tools.isChan(input.sender, False):
         return
     unobot.play(kenni, input)
 play.commands = ['play', 'p']
@@ -656,7 +658,7 @@ play.thread = False
 play.rate = 0
 
 def draw(kenni, input):
-    if not (input.sender).startswith('#'):
+    if not tools.isChan(input.sender, False):
         return
     unobot.draw(kenni, input)
 draw.commands = ['draw', 'd', 'dr']
@@ -665,7 +667,7 @@ draw.thread = False
 draw.rate = 0
 
 def passs(kenni, input):
-    if not (input.sender).startswith('#'):
+    if not tools.isChan(input.sender, False):
         return
     unobot.passs(kenni, input)
 passs.commands = ['pass', 'pa']
@@ -688,7 +690,7 @@ show_user_cards.thread = False
 show_user_cards.rate = 0
 
 def top_card(kenni, input):
-    if not (input.sender).startswith('#'):
+    if not tools.isChan(input.sender, False):
         return
     unobot.showTopCard_demand(kenni)
 top_card.commands = ['top']
@@ -697,7 +699,7 @@ top_card.thread = False
 top_card.rate = 0
 
 def leave(kenni, input):
-    if not (input.sender).startswith('#'):
+    if not tools.isChan(input.sender, False):
         return
     unobot.leave(kenni, input)
 leave.commands = ['leave']

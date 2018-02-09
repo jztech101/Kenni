@@ -12,6 +12,7 @@ More info:
 """
 
 import threading, time, sys
+import tools
 
 def setup(kenni):
     # by clsn
@@ -81,7 +82,7 @@ startup.priority = 'low'
 
 # Method for populating op/hop/voice information in channels on join
 def privs_on_join(kenni, input):
-    if not input.mode_target or not input.mode_target.startswith('#'):
+    if not input.mode_target or not tools.isChan(input.mode_target, False):
         return
     channel = input.mode_target
     if input.names and len(input.names) > 0:
@@ -99,7 +100,7 @@ privs_on_join.event = '353'
 privs_on_join.priority = 'high'
 
 def hostmask_on_join(kenni, input):
-    if not input.mode or not input.mode.startswith('#'):
+    if not input.mode or not tools.isChan(input.mode, False):
         return
     kenni.set_hostmask(input.other2, input.names)
 hostmask_on_join.rule = r'(.*)'
@@ -107,7 +108,7 @@ hostmask_on_join.event = '352'
 hostmask_on_join.priority = 'high'
 
 def new_Join_Hostmask(kenni, input):
-    if not input.sender or not input.sender.startswith('#'):
+    if not input.sender or not tools.isChan(input.sender, False):
         return
     kenni.set_hostmask(input.nick, input.host)
 new_Join_Hostmask.rule = r'(.*)'
@@ -116,7 +117,7 @@ new_Join_Hostmask.priority = 'high'
 
 # Method for tracking changes to ops/hops/voices in channels
 def track_priv_change(kenni, input):
-    if not input.sender or not input.sender.startswith('#'):
+    if not input.sender or not tools.isChan(input.sender, False):
         return
 
     channel = input.sender
