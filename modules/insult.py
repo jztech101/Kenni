@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 insult.py - kenni Insult Module
 by alekhin0w

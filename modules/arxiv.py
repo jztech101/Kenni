@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 '''
 arXiv.py -- arXiv Module
 Copyright 2014 Sujeet Akula (sujeet@freeboson.org)

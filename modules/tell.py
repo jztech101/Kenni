@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 tell.py - kenni Tell and Ask Module
 Copyright 2012-2013, Michael Yanovich (yanovich.net)

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 '''
 magic8ball.py - kenni's Magic 8 Ball Module
 Copyright 2015, Kevin Holland (kevinholland94@gmail.com)

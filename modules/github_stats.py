@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 github_stats.py - kenni Github Info Module
 Copyright 2009-2015, Michael Yanovich (yanovich.net)

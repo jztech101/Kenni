@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 codepoints.py - kenni Codepoints Module
 Copyright 2009-2014, Michael Yanovich (yanovich.net)

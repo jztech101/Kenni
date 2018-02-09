@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 banned_words.py - kenni banned words module
 Copyright 2015, Josh Begleiter (jbegleiter.com)

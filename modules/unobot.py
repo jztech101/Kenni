@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python22
 """
 Copyright 2010 Tamas Marki. All rights reserved.
 

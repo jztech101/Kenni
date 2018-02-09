@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 roulette.py - kenni Roulette Game Module
 Copyright 2010-2013, Kenneth Sham

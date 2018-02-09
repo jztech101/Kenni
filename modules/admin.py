@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 '''
 admin.py - kenni Admin Module
 Copyright 2010-2013, Sean B. Palmer (inamidst.com) and Michael Yanovich (yanovich.net)

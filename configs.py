@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 configs.py - kenni IRC bot config manager
 Copyright 2009-2015, Michael Yanovich (yanovich.net)

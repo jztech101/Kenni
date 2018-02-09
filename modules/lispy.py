@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 lispy.py - Lisp Module
 Copyright 2013 Michael Yanovich (yanovich.net)

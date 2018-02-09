@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 scores.py - kenni Scores Module
 Copyright 2010-2013, Michael Yanovich (yanovich.net) and Matt Meinwald,

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim: set fileencoding=UTF-8 :
 """
 weather.py - kenni Weather Module

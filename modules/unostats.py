@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 unostats.py -- kenni's uno stat generator
 Copyright 2011-2013, Michael Yanovich (yanovich.net)

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 find.py - kenni Spell Checking Module
 Copyright 2011-2013, Michael Yanovich (yanovich.net)

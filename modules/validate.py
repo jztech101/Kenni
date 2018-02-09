@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 validate.py - kenni Validation Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)

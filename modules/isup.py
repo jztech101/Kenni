@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 isup.py - Simple website status check with isup.me
 Copyright 2013-2014, Michael Yanovich (yanovich.net)

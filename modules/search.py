@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 search.py - kenni Web Search Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)

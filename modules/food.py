@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 '''
 dinner.py - Dinner Module
 Copyright 2014 Sujeet Akula (sujeet@freeboson.org)

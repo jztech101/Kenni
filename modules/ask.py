@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 '''
 ask.py - kenni's Ask Module
 Copyright 2011-2013, Michael Yanovich (yanovich.net)

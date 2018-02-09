@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 etymology.py - kenni Etymology Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)

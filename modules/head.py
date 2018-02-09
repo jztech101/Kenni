@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 head.py - kenni HTTP Metadata Utilities
 Copyright 2009-2013, Michael Yanovich (yanovich.net)

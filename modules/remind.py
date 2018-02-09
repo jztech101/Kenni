@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 remind.py - kenni Reminder Module
 Copyright 2011-2013, Michael Yanovich (yanovich.net)

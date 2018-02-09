@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 colours.py - kenni Colour Module
 Copyright 2015, Michael Yanovich (yanovich.net)

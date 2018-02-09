@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 wikipedia.py - kenni Wikipedia Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)

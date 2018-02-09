@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 '''
 units.py - kenni Units Module
 Copyright 2013, Michael Yanovich (yanovich.net)

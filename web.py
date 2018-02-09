@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 web.py - Web Facilities
 Copyright 2009-2013, Michael Yanovich (yanovich.net)

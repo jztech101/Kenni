@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim: set fileencoding=UTF-8 :
 '''
 youtube.py - Youtube Module Improved v3

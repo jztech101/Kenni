@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 image_me.py - kenni Animated GIF Fetcher Module
 Copyright 2009-2013, Michael Yanovich (yanovich.net)
