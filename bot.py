@@ -209,7 +209,7 @@ class kenni(irc.Bot):
                 sender = origin.sender or text
                 if attr == 'reply':
                     return (lambda msg:
-                        self._bot.msg(sender, origin.nick + ': ' + msg))
+                        self._bot.msg(sender, msg))
                 elif attr == 'say':
                     return lambda msg: self._bot.msg(sender, msg)
                 elif attr == 'bot':
