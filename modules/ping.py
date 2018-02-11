@@ -12,14 +12,6 @@ More info:
 
 import random
 
-
-def interjection(kenni, input):
-    """response to interjections"""
-    kenni.say(input.nick + '!')
-interjection.rule = r'($nickname!)'
-interjection.priority = 'high'
-interjection.example = '$nickname!'
-
 def f_ping(kenni, input):
     """ping kenni in a channel or pm"""
     kenni.say('pong')
