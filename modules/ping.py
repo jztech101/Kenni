@@ -22,12 +22,12 @@ interjection.example = '$nickname!'
 
 def f_ping(kenni, input):
     """ping kenni in a channel or pm"""
-    kenni.reply('pong')
+    kenni.say('pong')
 f_ping.commands = ['ping']
 f_ping.priority = 'high'
 
 def f_pong(kenni, input):
-    kenni.reply('ping')
+    kenni.say('ping')
 f_pong.commands = ['pong']
 f_pong.priority = 'high'
 

@@ -32,7 +32,7 @@ def gettld(kenni, input):
 
     text = input.group(2)
     if not text:
-        kenni.reply("You didn't provide any input.")
+        kenni.say("You didn't provide any input.")
         return
     text = text.split()[0]
     if text and text.startswith('.'):

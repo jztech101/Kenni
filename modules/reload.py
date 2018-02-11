@@ -20,23 +20,23 @@ def f_reload(kenni, input):
 
     name = input.group(2)
     if name == kenni.config.owner:
-        return kenni.reply('What?')
+        return kenni.say('What?')
 
     if (not name) or (name == '*'):
         kenni.variables = None
         kenni.commands = None
         kenni.setup()
-        return kenni.reply('done')
+        return kenni.say('done')
 
     if not sys.modules.has_key(name):
-        return kenni.reply('%s: no such module!' % name)
+        return kenni.say('%s: no such module!' % name)
 
     # Thanks to moot for prodding me on this
     path = sys.modules[name].__file__
     if path.endswith('.pyc') or path.endswith('.pyo'):
         path = path[:-1]
     if not os.path.isfile(path):
-        return kenni.reply('Found %s, but not the source file' % name)
+        return kenni.say('Found %s, but not the source file' % name)
 
     module = imp.load_source(name, path)
     sys.modules[name] = module
@@ -49,7 +49,7 @@ def f_reload(kenni, input):
     kenni.register(vars(module))
     kenni.bind_commands()
 
-    kenni.reply('%r (version: %s)' % (module, modified))
+    kenni.say('%r (version: %s)' % (module, modified))
     if hasattr(kenni.config, 'logchan_pm'):
         if not input.owner:
             kenni.msg(kenni.config.logchan_pm, 'RELOADED: %r -- (%s, %s) - %s' % (module, input.sender, input.nick, modified))

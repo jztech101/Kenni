@@ -135,7 +135,7 @@ def f_remind(kenni, input):
         if rand > 0.9999: response = 'yeah, yeah'
         elif rand > 0.999: response = 'yeah, sure, whatever'
 
-    kenni.reply(response)
+    kenni.say(response)
 
     dumpReminders(kenni.tell_filename, kenni.reminders, kenni.tell_lock) # @@ tell
 f_remind.rule = ('$nick', ['[tTyY]ell', '[aA]sk'], r'(\S+) (.*)')

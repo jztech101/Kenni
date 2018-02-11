@@ -28,7 +28,7 @@ re_country = re.compile('(?i)(.+), (.+ of)')
 def ip_lookup(kenni, input):
     txt = input.group(2)
     if not txt:
-        return kenni.reply("No search term!")
+        return kenni.say("No search term!")
     txt = uc.encode(txt)
     query = uc.decode(txt)
     response = "[IP/Host Lookup] "
@@ -39,7 +39,7 @@ def ip_lookup(kenni, input):
     try:
         results = json.loads(page)
     except:
-        return kenni.reply('Did not receive proper JSON from %s' % (base))
+        return kenni.say('Did not receive proper JSON from %s' % (base))
     if results:
         if re_ip.findall(query):
             ## IP Address
@@ -69,7 +69,7 @@ def ip_lookup(kenni, input):
             response += '%s ZIP: %s' % (spacing, results['zipcode'])
         response += '%s Latitude: %s' % (spacing, results['latitude'])
         response += '%s Longitude: %s' % (spacing, results['longitude'])
-    kenni.reply(response)
+    kenni.say(response)
 ip_lookup.commands = ['ip', 'iplookup', 'host']
 ip_lookup.example = ".iplookup 8.8.8.8"
 

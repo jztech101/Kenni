@@ -179,7 +179,7 @@ def cw(kenni, input):
                 output = "Non morse code character used."
                 break
             output += " "
-    kenni.reply(output)
+    kenni.say(output)
 cw.commands = ['cw', 'morse', 'm']
 cw.thread = True
 

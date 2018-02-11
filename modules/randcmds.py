@@ -14,7 +14,7 @@ def potato(kenni, input):
 potato.commands = ['potato']
 potato.priority = 'high'
 def moo(kenni, input):
-    kenni.reply('mooooooooooo')
+    kenni.say('mooooooooooo')
 moo.commands = ['moo']
 moo.priority = 'high'
 def cookie(kenni, input):
@@ -25,11 +25,11 @@ def cookie(kenni, input):
 cookie.commands = ['cookie']
 cookie.priority = 'high'
 def source(kenni, input):
-    kenni.reply('https://github.com/jztech101/kenni')
+    kenni.say('https://github.com/jztech101/kenni')
 source.commands = ['source']
 source.priority = 'high'
 def shrug(kenni, input):
-    kenni.reply('┻━┻ ︵ ¯\_(ツ)_/¯ ︵ ┻━┻')
+    kenni.say('┻━┻ ︵ ¯\_(ツ)_/¯ ︵ ┻━┻')
 shrug.commands = ['shrug']
 shrug.priority = 'high'
 if __name__ == '__main__':

@@ -30,7 +30,7 @@ def addquote(kenni, input):
 
     write_addquote(text)
 
-    kenni.reply('Quote added.')
+    kenni.say('Quote added.')
 addquote.commands = ['addquote']
 addquote.priority = 'low'
 addquote.example = '.addquote'
@@ -47,11 +47,11 @@ def retrievequote(kenni, input):
     try:
         fn = open('quotes.txt', 'r')
     except:
-        return kenni.reply('Please add a quote first.')
+        return kenni.say('Please add a quote first.')
 
     lines = fn.readlines()
     if len(lines) < 1:
-        return kenni.reply(NO_QUOTES)
+        return kenni.say(NO_QUOTES)
     MAX = len(lines)
     fn.close()
     random.seed()
@@ -76,7 +76,7 @@ def retrievequote(kenni, input):
     else:
         number = random.randint(1, MAX)
     if not (0 <= number <= MAX):
-        kenni.reply("I'm not sure which quote you would like to see.")
+        kenni.say("I'm not sure which quote you would like to see.")
     else:
         if lines:
             if number == 0:
@@ -85,7 +85,7 @@ def retrievequote(kenni, input):
                 line = lines[number - 1]
             kenni.say('Quote %s of %s: ' % (number, MAX) + line)
         else:
-            kenni.reply(NO_QUOTES)
+            kenni.say(NO_QUOTES)
 retrievequote.commands = ['quote']
 retrievequote.priority = 'low'
 retrievequote.example = '.quote'
@@ -101,7 +101,7 @@ def delquote(kenni, input):
     try:
         fn = open('quotes.txt', 'r')
     except:
-        return kenni.reply('No quotes to delete.')
+        return kenni.say('No quotes to delete.')
 
     lines = fn.readlines()
     MAX = len(lines)
@@ -110,13 +110,13 @@ def delquote(kenni, input):
     try:
         number = int(text)
     except:
-        kenni.reply('Please enter the quote number you would like to delete.')
+        kenni.say('Please enter the quote number you would like to delete.')
         return
 
     if number > 0:
         newlines = lines[:number - 1] + lines[number:]
     elif number == 0:
-        return kenni.reply('There is no "0th" quote!')
+        return kenni.say('There is no "0th" quote!')
     elif number == -1:
         newlines = lines[:number]
     else:
@@ -130,7 +130,7 @@ def delquote(kenni, input):
             if txt[-1] != '\n':
                 fn.write('\n')
     fn.close()
-    kenni.reply('Successfully deleted quote %s.' % (number))
+    kenni.say('Successfully deleted quote %s.' % (number))
 delquote.commands = ['rmquote', 'delquote']
 delquote.priority = 'low'
 delquote.example = '.rmquote'

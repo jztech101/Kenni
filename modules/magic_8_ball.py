@@ -49,11 +49,11 @@ def magic8Ball(kenni, input):
 
     #1 in 5 chance of getting an ask again answer (randint() is inclusive)
     if (random.randint(1,5) == 1):
-        kenni.reply(random.choice(askAgainAnswers))
+        kenni.say(random.choice(askAgainAnswers))
     else:  #else produce a real answer
         hash = hashlib.sha224(input)
         hash.update(str(time()))
-        kenni.reply(answers[int(hash.hexdigest(), 16) % len(answers)])
+        kenni.say(answers[int(hash.hexdigest(), 16) % len(answers)])
 
 
 magic8Ball.commands = ['magic8Ball', 'm8b', '8ball', '8b']

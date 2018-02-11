@@ -16,7 +16,7 @@ import re
 def rand(kenni, input):
     """.rand <arg1> <arg2> - Generates a random integer between <arg1> and <arg2>."""
     if input.group(2) == " " or not input.group(2):
-        kenni.reply("I'm sorry, but you must enter at least one number.")
+        kenni.say("I'm sorry, but you must enter at least one number.")
     else:
         random.seed()
         li_integers = input.group(2)
@@ -35,9 +35,9 @@ def rand(kenni, input):
                     a = li_integers_str
                     a = int(a)
                     randinte = random.randint(0, a)
-                kenni.reply("your random integer is: " + str(randinte))
+                kenni.say("your random integer is: " + str(randinte))
             else:
-                kenni.reply("lolwut")
+                kenni.say("lolwut")
         else:
             ln = li_integers.split()
             if len(ln) == 2:
@@ -54,9 +54,9 @@ def rand(kenni, input):
                     randinte = random.randint(a, b)
                 else:
                     randinte = random.randint(b, a)
-                kenni.reply("your random integer is: " + str(randinte))
+                kenni.say("your random integer is: " + str(randinte))
             else:
-                kenni.reply("I'm not sure what you want me to do!")
+                kenni.say("I'm not sure what you want me to do!")
 
 rand.commands = ['rand', 'randnum','randominteger']
 rand.priority = 'medium'

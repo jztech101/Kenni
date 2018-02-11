@@ -51,7 +51,7 @@ def c(kenni, input):
 
     ## let's not bother if someone doesn't give us input
     if not input.group(2):
-        return kenni.reply('Nothing to calculate.')
+        return kenni.say('Nothing to calculate.')
 
     ## handle some unicode conversions
     q = input.group(2).encode('utf-8')
@@ -157,7 +157,7 @@ def py(kenni, input):
     """.py <code> -- evaluates python code"""
     code = input.group(2)
     if not code:
-        return kenni.reply('No code provided.')
+        return kenni.say('No code provided.')
     query = code.encode('utf-8')
     uri = 'https://tumbolia-two.appspot.com/py/'
     try:
@@ -165,16 +165,16 @@ def py(kenni, input):
         if answer is not None and answer != "\n":
             kenni.say(answer)
         else:
-            kenni.reply('Sorry, no result.')
+            kenni.say('Sorry, no result.')
     except Exception, e:
-        kenni.reply('The server did not return an answer.')
+        kenni.say('The server did not return an answer.')
 py.commands = ['py', 'python']
 py.example = '.py print "Hello world, %s!" % ("James")'
 
 
 def math(kenni, input):
     if not input.group(2):
-        return kenni.reply("No search term.")
+        return kenni.say("No search term.")
 
     txt = input.group(2)
     txt = txt.encode('utf-8')
@@ -238,7 +238,7 @@ def wa(kenni, input):
     appid = kenni.config.wolframalpha_apikey
 
     if not input.group(2):
-        return kenni.reply("No search term.")
+        return kenni.say("No search term.")
 
     txt = input.group(2)
     txt = txt.encode('utf-8')

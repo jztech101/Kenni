@@ -119,7 +119,7 @@ def generic_countdown(kenni, input):
         day = text[2]
 
         if not year.isdigit() and not month.isdigit() and not day.isdigit():
-            return kenni.reply('What are you even trying to do?')
+            return kenni.say('What are you even trying to do?')
 
         try:
             offset = text[3]
@@ -137,14 +137,14 @@ def generic_countdown(kenni, input):
     try:
         float(offset)
     except:
-        #return kenni.reply(':-(')
+        #return kenni.say(':-(')
         offset = 0
 
 
     if text and len(text) >= 3 and year.isdigit() and month.isdigit() and day.isdigit():
         calculate_date = datetime(int(year), int(month), int(day), 0, 0, 0)
         if abs(float(offset)) >= 14:
-            return kenni.reply('Do you not love me anymore?')
+            return kenni.say('Do you not love me anymore?')
         today = datetime.now() + timedelta(hours=float(offset))
         nye = False
     elif -14 <= int(offset) <= 14:

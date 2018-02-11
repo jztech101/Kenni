@@ -21,7 +21,7 @@ def insult(kenni, input):
 
     target = input.group(2)
     if not target:
-        return kenni.reply('.i <target>!')
+        return kenni.say('.i <target>!')
     target.encode('utf-8')
     target = (target).strip()
     try:
@@ -52,7 +52,7 @@ def addinsult(kenni, input):
     fn.write(text)
     fn.write("\n")
     fn.close()
-    kenni.reply("Insult added.")
+    kenni.say("Insult added.")
 addinsult.commands = ['iadd']
 addinsult.priority = 'medium'
 addinsult.example = '.iadd Bad Person'

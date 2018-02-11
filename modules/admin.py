@@ -189,7 +189,7 @@ def blocks(kenni, input):
                     if len(each) > 0:
                         kenni.say('blocked hostmask: ' + each)
             else:
-                kenni.reply(STRINGS['nonelisted'] % ('hostmasks'))
+                kenni.say(STRINGS['nonelisted'] % ('hostmasks'))
 
         ## Nicks
         elif text[2] == 'nick':
@@ -198,7 +198,7 @@ def blocks(kenni, input):
                     if len(each) > 0:
                         kenni.say('blocked nick: ' + each)
             else:
-                kenni.reply(STRINGS['nonelisted'] % ('nicks'))
+                kenni.say(STRINGS['nonelisted'] % ('nicks'))
 
         elif text[2] == 'ident':
             if len(idents) > 0 and idents.count('') == 0:
@@ -208,7 +208,7 @@ def blocks(kenni, input):
 
         ## Couldn't display anything
         else:
-            kenni.reply(STRINGS['invalid_display'])
+            kenni.say(STRINGS['invalid_display'])
 
     elif len(text) == 4 and text[1] == 'add':
         ## Add blocks...
@@ -220,10 +220,10 @@ def blocks(kenni, input):
         elif text[2] == 'ident':
             idents.append(text[3])
         else:
-            kenni.reply(STRINGS['invalid'] % ('adding'))
+            kenni.say(STRINGS['invalid'] % ('adding'))
             return
 
-        kenni.reply(STRINGS['success_add'] % (text[3]))
+        kenni.say(STRINGS['success_add'] % (text[3]))
 
     elif len(text) == 4 and text[1] == 'del':
         ## Delete a block...
@@ -232,33 +232,33 @@ def blocks(kenni, input):
         if text[2] == 'nick':
             try:
                 nicks.remove(text[3])
-                kenni.reply(STRINGS['success_del'] % (text[3]))
+                kenni.say(STRINGS['success_del'] % (text[3]))
             except:
-                kenni.reply(STRINGS['no_nick'] % (text[3]))
+                kenni.say(STRINGS['no_nick'] % (text[3]))
                 return
 
         ## Hostmask
         elif text[2] == 'hostmask':
             try:
                 masks.remove(text[3])
-                kenni.reply(STRINGS['success_del'] % (text[3]))
+                kenni.say(STRINGS['success_del'] % (text[3]))
             except:
-                kenni.reply(STRINGS['no_host'] % (text[3]))
+                kenni.say(STRINGS['no_host'] % (text[3]))
                 return
 
         ## Ident
         elif text[2] == 'ident':
             try:
                 idents.remove(text[3])
-                kenni.reply(STRINGS['success_del'] % (text[3]))
+                kenni.say(STRINGS['success_del'] % (text[3]))
             except:
-                kenni.reply(STRINGS['no_ident'] % (text[3]))
+                kenni.say(STRINGS['no_ident'] % (text[3]))
                 return
         else:
-            kenni.reply(STRINGS['invalid'] % ('deleting'))
+            kenni.say(STRINGS['invalid'] % ('deleting'))
             return
     else:
-        kenni.reply(STRINGS['huh'])
+        kenni.say(STRINGS['huh'])
 
     os.remove('blocks')
     blocks = open('blocks', 'w')

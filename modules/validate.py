@@ -16,7 +16,7 @@ import web
 def val(kenni, input):
     """Check a webpage using the W3C Markup Validator."""
     if not input.group(2):
-        return kenni.reply("Nothing to validate.")
+        return kenni.say("Nothing to validate.")
     uri = input.group(2)
     if not uri.startswith('http://'):
         uri = 'http://' + uri
@@ -39,7 +39,7 @@ def val(kenni, input):
                 else: result += ' (%s error)' % n
     else: result += 'Unvalidatable: no X-W3C-Validator-Status'
 
-    kenni.reply(result)
+    kenni.say(result)
 val.rule = (['val'], r'(?i)(\S+)')
 val.example = '.val http://www.w3.org/'
 

@@ -78,7 +78,7 @@ def format(word, definitions, number=2):
 def define(kenni, input):
     word = input.group(2)
     if not word:
-        kenni.reply("You want the definition for what?")
+        kenni.say("You want the definition for what?")
         return
     word = (word).lower()
     etymology, definitions = wiktionary(word)

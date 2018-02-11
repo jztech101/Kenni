@@ -20,20 +20,20 @@ def ask(kenni, input):
     choices = input.group(2)
 
     if choices == None:
-        kenni.reply('There is no spoon! Please try a valid question.')
+        kenni.say('There is no spoon! Please try a valid question.')
     elif choices.lower() == 'what is the answer to life, the universe, and everything?':
         ## cf. https://is.gd/2KYchV
-        kenni.reply('42')
+        kenni.say('42')
     else:
         list_choices = choices.lower().split(' or ')
         if len(list_choices) == 1:
             ## if multiple things aren't listed
             ## default to yes/no
-            kenni.reply(random.choice(['yes', 'no']))
+            kenni.say(random.choice(['yes', 'no']))
         else:
             ## randomly pick an item if multiple things
             ## are listed
-            kenni.reply((random.choice(list_choices)).encode('utf-8'))
+            kenni.say((random.choice(list_choices)).encode('utf-8'))
 ask.commands = ['ask']
 ask.priority = 'low'
 ask.example = '.ask today or tomorrow or next week'

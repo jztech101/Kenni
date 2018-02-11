@@ -46,7 +46,7 @@ def bing(kenni, input):
         lang = lang[1:]
     else: lang = 'en-GB'
     if not query:
-        return kenni.reply('.bing what?')
+        return kenni.say('.bing what?')
 
     query = query.encode('utf-8')
     uri = bing_search(query, lang)
@@ -59,7 +59,7 @@ def bing(kenni, input):
         if not hasattr(kenni, 'last_seen_uri'):
             kenni.last_seen_uri = {}
         kenni.last_seen_uri[input.sender] = uri
-    else: kenni.reply("No results found for '%s'." % query)
+    else: kenni.say("No results found for '%s'." % query)
 bing.commands = ['bing']
 bing.example = '.bing swhack'
 
@@ -135,7 +135,7 @@ def duck(kenni, input):
     '''Perform a DuckDuckGo Search and Zero-Click lookup'''
     query = input.group(2)
     if not query:
-        return kenni.reply('.ddg what?')
+        return kenni.say('.ddg what?')
 
     #query = query.encode('utf-8')
     #kenni.say('query: ' + query)
@@ -149,7 +149,7 @@ def duck(kenni, input):
         else:
             kenni.say(uri)
     else:
-        return kenni.reply("No results found for '%s'." % query)
+        return kenni.say("No results found for '%s'." % query)
 duck.commands = ['duck', 'ddg', 'g', 'search']
 
 if __name__ == '__main__':

@@ -338,7 +338,7 @@ def f_lisp(kenni, input):
         output = eval(output)
         output = to_string(output)
     except Exception, e:
-        kenni.reply('Scheme Lisp ERROR: %s' % (str(e)))
+        kenni.say('Scheme Lisp ERROR: %s' % (str(e)))
         return
     response = str()
     if type(list()) == type(output):
@@ -347,7 +347,7 @@ def f_lisp(kenni, input):
         response = output
     else:
         response = str(output)
-    kenni.reply(response)
+    kenni.say(response)
 f_lisp.commands = ['lisp']
 f_lisp.example = '.lisp (+ 2 2)'
 

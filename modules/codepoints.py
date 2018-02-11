@@ -154,10 +154,10 @@ def u(kenni, input):
     arg = input.bytes[3:]
     # kenni.msg('#inamidst', '%r' % arg)
     if not arg:
-        return kenni.reply('You gave me zero length input.')
+        return kenni.say('You gave me zero length input.')
     elif not arg.strip(' '):
-        if len(arg) > 1: return kenni.reply('%s SPACEs (U+0020)' % len(arg))
-        return kenni.reply('1 SPACE (U+0020)')
+        if len(arg) > 1: return kenni.say('%s SPACEs (U+0020)' % len(arg))
+        return kenni.say('1 SPACE (U+0020)')
 
     # @@ space
     if set(arg.upper()) - set(
@@ -191,13 +191,13 @@ def u(kenni, input):
                 elif (i == 2) and (len(results) > 3):
                     kenni.say(result + ' [...]')
             if not results:
-                kenni.reply('Sorry, no results')
+                kenni.say('Sorry, no results')
         else:
             # look up a codepoint freely
             result = codepoint_simple(arg)
             if result is not None:
                 kenni.say(result)
-            else: kenni.reply('Sorry, no results for %r.' % arg)
+            else: kenni.say('Sorry, no results for %r.' % arg)
     else:
         text = arg.decode('utf-8')
         if len(text) <= 3:
@@ -206,10 +206,10 @@ def u(kenni, input):
                 kenni.say(about(u))
         elif len(text) <= 10:
             ## look up more than three podecoints
-            kenni.reply(' '.join('U+%04X' % ord(c) for c in text))
+            kenni.say(' '.join('U+%04X' % ord(c) for c in text))
         else:
             ## oh baby
-            kenni.reply('Sorry, your input is too long!')
+            kenni.say('Sorry, your input is too long!')
 u.commands = ['u', 'unicode']
 u.example = '.u 203D'
 
@@ -217,7 +217,7 @@ u.example = '.u 203D'
 def bytes(kenni, input):
     '''Show the input as pretty printed bytes.'''
     b = input.bytes
-    kenni.reply('%r' % b[b.find(' ') + 1:])
+    kenni.say('%r' % b[b.find(' ') + 1:])
 bytes.commands = ['bytes']
 bytes.example = '.bytes \xe3\x8b\xa1'
 

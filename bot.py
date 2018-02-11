@@ -207,18 +207,8 @@ class kenni(irc.Bot):
 
             def __getattr__(self, attr):
                 sender = origin.sender or text
-                if attr == 'reply':
-                    return (lambda msg:
-                        self._bot.msg(sender, origin.nick + ': ' + msg))
-                elif attr == 'say':
+                if attr == 'say':
                     return lambda msg: self._bot.msg(sender, msg)
-                elif attr == 'bot':
-                    # Allow deprecated usage of kenni.bot.foo but print a warning to the console
-                    print "Warning: Direct access to kenni.bot.foo is deprecated.  Please use kenni.foo instead."
-                    import traceback
-                    traceback.print_stack()
-                    # Let this keep working by passing it transparently to _bot
-                    return self._bot
                 return getattr(self._bot, attr)
 
             def __setattr__(self, attr, value):

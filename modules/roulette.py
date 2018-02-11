@@ -45,7 +45,7 @@ def roulette (kenni, input):
         ROULETTE_TMP['NUMBER'] = random.randint(0,ROULETTE_SETTINGS['MAX_RANGE'])
         ROULETTE_TMP['LAST-PLAYER'] = input.nick
         ROULETTE_TMP['LAST-ACTIVITY'] = datetime.now()
-        kenni.reply(ROULETTE_STRINGS['TICK'])
+        kenni.say(ROULETTE_STRINGS['TICK'])
         return
     if ROULETTE_TMP['LAST-PLAYER'] == input.nick:
         return
@@ -57,7 +57,7 @@ def roulette (kenni, input):
         ROULETTE_TMP['NUMBER'] = None
         ROULETTE_TMP['LAST-ACTIVITY'] = None
     else:
-        kenni.reply(ROULETTE_STRINGS['TICK'])
+        kenni.say(ROULETTE_STRINGS['TICK'])
 roulette.commands = ['roulette']
 roulette.priority = 'low'
 roulette.rate = 60
@@ -67,12 +67,12 @@ def rouletteStop (kenni, input):
     if ROULETTE_TMP['LAST-PLAYER'] is None:
         return
     if datetime.now() - ROULETTE_TMP['LAST-ACTIVITY'] > ROULETTE_TMP['TIMEOUT']:
-        kenni.reply(ROULETTE_STRINGS['GAME_END'])
+        kenni.say(ROULETTE_STRINGS['GAME_END'])
         ROULETTE_TMP['LAST-ACTIVITY'] = None
         ROULETTE_TMP['LAST-PLAYER'] = None
         ROULETTE_TMP['NUMBER'] = None
     else:
-        kenni.reply(ROULETTE_STRINGS['GAME_END_FAIL'] % (input.nick, ROULETTE_TMP['TIMEOUT'].seconds - (datetime.now() - ROULETTE_TMP['LAST-ACTIVITY']).seconds))
+        kenni.say(ROULETTE_STRINGS['GAME_END_FAIL'] % (input.nick, ROULETTE_TMP['TIMEOUT'].seconds - (datetime.now() - ROULETTE_TMP['LAST-ACTIVITY']).seconds))
 rouletteStop.commands = ['roulette-stop']
 roulette.priority = 'low'
 roulette.rate = 60

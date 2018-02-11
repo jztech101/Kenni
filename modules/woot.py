@@ -20,7 +20,7 @@ def woot(kenni, input):
     output = str()
     parsed = feedparser.parse(api)
     if not parsed['entries']:
-        kenni.reply("No item currently available.")
+        kenni.say("No item currently available.")
         return
     item = parsed['entries'][0]['woot_products']
     link = parsed['entries'][0]['link']
@@ -42,7 +42,7 @@ def woot(kenni, input):
 
     output = base.format(item, price, soldout, condition, quantity,
             woot_off, link.replace("http:", "https:"))
-    kenni.reply(output)
+    kenni.say(output)
 woot.commands = ['woot']
 woot.priority = 'low'
 woot.rate = 30

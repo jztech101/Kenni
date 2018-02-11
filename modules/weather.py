@@ -18,7 +18,6 @@ import re
 import urllib
 import web
 import sys
-from tools import deprecated
 from modules import unicode as uc
 from icao import data
 
@@ -590,7 +589,7 @@ def windchill(kenni, input):
         return kenni.say("You can't have negative wind speed!")
     elif wind >= 300:
         ## hehe
-        kenni.reply('Are you okay?')
+        kenni.say('Are you okay?')
 
     ## cf. https://is.gd/mgLuzU
     wc = 35.74 + (0.6215 * temp) - (35.75 * (wind ** (0.16))) + (0.4275 * temp * (wind ** (0.16)))

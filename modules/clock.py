@@ -13,7 +13,7 @@ More info:
 
 import re, math, time, urllib, locale, socket, struct, datetime
 from decimal import Decimal as dec
-from tools import deprecated
+
 
 TimeZones = {'KST': 9, 'CADT': 10.5, 'EETDST': 3, 'MESZ': 2, 'WADT': 9,
             'EET': 2, 'MST': -7, 'WAST': 8, 'IST': 5.5, 'B': 2,
@@ -198,36 +198,35 @@ TimeZones.update(TZ3)
 r_local = re.compile(r'\([a-z]+_[A-Z]+\)')
 
 
-@deprecated
-def f_time(self, origin, match, args):
+def f_time(kenni, input):
     """Returns the current time."""
-    tz = match.group(2) or 'GMT'
+    tz = input.group(2) or 'GMT'
 
     # Personal time zones, because they're rad
-    if hasattr(self.config, 'timezones'):
-        People = self.config.timezones
+    if hasattr(kenni.config, 'timezones'):
+        People = kenni.config.timezones
     else: People = {}
 
     if People.has_key(tz):
         tz = People[tz]
-    elif (not match.group(2)) and People.has_key(origin.nick):
-        tz = People[origin.nick]
+    elif (not input.group(2)) and People.has_key(input.nick):
+        tz = People[input.nick]
 
     TZ = tz.upper()
     if len(tz) > 30: return
 
     if (TZ == 'UTC') or (TZ == 'Z'):
         msg = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
-        self.msg(origin.sender, msg)
+        kenni.msg(input.sender, msg)
     elif r_local.match(tz): # thanks to Mark Shoulsdon (clsn)
         locale.setlocale(locale.LC_TIME, (tz[1:-1], 'UTF-8'))
         msg = time.strftime("%A, %d %B %Y %H:%M:%SZ", time.gmtime())
-        self.msg(origin.sender, msg)
+        kenni.msg(input.sender, msg)
     elif TimeZones.has_key(TZ):
         offset = TimeZones[TZ] * 3600
         timenow = time.gmtime(time.time() + offset)
         msg = time.strftime("%a, %d %b %Y %H:%M:%S " + str(TZ), timenow)
-        self.msg(origin.sender, msg)
+        kenni.msg(input.sender, msg)
     elif tz and tz[0] in ('+', '-') and 4 <= len(tz) <= 6:
         import re
         ## handle invalid inputs and typos
@@ -244,9 +243,9 @@ def f_time(self, origin, match, args):
         if tz_final % 1 == 0.0:
             tz_final = int(tz_final)
         if tz_final >= 100 or tz_final <= -100:
-            return self.reply('Time requested is too far away.')
+            return kenni.reply('Time requested is too far away.')
         msg = time.strftime("%a, %d %b %Y %H:%M:%S UTC" + "%s%s" % (str(sign), str(abs(tz_final))), timenow)
-        self.msg(origin.sender, msg)
+        kenni.msg(input.sender, msg)
     else:
         try: t = float(tz)
         except ValueError:
@@ -255,17 +254,17 @@ def f_time(self, origin, match, args):
             if r_tz.match(tz) and os.path.isfile('/usr/share/zoneinfo/' + tz):
                 cmd, PIPE = 'TZ=%s date' % tz, subprocess.PIPE
                 proc = subprocess.Popen(cmd, shell=True, stdout=PIPE)
-                self.msg(origin.sender, proc.communicate()[0])
+                kenni.msg(input.sender, proc.communicate()[0])
             else:
                 error = "Sorry, I don't know about the '%s' timezone." % tz
-                self.msg(origin.sender, origin.nick + ': ' + error)
+                kenni.msg(input.sender, input.nick + ': ' + error)
         else:
             if t >= 100 or t <= -100:
-                return self.reply('Time requested is too far away.')
+                return kenni.say('Time requested is too far away.')
             try:
                 timenow = time.gmtime(time.time() + (t * 3600))
             except:
-                return self.reply('Time requested is too far away.')
+                return kenni.say('Time requested is too far away.')
             if t >= 0:
                 sign = '+'
             elif t < 0:
@@ -277,7 +276,7 @@ def f_time(self, origin, match, args):
                 ## if tz is a whole number
                 tz = int(tz)
             msg = time.strftime("%a, %d %b %Y %H:%M:%S UTC" + "%s%s" % (sign, str(tz)), timenow)
-            self.msg(origin.sender, msg)
+            kenni.msg(input.sender, msg)
 f_time.commands = ['t', 'time']
 f_time.name = 't'
 f_time.example = '.t UTC'
@@ -349,12 +348,12 @@ def easter(kenni, input):
     elif text and len(text.split()) == 1:
         year = text
     else:
-        kenni.reply(bad_input)
+        kenni.say(bad_input)
         return
     try:
         year = int(year)
     except:
-        kenni.reply(bad_input)
+        kenni.say(bad_input)
         return
 
     month, day = IanTaylorEasterJscr(year)
@@ -370,10 +369,10 @@ def easter(kenni, input):
     elif month == 4:
         month = "April"
     else:
-        kenni.reply("Calculation of Easter failed.")
+        kenni.say("Calculation of Easter failed.")
         return
 
-    kenni.reply("In the year %s, (Western) Easter %s: %s %s" % (year, verb, day, month))
+    kenni.say("In the year %s, (Western) Easter %s: %s %s" % (year, verb, day, month))
 easter.commands = ['easter']
 
 

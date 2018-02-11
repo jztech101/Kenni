@@ -582,7 +582,7 @@ class UnoBot:
         text = input.group().lower().split()
 
         if len(text) != 3:
-            kenni.reply("Invalid input for stats command. Try '.unostats ppg 10' to show the top 10 ranked by points per game. You can also show rankings by percent-wins 'pw'.")
+            kenni.say("Invalid input for stats command. Try '.unostats ppg 10' to show the top 10 ranked by points per game. You can also show rankings by percent-wins 'pw'.")
             return
 
         if text[1] == "pw" or text[1] == "ppg":
@@ -590,7 +590,7 @@ class UnoBot:
             self.rank_assist(kenni, input, text[2], text[1])
 
         if not self.prescores:
-            kenni.reply(STRINGS['NO_SCORES'])
+            kenni.say(STRINGS['NO_SCORES'])
 
     def rank_assist(self, kenni, input, nicknum, ranktype):
         nickk = (input.nick).lower()
@@ -612,7 +612,7 @@ unobot = UnoBot ()
 
 def uno(kenni, input):
     if input.sender != CHANNEL:
-        kenni.reply("Please join %s to play uno!" % (CHANNEL))
+        kenni.say("Please join %s to play uno!" % (CHANNEL))
     elif input.sender == CHANNEL:
         unobot.start(kenni, input.nick)
 uno.commands = ['uno']

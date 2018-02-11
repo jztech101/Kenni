@@ -23,7 +23,7 @@ def isup(kenni, input):
     '''isup.me website status checker'''
     site = input.group(2)
     if not site:
-        return kenni.reply('What site do you want to check?')
+        return kenni.say('What site do you want to check?')
     if ' ' in site:
         idx = site.find(' ')
         site = site[:idx+1]
@@ -32,7 +32,7 @@ def isup(kenni, input):
     if site[:7] != 'http://' and site[:8] != 'https://':
         if '://' in site:
             protocol = site.split('://')[0] + '://'
-            return kenni.reply('Try it again without the %s' % protocol)
+            return kenni.say('Try it again without the %s' % protocol)
         else:
             site = 'http://' + site
     try:

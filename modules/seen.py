@@ -25,7 +25,7 @@ def f_seen(kenni, input):
     nick = input.group(2).lower()
 
     if not hasattr(kenni, 'seen'):
-        return kenni.reply('?')
+        return kenni.say('?')
 
     if kenni.seen.has_key(nick):
         channel, t = kenni.seen[nick]

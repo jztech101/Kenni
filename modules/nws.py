@@ -160,7 +160,7 @@ def nws_lookup(kenni, input):
     ''' Look up weather watches, warnings, and advisories. '''
     text = input.group(2)
     if not text:
-        return kenni.reply('You need to provide some input.')
+        return kenni.say('You need to provide some input.')
     bits = text.split(',')
     master_url = False
     if len(bits) == 2:
@@ -176,7 +176,7 @@ def nws_lookup(kenni, input):
             if reverse_lookup:
                 state = reverse_lookup[0]
         if state not in states and len(reverse_lookup) < 1:
-            kenni.reply('State not found.')
+            kenni.say('State not found.')
             return
         url1 = county_list.format(states[state])
         page1 = web.get(url1).split('\n')
@@ -191,7 +191,7 @@ def nws_lookup(kenni, input):
             prev2 = prev1
             prev1 = line
         if not url_part2:
-            return kenni.reply('Could not find county.')
+            return kenni.say('Could not find county.')
         master_url = 'https://alerts.weather.gov/cap/' + url_part2
         location = text
     elif len(bits) == 1:
@@ -200,12 +200,12 @@ def nws_lookup(kenni, input):
             zip_code = bits[0]
             zips = re_zip.findall(zip_code)
             if not zips:
-                return kenni.reply('ZIP is invalid.')
+                return kenni.say('ZIP is invalid.')
             else:
                 try:
                     zip_code = zips[0][0]
                 except:
-                    return kenni.reply('ZIP could not be validated.')
+                    return kenni.say('ZIP could not be validated.')
             urlz = zip_code_lookup.format(zip_code)
             pagez = web.get(urlz)
             fips = re_fips.findall(pagez)
@@ -213,7 +213,7 @@ def nws_lookup(kenni, input):
                 state = re_state.findall(pagez)
                 city = re_city.findall(pagez)
                 if not state and not city:
-                    return kenni.reply('Could not match ZIP code to a state')
+                    return kenni.say('Could not match ZIP code to a state')
                 try:
                     state = state[0].lower()
                     state = states[state].upper()
@@ -221,12 +221,12 @@ def nws_lookup(kenni, input):
                     fips_combo = unicode(state) + 'C' + unicode(fips[0])
                     master_url = alerts.format(fips_combo)
                 except:
-                    return kenni.reply('Could not parse state or city from database.')
+                    return kenni.say('Could not parse state or city from database.')
             else:
-                return kenni.reply('ZIP code does not exist.')
+                return kenni.say('ZIP code does not exist.')
 
     if not master_url:
-        return kenni.reply('Invalid input. Please enter a ZIP code or a county and state pairing, such as \'Franklin, Ohio\'')
+        return kenni.say('Invalid input. Please enter a ZIP code or a county and state pairing, such as \'Franklin, Ohio\'')
 
     feed = feedparser.parse(master_url)
     warnings_dict = dict()
@@ -281,15 +281,15 @@ nws_lookup.rate = 10
 def warns_control(kenni, input):
     global stop
     if not input.admin:
-        return kenni.reply('You need to be an admin to use this!')
+        return kenni.say('You need to be an admin to use this!')
 
     if input.group(2) == 'start':
         stop = False
-        kenni.reply('Starting...')
+        kenni.say('Starting...')
         weather_feed(kenni)
     elif input.group(2) == 'stop':
         stop = True
-        kenni.reply('Stopping...')
+        kenni.say('Stopping...')
 warns_control.commands = ['warns']
 warns_control.priority = 'high'
 warns_control.thread = True
@@ -317,7 +317,7 @@ def weather_feed(kenni):
                 conn.commit()
                 c.close()
                 stop = False
-                return kenni.reply('Checking... I\'m comleteply stopped. (stopped in "Master")')
+                return kenni.say('Checking... I\'m comleteply stopped. (stopped in "Master")')
             parsed = feedparser.parse(warning_list)
             if not len(parsed['entries']) > 0:
                 continue
@@ -327,7 +327,7 @@ def weather_feed(kenni):
                     conn.commit()
                     c.close()
                     stop = False
-                    return kenni.reply('Checking... I\'m completely stopped. (stopped inside XML Parse)')
+                    return kenni.say('Checking... I\'m completely stopped. (stopped inside XML Parse)')
                 entry = entity
                 try:
                     area = entry['cap_areadesc']

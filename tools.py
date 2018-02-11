@@ -11,24 +11,6 @@ More info:
 * Phenny: http://inamidst.com/phenny/
 """
 
-def deprecated(old):
-    def new(kenni, input, old=old):
-        self = kenni
-        origin = type('Origin', (object,), {
-            'sender': input.sender,
-            'nick': input.nick
-        })()
-        match = input.match
-        args = [input.bytes, input.sender, '@@']
-
-        old(self, origin, match, args)
-    new.__module__ = old.__module__
-    new.__name__ = old.__name__
-    return new
-
-if __name__ == '__main__':
-    print __doc__.strip()
-
 def isChan(chan, checkprefix):
     if not chan:
         return False

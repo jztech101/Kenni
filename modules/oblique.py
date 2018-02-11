@@ -42,11 +42,11 @@ def service(kenni, input, command, args):
     if isinstance(info, list):
         info = info[0]
     if not 'text/plain' in info.get('content-type', '').lower():
-        return kenni.reply("Sorry, the service didn't respond in plain text.")
+        return kenni.say("Sorry, the service didn't respond in plain text.")
     bytes = web.get(uri)
     lines = bytes.splitlines()
     if not lines:
-        return kenni.reply("Sorry, the service didn't respond any output.")
+        return kenni.say("Sorry, the service didn't respond any output.")
     try: line = lines[0].encode('utf-8')[:350]
     except: line = lines[0][:250]
     kenni.say(line)
@@ -72,10 +72,10 @@ def o(kenni, input):
             if added:
                 msg += ' Added: ' + ', '.join(sorted(added)[:5])
                 if len(added) > 5: msg += ', &c.'
-            return kenni.reply(msg)
+            return kenni.say(msg)
 
     if not text:
-        return kenni.reply('Try %s for details.' % o.serviceURI)
+        return kenni.say('Try %s for details.' % o.serviceURI)
 
     if ' ' in text:
         command, args = text.split(' ', 1)
@@ -84,10 +84,10 @@ def o(kenni, input):
 
     if command == 'service':
         msg = o.services.get(args, 'No such service!')
-        return kenni.reply(msg)
+        return kenni.say(msg)
 
     if not o.services.has_key(command):
-        return kenni.reply('Service not found in %s' % o.serviceURI)
+        return kenni.say('Service not found in %s' % o.serviceURI)
 
     if hasattr(kenni.config, 'external'):
         default = kenni.config.external.get('*')
@@ -95,9 +95,9 @@ def o(kenni, input):
         if manifest:
             commands = set(manifest)
             if (command not in commands) and (manifest[0] != '!'):
-                return kenni.reply('Sorry, %s is not whitelisted' % command)
+                return kenni.say('Sorry, %s is not whitelisted' % command)
             elif (command in commands) and (manifest[0] == '!'):
-                return kenni.reply('Sorry, %s is blacklisted' % command)
+                return kenni.say('Sorry, %s is blacklisted' % command)
     service(kenni, input, command, args)
 o.commands = ['o','oblique']
 o.example = '.o servicename arg1 arg2 arg3'

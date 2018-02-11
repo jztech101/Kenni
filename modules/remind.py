@@ -124,7 +124,7 @@ def setup(kenni):
 def remind(kenni, input):
     m = r_command.match(input.bytes)
     if not m:
-        return kenni.reply("Sorry, didn't understand the input.")
+        return kenni.say("Sorry, didn't understand the input.")
     length, scale, message = m.groups()
 
     length = float(length)
@@ -150,10 +150,10 @@ def remind(kenni, input):
             if duration >= 3600 * 12:
                 w += time.strftime(' on %d %b %Y', time.gmtime(t))
             w += time.strftime(' at %H:%MZ', time.gmtime(t))
-            kenni.reply('Okay, will remind%s' % w)
+            kenni.say('Okay, will remind%s' % w)
         except:
-            kenni.reply('Please enter a more realistic time-frame.')
-    else: kenni.reply('Okay, will remind in %s secs' % duration)
+            kenni.say('Please enter a more realistic time-frame.')
+    else: kenni.say('Okay, will remind in %s secs' % duration)
 remind.commands = ['remind','in']
 
 r_time = re.compile(r'.*([0-9]{2}[:.][0-9]{2}).*')
@@ -186,7 +186,7 @@ def at(kenni, input):
     if not m:
         ## even if a date is specified, if we couldn't find a specific time
         ## we don't know *when* to remind the user
-        return kenni.reply("Sorry, I couldn't find the time. " + help_txt)
+        return kenni.say("Sorry, I couldn't find the time. " + help_txt)
 
     ## : are better than .
     ## but we should still accept .
@@ -197,7 +197,7 @@ def at(kenni, input):
     m = r_zone.findall(bytes)
 
     if not m:
-        return kenni.reply("Sorry, I couldn't figure out what date you wanted. " + help_txt)
+        return kenni.say("Sorry, I couldn't figure out what date you wanted. " + help_txt)
 
     ## pluck out the [A-Za-z]+|[+-]\d\d?
     z = m[0][0]
@@ -281,7 +281,7 @@ def at(kenni, input):
         phrase = 'seconds'
     else:
         ## well crap, the duration must be negative!
-        return kenni.reply('Sorry, but that occurs in the past! Please select a time in the future.')
+        return kenni.say('Sorry, but that occurs in the past! Please select a time in the future.')
 
     ## who do we need to remind? and where? and what?
     reminder = (input.sender, input.nick, bytes)
@@ -296,7 +296,7 @@ def at(kenni, input):
     kenni.sending.release()
 
     ## communicate to the user!
-    kenni.reply('Reminding at %s %s - in %s %s' % (t, z, t_duration, phrase))
+    kenni.say('Reminding at %s %s - in %s %s' % (t, z, t_duration, phrase))
 at.commands = ['remindat','at']
 
 if __name__ == '__main__':

@@ -43,9 +43,9 @@ class Scores:
             return
         nick = uc.encode(nick.lower())
         if not nick:
-            kenni.reply(self.STRINGS["cantadd"])
+            kenni.say(self.STRINGS["cantadd"])
         elif (not input.admin) and (input.nick).lower() == nick:
-            kenni.reply(self.STRINGS["denied"])
+            kenni.say(self.STRINGS["denied"])
         else:
             nick = nick.lower()
             chan = (input.sender).lower()
@@ -197,7 +197,7 @@ class Scores:
             return
 
         if add < 0 or sub < 0:
-            kenni.reply("You are doing it wrong.")
+            kenni.say("You are doing it wrong.")
             return
 
         if channel not in self.scores_dict:
@@ -211,7 +211,7 @@ class Scores:
         if not input.admin:
             return
         if len(line) < 9:
-            kenni.reply("No input provided.")
+            kenni.say("No input provided.")
             return
         line = line[8:].split()
         channel = uc.encode((input.sender).lower())

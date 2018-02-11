@@ -42,7 +42,7 @@ def head(kenni, input):
     if not isinstance(info, list):
         try: info = dict(info)
         except TypeError:
-            return kenni.reply('Try .head http://example.org/ [optional header]')
+            return kenni.say('Try .head http://example.org/ [optional header]')
         info['Status'] = '200'
     else:
         newInfo = dict(info[0])
@@ -61,7 +61,7 @@ def head(kenni, input):
             data.append(time.strftime('%Y-%m-%d %H:%M:%S UTC', modified))
         if info.has_key('content-length'):
             data.append(info['content-length'] + ' bytes')
-        kenni.reply(', '.join(data))
+        kenni.say(', '.join(data))
     else:
         headerlower = header.lower()
         if info.has_key(headerlower):
