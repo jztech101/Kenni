@@ -243,7 +243,7 @@ def f_time(kenni, input):
         if tz_final % 1 == 0.0:
             tz_final = int(tz_final)
         if tz_final >= 100 or tz_final <= -100:
-            return kenni.reply('Time requested is too far away.')
+            return kenni.say('Time requested is too far away.')
         msg = time.strftime("%a, %d %b %Y %H:%M:%S UTC" + "%s%s" % (str(sign), str(abs(tz_final))), timenow)
         kenni.msg(input.sender, msg)
     else:
@@ -257,7 +257,7 @@ def f_time(kenni, input):
                 kenni.msg(input.sender, proc.communicate()[0])
             else:
                 error = "Sorry, I don't know about the '%s' timezone." % tz
-                kenni.msg(input.sender, input.nick + ': ' + error)
+                kenni.msg(input.sender, error)
         else:
             if t >= 100 or t <= -100:
                 return kenni.say('Time requested is too far away.')
