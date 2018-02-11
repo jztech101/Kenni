@@ -132,7 +132,7 @@ def create_default_config(fn):
 
     # Directories to load user modules from
     # e.g. /path/to/my/modules
-    extra = ['""" + os.getcwd() + '/modules/' + """']
+    extra = []
 
     # Services to load: maps channel names to white or black lists
     external = {
