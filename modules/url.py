@@ -1,20 +1,4 @@
 #!/usr/bin/env python2
-"""
-url.py - kenni
-Bitly Module
-Copyright 2015, Sujeet Akula (sujeet@freeboson.org)
-Copyright 2010-2013, Michael Yanovich (yanovich.net)
-Copyright 2010-2013, Kenneth Sham
-Licensed under the Eiffel Forum License 2.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/ 
-* Phenny: http://inamidst.com/phenny/
-
-This module will record all URLs to bitly via an api key and account.
-It also automatically displays the "title" of any URL pasted into the channel.
-"""
 
 import json
 import re
@@ -26,17 +10,6 @@ import urllib2
 import web
 import sys
 
-# Place a file in your ~/Kenni/ folder named, bitly.txt
-# and inside this file place your API key followed by a ','
-# and then your username. For example, the only line in that
-# file should look like this:
-# R_d67798xkjc87sdx6x8c7kjc87,myusername
-
-# this variable is to determine when to use bitly. If the URL is more
-# than this length, it'll display a bitly URL instead. To disable bit.ly,
-# put None even if it's set to None, triggering .bitly command will still 
-
-# do not edit below this line unless you know what you're doing
 BAD_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.bmp', '.tiff', '.gif', '.pdf',
                   '.doc', '.docx', '.deb', '.rpm', '.exe', '.zip', '.7z', '.gz',
                   '.tar', '.webm', '.mp4', '.mp3', '.avi', '.mpeg', '.mpg',

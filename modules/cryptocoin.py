@@ -1,15 +1,4 @@
 #!/usr/bin/env python2
-'''
-units.py - kenni Units Module
-Copyright 2013, Michael Yanovich (yanovich.net)
-Licensed under the Eiffel Forum License 2.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/ 
-* Phenny: http://inamidst.com/phenny/
-'''
-
 from modules import proxy
 import locale
 import json

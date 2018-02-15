@@ -1,16 +1,4 @@
 #!/usr/bin/env python2
-"""
-tell.py - kenni Tell and Ask Module
-Copyright 2012-2013, Michael Yanovich (yanovich.net)
-Copyright 2008, Sean B. Palmer (inamidst.com)
-Licensed under the Eiffel Forum License 2.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/ 
-* Phenny: http://inamidst.com/phenny/
-"""
-
 import os, re, time, random
 import threading
 import tools

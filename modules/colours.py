@@ -1,14 +1,4 @@
 #!/usr/bin/env python2
-"""
-colours.py - kenni Colour Module
-Copyright 2015, Michael Yanovich (yanovich.net)
-Licensed under the Eiffel Forum License 2.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/
-* Phenny: http://inamidst.com/phenny/
-"""
 import tools
 colours = {
     "00": "white",

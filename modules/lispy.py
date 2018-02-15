@@ -1,15 +1,4 @@
 #!/usr/bin/env python2
-"""
-lispy.py - Lisp Module
-Copyright 2013 Michael Yanovich (yanovich.net)
-Copyright 2010-2013 Peter Norvig (norvig.com)
-Licensed under the Eiffel Forum License 2.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/ 
-* Phenny: http://inamidst.com/phenny/
-"""
 
 ################ Scheme Interpreter in Python
 

@@ -1,18 +1,4 @@
 #!/usr/bin/env python2
-"""
-github_stats.py - kenni Github Info Module
-Copyright 2009-2015, Michael Yanovich (yanovich.net)
-Copyright 2008-2013, Sean B. Palmer (inamidst.com)
-Licensed under the Eiffel Forum License 2.
-
-Developed by kaneda (http://jbegleiter.com / https://github.com/kaneda)
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/
-* Phenny: http://inamidst.com/phenny/
-"""
-
 import json
 import random
 import re

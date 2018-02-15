@@ -1,14 +1,4 @@
 #!/usr/bin/env python2
-'''
-ask.py - kenni's Ask Module
-Copyright 2011-2013, Michael Yanovich (yanovich.net)
-Licensed under the Eiffel Forum License 2.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/ 
-* Phenny: http://inamidst.com/phenny/
-'''
 
 import random, time
 

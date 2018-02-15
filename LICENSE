@@ -1,3 +1,26 @@
+Primary License holders:
+Copyright 2008-2018, Sean B. Palmer (inamidst.com) - Primary Developer of phenny (http://inamidst.com/phenny/)
+Copyright 2009-2018, yano (yanovich.net) - Primary Developer of jenni (https://github.com/myano/jenni/)
+Copyright 2018 - Julian Zhou (JZTech101)
+
+Secondary License holders:
+Copyright 2010-2018 Alek Rollyson, Josh Begleiter (jbegleiter.com) - adminchannel.py
+Copyright 2015-2018, Josh Begleiter (jbegleiter.com) - banned_words.py, youtube.py
+Copyright 2014-2018 Sujeet Akula (sujeet@freeboson.org) - arxiv.py, food.py, youtube.py
+Copyright 2012-2018, Elad Alfassa, <elad@fedoraproject.org> - imdb.py, youtube.py, web.py
+Copyright 2011-2018, Dimitri Molenaars (TyRope.nl) - ip.py, youtube.py, web.py
+Copyright 2012-2018 Edward Powell (embolalaia.net) - isup.py, search.py, youtube.py
+Copyright 2010-2018 Peter Norvig (norvig.com) - lispy.py
+Copyright 2015-2018, Kevin Holland (kevinholland94@gmail.com) - magic_8_ball.py
+Copyright 2015-2018 Jonathan Arnett (j3rn.com) - pun.py
+Copyright 2010-2018, Kenneth Sham - roulette.py
+Copyright 2010-2018, Matt Meinwald, Samuel Clements - scores.py
+Copyright 2015-2018, Sujeet Akula (sujeet@freeboson.org) - url.py
+Copyright 2010-2018 Morgan Goose - xkcd.py
+Copyright 2014-2018 Paul Schellin (paulschellin@gmail.com) - xkcd.py
+Copyright 2015-2018, David Jarrett (jarada.co.uk) - youtube.py
+
+
 Eiffel Forum License, version 2
 
 1. Permission is hereby granted to use, copy, modify and/or

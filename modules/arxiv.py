@@ -1,15 +1,4 @@
 #!/usr/bin/env python2
-'''
-arXiv.py -- arXiv Module
-Copyright 2014 Sujeet Akula (sujeet@freeboson.org)
-Licensed under the Eiffel Forum License 2.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni-misc: https://github.com/freeboson/jenni-misc/
-* jenni: https://github.com/myano/jenni/
-* Phenny: http://inamidst.com/phenny/
-'''
 
 import web, re, feedparser
 from web import urllib

@@ -1,20 +1,5 @@
 #!/usr/bin/env python2
 # coding=utf-8
-"""
-ip.py - kenni IP Lookup Module
-Copyright 2013, Michael Yanovich (yanovich.net)
-Copyright 2011, Dimitri Molenaars (TyRope.nl)
-Licensed under the Eiffel Forum License 2.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* Willie: http://willie.dftba.net
-* jenni: https://github.com/myano/jenni/
-* Phenny: http://inamidst.com/phenny/
-
-This module has been imported from Willie.
-"""
-
 from modules import unicode as uc
 import json
 import re

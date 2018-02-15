@@ -1,15 +1,4 @@
 #!/usr/bin/env python2
-"""
-pun.py - kenni Pun Module
-Copyright 2009-2015, Michael Yanovich (yanovich.net)
-Copyright 2008-2015, Sean B. Palmer (inamidst.com)
-Copyright 2015, Jonathan Arnett (j3rn.com)
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/ 
-* Phenny: http://inamidst.com/phenny/
-"""
 
 import re
 import web

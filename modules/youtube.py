@@ -1,19 +1,5 @@
 #!/usr/bin/env python2
 # vim: set fileencoding=UTF-8 :
-'''
-youtube.py - Youtube Module Improved v3
-
-Copyright 2015, David Jarrett (jarada.co.uk)
-Copyright 2015, Josh Begleiter (kanedasan@gmail.com)
-Copyright 2015, Michael Yanovich (yanovich.net)
-Copyright 2014, Sujeet Akula (sujeet@freeboson.org)
-Copyright 2012, Dimitri Molenaars, Tyrope.nl.
-Copyright 2012-2013, Elad Alfassa, <elad@fedoraproject.org>
-Copyright 2012, Edward Powell, embolalia.net
-
-More info:* Kenni: https://github.com/JZTech101/Kenni* jenni-misc: https://github.com/freeboson/jenni-misc/* jenni: https://github.com/myano/jenni/ * Phenny: http://inamidst.com/phenny/
-'''
-
 import json
 import re
 import traceback

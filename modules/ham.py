@@ -1,18 +1,6 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=UTF-8 :
-"""
-ham.py - kenni Ham Radio Module
-Copyright 2011-2013, Michael Yanovich (yanovich.net)
-Licensed under the Eiffel Forum License 2.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/
-* Phenny: http://inamidst.com/phenny/
-
-This contains a collection of lookups and calls for ham radio enthusiasts.
-"""
 
 from modules import unicode as uc
 import re

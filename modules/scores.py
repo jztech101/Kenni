@@ -1,15 +1,4 @@
 #!/usr/bin/env python2
-"""
-scores.py - kenni Scores Module
-Copyright 2010-2013, Michael Yanovich (yanovich.net) and Matt Meinwald,
-    and Samuel Clements
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/
-* Phenny: http://inamidst.com/phenny/
-"""
-
 import codecs
 from modules import unicode as uc
 import pickle

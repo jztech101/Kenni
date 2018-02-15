@@ -1,16 +1,4 @@
 #!/usr/bin/env python2
-"""
-wiktionary.py - kenni Wiktionary Module
-Copyright 2009-2013, Michael Yanovich (yanovich.net)
-Copyright 2009-2013, Sean B. Palmer (inamidst.com)
-Licensed under the Eiffel Forum License 2.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/
-* Phenny: http://inamidst.com/phenny/
-"""
-
 import re
 import web
 

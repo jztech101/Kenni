@@ -1,14 +1,4 @@
 #!/usr/bin/env python2
-"""
-icao.py - Phenny ICAO Codes Data
-This data and module are in the public domain.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/
-* Phenny: http://inamidst.com/phenny/
-"""
-
 data = {
     "AGAF": (-9.19138888889, 160.948333333),
     "AGAR": (-9.85472222222, 161.979166667),

@@ -1,17 +1,4 @@
 # -*- coding: utf8 -*-
-'''
-imdb.py - kenni Movie Information Module
-Copyright 2014-2015, Michael Yanovich, yanovich.net
-Copyright 2012, Elad Alfassa, <elad@fedoraproject.org>
-Licensed under the Eiffel Forum License 2.
-
-This module relies on omdbapi.com
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/
-* Phenny: http://inamidst.com/phenny/
-'''
 
 from modules import proxy
 import json

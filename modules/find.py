@@ -1,18 +1,4 @@
 #!/usr/bin/env python2
-"""
-find.py - kenni Spell Checking Module
-Copyright 2011-2013, Michael Yanovich (yanovich.net)
-Licensed under the Eiffel Forum License 2.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/ 
-* Phenny: http://inamidst.com/phenny/
-
-Contributions from: Matt Meinwald and Morgan Goose
-This module will fix spelling errors if someone corrects them
-using the sed notation (s///) commonly found in vi/vim.
-"""
 
 from modules import unicode as uc
 import os, re

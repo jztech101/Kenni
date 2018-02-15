@@ -1,15 +1,4 @@
 #!/usr/bin/env python2
-"""
-ping.py - kenni Ping Module
-Copyright 2009-2013, Michael Yanovich (yanovich.net)
-Copyright 2008-2013, Sean B. Palmer (inamidst.com)
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/
-* Phenny: http://inamidst.com/phenny/
-"""
-
 import random
 
 

@@ -1,16 +1,4 @@
 #!/usr/bin/env python2
-'''
-warnings.py -- kenni NWS Alert Module
-Copyright 2011-2013, Michael Yanovich (yanovich.net)
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/ 
-* Phenny: http://inamidst.com/phenny/
-
-This module allows one to query the National Weather Service for active
-watches, warnings, and advisories that are present.
-'''
 
 import copy
 import datetime

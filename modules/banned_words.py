@@ -1,15 +1,4 @@
 #!/usr/bin/env python2
-"""
-banned_words.py - kenni banned words module
-Copyright 2015, Josh Begleiter (jbegleiter.com)
-Licensed under the Eiffel Forum License 2.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/
-* Phenny: http://inamidst.com/phenny/
-"""
-
 import imp, os, re, time
 import tools
 

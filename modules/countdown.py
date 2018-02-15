@@ -1,15 +1,4 @@
 #!/usr/bin/env python2
-"""
-countdown.py - kenni Countdown Module
-Copyright 2011-2013, Michael Yanovich (yanovich.net)
-Licensed under the Eiffel Forum License 2.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/ 
-* Phenny: http://inamidst.com/phenny/
-"""
-
 from datetime import datetime, timedelta
 
 ## TODO: just scrape, https://www.timeanddate.com/countdown/generic?iso=20170411T070001&p0=1440&msg=DO+SFO2+DOWNTIME&ud=1&font=cursive

@@ -1,19 +1,4 @@
 #!/usr/bin/env python2
-'''
-magic8ball.py - kenni's Magic 8 Ball Module
-Copyright 2015, Kevin Holland (kevinholland94@gmail.com)
-Licensed under the Eiffel Forum License 2.
-
-This module is a Magic 8 Ball implementation that will give one answer for a question on a given day
-This works by hashing the user's input and seeding it with the current date (as a string). This way,
-the same question will always have the same answer on a given day.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/
-* Phenny: http://inamidst.com/phenny/
-'''
-
 import random
 import hashlib
 from time import time

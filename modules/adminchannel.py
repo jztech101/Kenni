@@ -1,20 +1,4 @@
 #!/usr/bin/env python2
-"""
-admin.py - kenni Admin Module
-Copyright 2010-2015, Michael Yanovich (yanovich.net), Alek Rollyson, Josh Begleiter (jbegleiter.com)
-Licensed under the Eiffel Forum License 2.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/ 
-* Phenny: http://inamidst.com/phenny/
-
-Beefed up by Alek Rollyson, Josh Begleiter.
-* Added functions for op, deop, voice, devoice
-* Uses NickServ ACC to verify that a nick is identified with services, as well
-  as m5's admin list as a double verification system. Should eliminate the possibility
-  of nick spoofing. May only work with freenode, hasn't been tested on other networks.
-"""
 
 import re
 import tools

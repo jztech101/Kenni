@@ -1,14 +1,6 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-'''
-Copyright 2018 Julian Zhou (2018)
-Licensed under the Eiffel Forum License 2.
-
-More Info:
-* Kenni: https://github.com/JZTech101/Kenni
-'''
-
 def potato(kenni, input):
     kenni.write(['PRIVMSG', input.sender], '\x01ACTION is a potato\x01')
 potato.commands = ['potato']

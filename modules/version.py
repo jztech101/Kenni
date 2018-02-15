@@ -1,15 +1,4 @@
 #!/usr/bin/env python2
-"""
-version.py - kenni Version Module
-Copyright 2009-2013, Michael Yanovich (yanovich.net)
-Copyright 2009-2013, Silas Baronda
-Licensed under the Eiffel Forum License 2.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/ 
-* Phenny: http://inamidst.com/phenny/
-"""
 
 from datetime import datetime
 from subprocess import *

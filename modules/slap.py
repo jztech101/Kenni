@@ -1,13 +1,4 @@
 #!/usr/bin/env python2
-"""
-scores.py - kenni Slap Module
-Copyright 2009-2013, Michael Yanovich (yanovich.net)
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/ 
-* Phenny: http://inamidst.com/phenny/
-"""
 
 import random
 import tools

@@ -1,11 +1,4 @@
 #!/usr/bin/env python2
-"""
-sasl.py - kenni SASL Authentication module
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/
-"""
 import base64
 
 def irc_cap (kenni, input):

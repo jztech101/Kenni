@@ -1,18 +1,4 @@
 #!/usr/bin/env python2
-"""
-isup.py - Simple website status check with isup.me
-Copyright 2013-2014, Michael Yanovich (yanovich.net)
-Copyright 2012-2013 Edward Powell (embolalaia.net)
-Licensed under the Eiffel Forum License 2.
-
-This allows users to check if a website is up through isup.me.
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* Willie: http://willie.dftba.net/
-* jenni: https://github.com/myano/jenni/
-* Phenny: http://inamidst.com/phenny/
-"""
 
 from modules import proxy
 import re

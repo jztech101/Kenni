@@ -1,13 +1,4 @@
 #1/usr/bin/env/python
-"""
-food.py - kenni Food Module
-by afuhrtrumpet
-
-More info:
-* Kenni: https://github.com/JZTech101/Kenni
-* jenni: https://github.com/myano/jenni/ 
-* Phenny: http://inamidst.com/phenny/
-"""
 
 from urllib2 import HTTPError
 from urllib import quote
