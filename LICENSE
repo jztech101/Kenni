@@ -1,24 +1,24 @@
 Primary License holders:
-Copyright 2008, Sean B. Palmer (inamidst.com) - Primary Developer of phenny (http://inamidst.com/phenny/)
-Copyright 2009, yano (yanovich.net) - Primary Developer of jenni (https://github.com/myano/jenni/)
-Copyright 2018 - Julian Zhou (JZTech101)
+Copyright (c) 2008, Sean B. Palmer (inamidst.com) - Primary Developer of phenny (http://inamidst.com/phenny/)
+Copyright (c) 2009, yano (yanovich.net) - Primary Developer of jenni (https://github.com/myano/jenni/)
+Copyright (c) 2018 - Julian Zhou (JZTech101)
 
 Secondary License holders:
-Copyright 2010 Alek Rollyson, Josh Begleiter (jbegleiter.com) - adminchannel.py
-Copyright 2015 Josh Begleiter (jbegleiter.com) - banned_words.py, youtube.py
-Copyright 2014 Sujeet Akula (sujeet@freeboson.org) - arxiv.py, food.py, youtube.py
-Copyright 2012 Elad Alfassa, <elad@fedoraproject.org> - imdb.py, youtube.py, web.py
-Copyright 2011 Dimitri Molenaars (TyRope.nl) - ip.py, youtube.py, web.py
-Copyright 2012 Edward Powell (embolalaia.net) - isup.py, search.py, youtube.py
-Copyright 2010 Peter Norvig (norvig.com) - lispy.py
-Copyright 2015 Kevin Holland (kevinholland94@gmail.com) - magic_8_ball.py
-Copyright 2015 Jonathan Arnett (j3rn.com) - pun.py
-Copyright 2010 Kenneth Sham - roulette.py
-Copyright 2010 Matt Meinwald, Samuel Clements - scores.py
-Copyright 2015 Sujeet Akula (sujeet@freeboson.org) - url.py
-Copyright 2010 Morgan Goose - xkcd.py
-Copyright 2014 Paul Schellin (paulschellin@gmail.com) - xkcd.py
-Copyright 2015 David Jarrett (jarada.co.uk) - youtube.py
+Copyright (c) 2010 Alek Rollyson, Josh Begleiter (jbegleiter.com) - adminchannel.py
+Copyright (c) 2015 Josh Begleiter (jbegleiter.com) - banned_words.py, youtube.py
+Copyright (c) 2014 Sujeet Akula (sujeet@freeboson.org) - arxiv.py, food.py, youtube.py
+Copyright (c) 2012 Elad Alfassa, <elad@fedoraproject.org> - imdb.py, youtube.py, web.py
+Copyright (c) 2011 Dimitri Molenaars (TyRope.nl) - ip.py, youtube.py, web.py
+Copyright (c) 2012 Edward Powell (embolalaia.net) - isup.py, search.py, youtube.py
+Copyright (c) 2010 Peter Norvig (norvig.com) - lispy.py
+Copyright (c) 2015 Kevin Holland (kevinholland94@gmail.com) - magic_8_ball.py
+Copyright (c) 2015 Jonathan Arnett (j3rn.com) - pun.py
+Copyright (c) 2010 Kenneth Sham - roulette.py
+Copyright (c) 2010 Matt Meinwald, Samuel Clements - scores.py
+Copyright (c) 2015 Sujeet Akula (sujeet@freeboson.org) - url.py
+Copyright (c) 2010 Morgan Goose - xkcd.py
+Copyright (c) 2014 Paul Schellin (paulschellin@gmail.com) - xkcd.py
+Copyright (c) 2015 David Jarrett (jarada.co.uk) - youtube.py
 
 
 Eiffel Forum License, version 2
