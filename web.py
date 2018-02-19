@@ -2,7 +2,7 @@
 import re
 import urllib
 from html.entities import name2codepoint
-uc = str
+from modules import unicode as uc
 
 r_entity = re.compile(r'&([^;\s]+);')
 

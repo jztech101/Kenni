@@ -7,7 +7,7 @@
 
 
 import re, sys, io
-uc = str
+from modules import unicode as uc
 
 class Symbol(str): pass
 

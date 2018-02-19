@@ -6,7 +6,7 @@ import re
 import urllib.request, urllib.parse, urllib.error
 import web
 import sys
-uc = str
+from modules import unicode as uc
 from icao import data
 
 install_geopy = "Please install geopy via 'pip' to use weather.py"

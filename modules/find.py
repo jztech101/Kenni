@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-uc = str
+from modules import unicode as uc
 import os, re
 import tools
 

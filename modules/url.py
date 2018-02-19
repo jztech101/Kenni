@@ -2,8 +2,8 @@
 import json
 import re
 from html.entities import name2codepoint
-uc = str
 from modules import proxy
+from modules import unicode as uc
 import time
 import urllib.request, urllib.error, urllib.parse
 import web
@@ -62,7 +62,7 @@ def find_title(url):
     if 'zerobin.net' in url:
         return True, 'ZeroBin'
 
-    url = url.decode('utf-8')
+    url = uc.decode(url)
 
     msg = str()
     k = 0
