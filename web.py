@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import re
-import urllib.request, urllib.parse, urllib.error
-import urllib.urlopen
+import urllib
 from html.entities import name2codepoint
 uc = str
 
