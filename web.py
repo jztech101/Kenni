@@ -24,9 +24,9 @@ def get(uri):
         return
     request = urllib.request.Request(uri, headers=defaultHeaders, data=None)
     u = urllib.request.urlopen(request)
-    bytes = u.read.decode('utf-8')
+    bytes = u.read()
     u.close()
-    return bytes
+    return bytes.decode('utf-8')
 
 
 def head(uri):
