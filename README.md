@@ -1,6 +1,6 @@
 Installation & Configuration
 ============================
-kenni requires python 2.7, kenni will not work with python 3.x.
+kenni requires python 3.x
 
 1. Run ./kenni - this creates a default config file
 2. Edit ~/Kenni/config/default.py

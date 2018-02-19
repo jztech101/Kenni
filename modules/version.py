@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from datetime import datetime
 from subprocess import *
+import sys
 
 
 def git_info():
@@ -14,7 +15,7 @@ def git_info():
 
 def version(kenni, input):
 
-    kenni.say("Kenni")
+    kenni.say("Kenni running on " + sys.version_info)
 version.commands = ['version']
 version.priority = 'medium'
 version.rate = 10
