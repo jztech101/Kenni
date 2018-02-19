@@ -40,7 +40,7 @@ def get_page(url):
     out['code'] = u.code
     out['read'] = con
     out['geturl'] = u.geturl()
-    out['headers'] = u.headers.dict
+    out['headers'] = u.headers
     out['url'] = u.url
     return out['code'], out
 

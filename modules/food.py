@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import re
 import web
+from modules import url as ur
 re_mark = re.compile('<dt><a href="(.*?)" target="_blank">(.*?)</a></dt>')
 
 def food(kenni, input):

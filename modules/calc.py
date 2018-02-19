@@ -46,7 +46,6 @@ def c(kenni, input):
     uri = uri_base + web.quote(temp_q)
 
     ## To the webs!
-    page = str()
     page = web.get(uri)
 
     answer = False
