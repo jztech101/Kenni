@@ -21,7 +21,7 @@ def get(uri):
     if not uri.startswith('http'):
         return
     u = urllib.request.urlopen(uri)
-    bytes = u.read()
+    bytes = u.encode("utf-8")
     u.close()
     return bytes
 
