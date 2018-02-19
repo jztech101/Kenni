@@ -3,6 +3,8 @@ import json
 import re
 import socket
 import web
+from modules import unicode as uc
+
 
 base = 'http://freegeoip.net/json/'
 re_ip = re.compile('(?i)\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')

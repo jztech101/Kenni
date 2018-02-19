@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os, random
+from modules import unicode as uc
 
 def insult(kenni, input):
     """ insults <target> with configured language insult """
