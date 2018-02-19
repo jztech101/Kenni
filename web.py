@@ -16,11 +16,14 @@ class Grab(urllib.request.URLopener):
         return urllib.addinfourl(fp, [headers, errcode], "http:" + url)
 urllib.request._urlopener = Grab()
 
-
+defaultHeaders = {
+    'User-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36'
+    }
 def get(uri):
     if not uri.startswith('http'):
         return
-    u = urllib.request.urlopen(uri)
+    request = urllib.request.Request(uri, headers=defaultHeaders, data=None)
+    u = urllib.request.urlopen(request)
     bytes = u.read
     u.close()
     return bytes
