@@ -130,7 +130,7 @@ def duck(kenni, input):
     ## try to find a search result via the API
     uri = duck_search(query)
     if uri:
-        passs, title = find_title(uri)
+        passs, title = url.find_title(uri)
         if passs:
             kenni.say("[" + title +"] " + uri)
         else:
