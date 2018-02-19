@@ -1,4 +1,5 @@
-#!/usr/bin/env python3import re, urllib.request, urllib.parse, urllib.error, gzip, io
+#!/usr/bin/env python3
+import re, urllib.request, urllib.parse, urllib.error, gzip, io
 import web
 
 wikiuri = 'https://%s.wikipedia.org/wiki/%s'
