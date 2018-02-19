@@ -118,77 +118,9 @@ def find_title(url):
     content = page
 
 
-    try:
-        from bs4 import BeautifulSoup
-        soup = BeautifulSoup(content, 'html.parser')
-        title = soup.title.string
-
-    except:
-        regex = re.compile('<(/?)title( [^>]+)?>', re.IGNORECASE)
-        content = regex.sub(r'<\1title>', content)
-        regex = re.compile('[\'"]<title>[\'"]', re.IGNORECASE)
-        content = regex.sub('', content)
-        start = content.find('<title>')
-        if start == -1:
-            return False, 'NO <title> found'
-        end = content.find('</title>', start)
-        if end == -1:
-            return False, 'NO </title> found'
-        content = content[start + 7:end]
-        content = content.strip('\n').rstrip().lstrip()
-        title = content
-
-
-    def e(m):
-        entity = m.group()
-        if entity.startswith('&#x'):
-            cp = int(entity[3:-1], 16)
-            meep = chr(cp)
-        elif entity.startswith('&#'):
-            cp = int(entity[2:-1])
-            meep = chr(cp)
-        else:
-            entity_stripped = entity[1:-1]
-            try:
-                char = name2codepoint[entity_stripped]
-                meep = chr(char)
-            except:
-                if entity_stripped in HTML_ENTITIES:
-                    meep = HTML_ENTITIES[entity_stripped]
-                else:
-                    meep = str()
-        try:
-            return uc.decode(meep)
-        except:
-            return uc.decode(uc.encode(meep))
-
-    title = r_entity.sub(e, title)
-
-    title = title.replace('\n', ' ')
-    title = title.replace('\r', ' ')
-    title = title.replace('\t', ' ')
-
-    def remove_spaces(x):
-        if '  ' in x:
-            x = x.replace('  ', ' ')
-            return remove_spaces(x)
-        else:
-            return x
-
-
-    new_title = str()
-    for char in title:
-        unichar = uc.encode(char)
-        if len(list(uc.encode(char))) <= 3:
-            new_title += uc.encode(char)
-    title = new_title
-
-    title = re.sub(r'(?i)dcc\ssend', '', title)
-
-    title = remove_spaces(title)
-    title = (title).strip()
-
-    title += '\x0F'
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(content, 'html.parser')
+    title = soup.title.string
 
     if len(title) > 350:
         title = title[:350] + '\x0F[...]'
