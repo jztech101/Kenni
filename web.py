@@ -1,8 +1,9 @@
-#!/usr/bin/env python3import re
+#!/usr/bin/env python3
+import re
 import urllib.request, urllib.parse, urllib.error
 import urllib.request, urllib.error, urllib.parse
 from html.entities import name2codepoint
-from .modules uc = str
+uc = str
 
 r_entity = re.compile(r'&([^;\s]+);')
 
