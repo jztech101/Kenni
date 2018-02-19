@@ -11,6 +11,7 @@ data_loaded = False
 
 def load_data():
     all_code = web.get('http://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt')
+    all_code = all_code.decode('utf-8')
     for line in all_code.split('\n'):
         parts = line.split(';')
         if len(parts) >= 10:
@@ -76,7 +77,7 @@ def about(u, cp=None, name=None):
     else:
         template = 'U+%04X %s (\xe2\x97\x8c%s)'
 
-    return template % (cp, name, u.encode('utf-8'))
+    return template % (cp, name, u)
 
 
 def codepoint_simple(arg):
@@ -143,7 +144,7 @@ def u(kenni, input):
     # kenni.msg('#inamidst', '%r' % arg)
     if not arg:
         return kenni.say('You gave me zero length input.')
-    elif not arg.strip(' '):
+    elif not arg.strip(b' '):
         if len(arg) > 1: return kenni.say('%s SPACEs (U+0020)' % len(arg))
         return kenni.say('1 SPACE (U+0020)')
 
@@ -200,14 +201,6 @@ def u(kenni, input):
             kenni.say('Sorry, your input is too long!')
 u.commands = ['u', 'unicode']
 u.example = '.u 203D'
-
-
-def bytes(kenni, input):
-    '''Show the input as pretty printed bytes.'''
-    b = input.bytes
-    kenni.say('%r' % b[b.find(' ') + 1:])
-bytes.commands = ['bytes']
-bytes.example = '.bytes \xe3\x8b\xa1'
 
 if __name__ == '__main__':
     print(__doc__.strip())

@@ -7,17 +7,12 @@ import re
 import string
 import urllib.request, urllib.parse, urllib.error
 import web
-
+from modules import unicode as uc
 
 c_pattern = r'(?ims)<(?:h2 class="r"|div id="aoba")[^>]*>(.*?)</(?:h2|div)>'
 c_answer = re.compile(c_pattern)
 r_tag = re.compile(r'<(?!!)[^>]+>')
 WAKEY_NOTFOUND = "Please sign up for WolframAlpha's API to use this function. http://products.wolframalpha.com/api/"
-
-try:
-   import proxy
-except:
-    pass
 
 
 def clean_up_answer(answer):
@@ -52,12 +47,7 @@ def c(kenni, input):
 
     ## To the webs!
     page = str()
-    try:
-        page = proxy.get(uri)
-    except:
-        ## if we can't access Google for calculating
-        ## let us try with good ole' web.get
-        page = web.get(uri)
+    page = web.get(uri)
 
     answer = False
 
@@ -73,7 +63,7 @@ def c(kenni, input):
         kenni.say(answer)
     else:
         #### Attempt #1a
-        uri = uri_base + web.urllib.quote(q)
+        uri = uri_base + web.quote(q)
         try:
             page = proxy.get(uri)
         except:
@@ -148,7 +138,7 @@ def py(kenni, input):
     query = code.encode('utf-8')
     uri = 'https://tumbolia-two.appspot.com/py/'
     try:
-        answer = web.get(uri + web.urllib.quote(query))
+        answer = web.get(uri + web.quote(query))
         if answer is not None and answer != "\n":
             kenni.say(answer)
         else:
@@ -166,7 +156,6 @@ def math(kenni, input):
     txt = input.group(2)
     txt = txt.encode('utf-8')
     txt = txt.decode('utf-8')
-    txt = txt.encode('utf-8')
     txt = urllib.parse.quote(txt.replace('+', '%2B'))
 
     url = 'http://gamma.sympy.org/input/?i='
@@ -200,7 +189,7 @@ def get_wa(search, appid):
     except ImportError:
         return "Please install 'bs4', also known as BeautifulSoup via pip to use WolframAlpha."
 
-    soup = BeautifulSoup(page, 'xml')
+    soup = BeautifulSoup(page, 'html.parser')
     attempt_one = soup.find_all(attrs={'primary':'true'})
 
     answer = 'No answers found!'

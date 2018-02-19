@@ -201,14 +201,14 @@ class kenni(irc.Bot):
 
         return kenniWrapper(self)
 
-    def input(self, origin, text, bytes, match, event, args):
+    def input(self, origin, text, match, event, args):
         class CommandInput(str):
-            def __new__(cls, text, origin, bytes, match, event, args):
+            def __new__(cls, text, origin, match, event, args):
                 s = str.__new__(cls, text)
                 s.sender = origin.sender
                 s.nick = origin.nick
                 s.event = event
-                s.bytes = bytes
+                s.bytes = text.encode('utf-8')
                 s.match = match
                 s.group = match.group
                 s.groups = match.groups
@@ -238,7 +238,7 @@ class kenni(irc.Bot):
                 s.host = origin.host
                 return s
 
-        return CommandInput(text, origin, bytes, match, event, args)
+        return CommandInput(text, origin, match, event, args)
 
     def call(self, func, origin, kenni, input):
         nick = (input.nick).lower()
@@ -261,9 +261,9 @@ class kenni(irc.Bot):
         except Exception as e:
             self.error(origin)
 
-    def dispatchcommand(self,origin,args, bytes,  text, match, event, func):
+    def dispatchcommand(self,origin,args,  text, match, event, func):
         kenni = self.wrapped(origin, text, match)
-        input = self.input(origin, text, bytes, match, event, args)
+        input = self.input(origin, text, match, event, args)
 
         nick = (input.nick).lower()
 
@@ -351,7 +351,7 @@ class kenni(irc.Bot):
                     if event != func.event: continue
                     match = regexp.match(text)
                     if match:
-                        self.dispatchcommand(origin,args, bytes, text, match, event, func)
+                        self.dispatchcommand(origin,args, text, match, event, func)
 
             items = list(self.commands[priority].items())
             for command, funcs in items:
@@ -366,7 +366,7 @@ class kenni(irc.Bot):
                     command = re.compile(pattern)
                     match = command.match(text)
                     if match:
-                        self.dispatchcommand(origin,args,bytes, text, match, event, func)
+                        self.dispatchcommand(origin,args, text, match, event, func)
             items = list(self.commandrules[priority].items())
             for commandrule, funcs in items:
                 for func in funcs:
@@ -378,7 +378,7 @@ class kenni(irc.Bot):
                     commandrule = re.compile(prefix + commandrule)
                     match = commandrule.match(text)
                     if match:
-                        self.dispatchcommand(origin,args,bytes, text, match, event, func)
+                        self.dispatchcommand(origin,args, text, match, event, func)
 
 
 if __name__ == '__main__':

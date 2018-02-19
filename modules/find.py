@@ -15,15 +15,10 @@ def load_db():
     search_file.close()
     search_dict = dict()
     for line in lines:
-        line = uc.decode(line)
-        line = uc.encode(line)
         a = line.replace(r'\n', '')
         new = a.split(r',')
         if len(new) < 3: continue
-        try:
-            channel = uc.encode(new[0])
-        except:
-            channel = uc.decode(new[0])
+        channel = new[0]
         nick = new[1]
         if len(new) < 2: continue
         if channel not in search_dict:
@@ -38,7 +33,7 @@ def load_db():
             if len(result) > 0:
                 result = result[:-1]
         if result:
-            search_dict[channel][nick].append(uc.decode(result))
+            search_dict[channel][nick].append(result)
     return search_dict
 
 def save_db(search_dict):
@@ -48,17 +43,11 @@ def save_db(search_dict):
         if channel is not "":
             for nick in search_dict[channel]:
                 for line in search_dict[channel][nick]:
-                    channel = uc.decode(channel)
-                    channel_utf = uc.encode(channel)
-                    search_file.write(channel_utf)
+                    search_file.write(channel)
                     search_file.write(",")
-                    nick = uc.encode(nick)
                     search_file.write(nick)
                     search_file.write(",")
-                    line_utf = line
-                    if not type(str()) == type(line):
-                        line_utf = uc.encode(line)
-                    search_file.write(line_utf)
+                    search_file.write(line)
                     search_file.write("\n")
     search_file.close()
 
@@ -71,9 +60,8 @@ def collectlines(kenni, input):
         return
     if not input.sender in kenni.config.sed_enable:
         return
-    channel = uc.decode(input.sender)
-    channel = uc.encode(channel)
-    nick = (input.nick).encode("utf-8")
+    channel = input.sender
+    nick = input.nick
     if not tools.isChan(channel, False): return
     search_dict = load_db()
     if channel not in search_dict:
@@ -102,8 +90,8 @@ def findandreplace(kenni, input):
        return
     if not input.sender in kenni.config.sed_enable:    
        return
-    channel = (input.sender).encode("utf-8")
-    nick = (input.nick).encode("utf-8")
+    channel = input.sender
+    nick = input.nick
 
     if not tools.isChan(channel, False): return
 

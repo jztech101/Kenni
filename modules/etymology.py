@@ -69,7 +69,7 @@ def etymology(word):
 def f_etymology(kenni, input):
     word = input.group(2)
 
-    try: result = etymology(word.encode('utf-8'))
+    try: result = etymology(word)
     except IOError:
         msg = "Can't connect to etymonline.com (%s)" % (etyuri % word)
         kenni.msg(input.sender, msg)

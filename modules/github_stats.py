@@ -119,7 +119,7 @@ def gh_search(kenni, input):
     origterm = input.groups()[1]
     if not origterm:
         return kenni.say('Perhaps you meant ".github_search repo"?')
-    origterm = origterm.encode('utf-8')
+    #origterm = origterm.encode('utf-8')
     origterm = origterm.strip()
 
     error = None
@@ -140,7 +140,7 @@ def gh_user_search(kenni, input):
     origterm = input.groups()[1]
     if not origterm:
         return kenni.say('Perhaps you meant ".github_user_search user"?')
-    origterm = origterm.encode('utf-8')
+    #origterm = origterm.encode('utf-8')
     origterm = origterm.strip()
 
     error = None
@@ -153,7 +153,7 @@ def gh_user_search(kenni, input):
     except Exception as e:
         error = "An unknown error occurred: " + str(e)
         traceback.print_exc()
-gh_user_search.commands = ['gh_user_search', 'github_user_search', 'gh_usr_s']
+gh_user_search.commands = ['gh_user_search', 'github_user_search', 'ghus']
 gh_user_search.priority = 'low'
 gh_user_search.rate = 10
 
@@ -161,7 +161,7 @@ def gh_user_info(kenni, input):
     origterm = input.groups()[1]
     if not origterm:
         return kenni.say('Perhaps you meant ".github_user_info user"?')
-    origterm = origterm.encode('utf-8')
+    #origterm = origterm.encode('utf-8')
     origterm = origterm.strip()
 
     error = None
@@ -174,7 +174,7 @@ def gh_user_info(kenni, input):
     except Exception as e:
         error = "An unknown error occurred: " + str(e)
         traceback.print_exc()
-gh_user_info.commands = ['gh_user_info', 'github_user_info', 'gh_usr', 'gh_user', 'gh_u']
+gh_user_info.commands = ['gh_user_info', 'github_user_info', 'gh_usr', 'gh_user', 'ghu']
 gh_user_info.priority = 'low'
 gh_user_info.rate = 10
 
@@ -182,7 +182,7 @@ def gh_prs(kenni, input):
     origterm = input.groups()[1]
     if not origterm:
         return kenni.say('Perhaps you meant ".github_prs user/repo"?')
-    origterm = origterm.encode('utf-8')
+    #origterm = origterm.encode('utf-8')
     origterm = origterm.strip()
 
     error = None
@@ -195,7 +195,7 @@ def gh_prs(kenni, input):
     except Exception as e:
         error = "An unknown error occurred: " + str(e)
         traceback.print_exc()
-gh_prs.commands = ['gh_prs', 'github_prs']
+gh_prs.commands = ['ghpr', 'github_prs']
 gh_prs.priority = 'low'
 gh_prs.rate = 10
 
@@ -203,7 +203,7 @@ def gh_contribs(kenni, input):
     origterm = input.groups()[1]
     if not origterm:
         return kenni.say('Perhaps you meant ".github_contribs user/repo"?')
-    origterm = origterm.encode('utf-8')
+    #origterm = origterm.encode('utf-8')
     origterm = origterm.strip()
 
     error = None
@@ -216,7 +216,7 @@ def gh_contribs(kenni, input):
     except Exception as e:
         error = "An unknown error occurred: " + str(e)
         traceback.print_exc()
-gh_contribs.commands = ['gh_contribs', 'github_contribs']
+gh_contribs.commands = ['gh_contribs', 'github_contribs', 'ghc']
 gh_contribs.priority = 'low'
 gh_contribs.rate = 10
 

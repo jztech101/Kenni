@@ -8,7 +8,7 @@ import web
 def head(kenni, input):
     """Provide HTTP HEAD information."""
     uri = input.group(2)
-    uri = (uri or '').encode('utf-8')
+    uri = (uri or '')
     if ' ' in uri:
         uri, header = uri.rsplit(' ', 1)
     else: uri, header = uri, None
