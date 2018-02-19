@@ -3,7 +3,7 @@ import json
 import re
 from html.entities import name2codepoint
 uc = str
-import proxy
+from . import proxy
 import time
 import urllib.request, urllib.error, urllib.parse
 import web

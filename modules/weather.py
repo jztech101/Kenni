@@ -17,7 +17,7 @@ except ImportError:
     print(install_geopy)
 
 
-r_re.compile(r'(?i)([+-]\d+):00 from')
+r_from = re.compile(r'(?i)([+-]\d+):00 from')
 r_tag = re.compile(r'<(?!!)[^>]+>')
 
 def clean(txt, delim=''):
