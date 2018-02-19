@@ -77,11 +77,11 @@ def f_remind(kenni, input):
         verb, tellee, msg = input.groups()
 
     ## handle unicode
-    verb = verb.decode('utf-8').encode('utf-8')
-    tellee = tellee.encode('utf-8')
-    msg = msg.encode('utf-8')
+    verb = verb.decode('utf-8')
+    tellee = tellee.encode('utf-8').decode('utf-8')
+    msg = msg.encode('utf-8').decode('utf-8')
 
-    tellee = tellee.rstrip(b'.,:;')
+    tellee = tellee.rstrip('.,:;')
 
     if not os.path.exists(kenni.tell_filename):
         return
