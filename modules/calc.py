@@ -48,7 +48,7 @@ def c(kenni, input):
 
     ## Attempt #1 (Google)
     uri_base = 'https://www.google.com/search?gbv=1&q='
-    uri = uri_base + web.urllib.quote(temp_q)
+    uri = uri_base + web.quote(temp_q)
 
     ## To the webs!
     page = str()
