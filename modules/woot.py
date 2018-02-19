@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-import feedparser
+#!/usr/bin/env python3import feedparser
 
 api = "https://api.woot.com/1/sales/current.rss/www.woot.com"
 
@@ -37,4 +36,4 @@ woot.priority = 'low'
 woot.rate = 30
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-from datetime import datetime, timedelta
+#!/usr/bin/env python3from datetime import datetime, timedelta
 import os
 import re
 import time
@@ -66,7 +65,7 @@ def load_database(name):
 
 def dump_database(name, data):
     f = open(name, 'wb')
-    for unixtime, reminders in data.iteritems():
+    for unixtime, reminders in data.items():
         for channel, nick, message in reminders:
             f.write('%s\t%s\t%s\t%s\n' % (unixtime, channel, nick, message))
     f.close()
@@ -74,7 +73,7 @@ def dump_database(name, data):
 def setup(kenni):
     global r_command
 
-    periods = '|'.join(scaling.keys())
+    periods = '|'.join(list(scaling.keys()))
     p_command = r'[^a-zA-Z]\w+ ([0-9]+(?:\.[0-9]+)?)\s?((?:{})\b)?:?\s?(.*)'.format(
         periods,
     )
@@ -199,7 +198,7 @@ def at(kenni, input):
     ## if they didn't use an offset
     if not tz:
         ## let's find an offset!
-        if clock.TimeZones.has_key(z):
+        if z in clock.TimeZones:
             tz = clock.TimeZones[z]
         else:
             ## default to UTC
@@ -215,9 +214,9 @@ def at(kenni, input):
         td = try_date[0]
         dt = datetime(int(td[0]), int(td[1]), int(td[2]), int(t[0:2]), int(t[3:]))
         dt -= timedelta(hours=tz)
-        print 'dt:', str(dt)
+        print('dt:', str(dt))
         time_delta = dt - datetime.now()
-        print 'time_delta:', str(time_delta)
+        print('time_delta:', str(time_delta))
 
         duration = time_delta.total_seconds()
         unix_stamp_event = int(time.mktime(dt.timetuple()))
@@ -288,5 +287,5 @@ def at(kenni, input):
 at.commands = ['remindat','at']
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())
 

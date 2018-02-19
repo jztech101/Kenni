@@ -1,12 +1,11 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import json
 import re
-from htmlentitydefs import name2codepoint
-from modules import unicode as uc
+from html.entities import name2codepoint
+from modules import str as uc
 from modules import proxy
 import time
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import web
 import sys
 
@@ -30,9 +29,9 @@ noteuri.priority = 'low'
 
 
 def get_page_backup(url):
-    req = urllib2.Request(url, headers={'Accept':'*/*'})
+    req = urllib.request.Request(url, headers={'Accept':'*/*'})
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Firefox/24.0')
-    u = urllib2.urlopen(req)
+    u = urllib.request.urlopen(req)
     contents = u.read(262144)
     out = dict()
     try:
@@ -87,9 +86,9 @@ def find_title(url):
         except:
             try:
                 status, msg = get_page_backup(url)
-                print "[url] Proxy isn't working!"
+                print("[url] Proxy isn't working!")
             except:
-                print '[url] Proxy and "get_page_backup" have both failed!'
+                print('[url] Proxy and "get_page_backup" have both failed!')
                 continue
 
         if type(msg) == type(dict()) and 'code' in msg:
@@ -111,7 +110,7 @@ def find_title(url):
     try:
         mtype = info['content-type']
     except:
-        print 'failed mtype:', str(info)
+        print('failed mtype:', str(info))
         return False, 'mtype failed'
     if not (('/html' in mtype) or ('/xhtml' in mtype)):
         return False, str(mtype)
@@ -144,15 +143,15 @@ def find_title(url):
         entity = m.group()
         if entity.startswith('&#x'):
             cp = int(entity[3:-1], 16)
-            meep = unichr(cp)
+            meep = chr(cp)
         elif entity.startswith('&#'):
             cp = int(entity[2:-1])
-            meep = unichr(cp)
+            meep = chr(cp)
         else:
             entity_stripped = entity[1:-1]
             try:
                 char = name2codepoint[entity_stripped]
-                meep = unichr(char)
+                meep = chr(char)
             except:
                 if entity_stripped in HTML_ENTITIES:
                     meep = HTML_ENTITIES[entity_stripped]
@@ -314,4 +313,4 @@ puny.commands = ['puny', 'idn', 'idna']
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

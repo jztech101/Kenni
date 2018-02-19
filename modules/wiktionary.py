@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-import re
+#!/usr/bin/env python3import re
 import web
 
 uri = 'https://en.wiktionary.org/w/index.php?title=%s&printable=yes'
@@ -56,9 +55,9 @@ parts = ('preposition', 'particle', 'noun', 'verb',
 def format(word, definitions, number=2):
     result = '%s' % word.encode('utf-8')
     for part in parts:
-        if definitions.has_key(part):
+        if part in definitions:
             defs = definitions[part][:number]
-            result += u' \u2014 '.encode('utf-8') + ('%s: ' % part)
+            result += ' \u2014 '.encode('utf-8') + ('%s: ' % part)
             n = ['%s. %s' % (i + 1, e.strip(' .')) for i, e in enumerate(defs)]
             result += ', '.join(n)
     return result.strip(' .,')
@@ -87,4 +86,4 @@ define.commands = ['dict', 'define', 'word']
 define.example = '.w bailiwick'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

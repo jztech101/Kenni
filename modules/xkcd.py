@@ -1,10 +1,9 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import json
 import random
 import web
 import re
-from modules import unicode as uc
+from modules import str as uc
 
 '''
 Randall Munroe is nice and provides a simple JSON API for fetching comics.
@@ -67,7 +66,7 @@ def xkcd(kenni, input):
         elif any([line.lower() in ['r', 'ran', 'rand', 'random']]):
             show_random_comic = True
         else:
-            kenni.say(u'Incorrect argument for .xkcd: ' + line)
+            kenni.say('Incorrect argument for .xkcd: ' + line)
 
 
     body = tryToGetJSON(xkcd_url)
@@ -79,8 +78,8 @@ def xkcd(kenni, input):
         body = tryToGetJSON(xkcd_url)
 
 
-    comic_date_str = body['year'] + u'-' + str(body['month']).zfill(2) + u'-' + str(body['day']).zfill(2)
-    header_str = u'\x02xkcd #\x02' + str(body['num']) + u' (' + comic_date_str + u') \x02' + body['title'] + u'\x02'
+    comic_date_str = body['year'] + '-' + str(body['month']).zfill(2) + '-' + str(body['day']).zfill(2)
+    header_str = '\x02xkcd #\x02' + str(body['num']) + ' (' + comic_date_str + ') \x02' + body['title'] + '\x02'
     kenni.say(header_str)
 
     if body['transcript'].encode('UTF-8'):
@@ -88,10 +87,10 @@ def xkcd(kenni, input):
         kenni.say(transcript_text)
 
 
-    alt_text = u'\x02Alt text\x02: ' + body['alt']
+    alt_text = '\x02Alt text\x02: ' + body['alt']
     kenni.say(alt_text)
 
-    img_ssl_link = u'[ ' + re.sub(r'http://', 'https://ssl', body['img']) + u' ]'
+    img_ssl_link = '[ ' + re.sub(r'http://', 'https://ssl', body['img']) + ' ]'
     kenni.say(img_ssl_link)
 
 
@@ -100,4 +99,4 @@ xkcd.example = '.xkcd  (for most recent), .xkcd [comic number]  (for specific co
 xkcd.priority = 'medium'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

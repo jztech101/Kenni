@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-import random
+#!/usr/bin/env python3import random
 
 def f_ping(kenni, input):
     """ping kenni in a channel or pm"""
@@ -13,5 +12,5 @@ f_pong.commands = ['pong']
 f_pong.priority = 'high'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())
 

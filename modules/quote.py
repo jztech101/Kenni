@@ -1,8 +1,7 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import random
 import itertools
-from modules import unicode as uc
+from modules import str as uc
 
 def write_addquote(text):
     fn = open('quotes.txt', 'a')
@@ -54,8 +53,8 @@ def retrievequote(kenni, input):
         except:
             nick = "<" + text + ">"
 
-            indices = range(1, len(lines) + 1)
-            selectors = map(lambda x: x.split()[0] == nick, lines)
+            indices = list(range(1, len(lines) + 1))
+            selectors = [x.split()[0] == nick for x in lines]
             filtered_indices = list(itertools.compress(indices, selectors))
 
             if len(filtered_indices) < 1:
@@ -163,4 +162,4 @@ grabquote.commands = ['grab']
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

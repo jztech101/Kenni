@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 def isChan(chan, checkprefix):
     if not chan:
         return False

@@ -1,14 +1,13 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 ################ Scheme Interpreter in Python
 
 ## (c) Peter Norvig, 2010; See http://norvig.com/lispy2.html
 
 ################ Symbol, Procedure, classes
 
-from __future__ import division
-import re, sys, StringIO
-from modules import unicode as uc
+
+import re, sys, io
+from modules import str as uc
 
 class Symbol(str): pass
 
@@ -17,11 +16,11 @@ def Sym(s, symbol_table={}):
     if s not in symbol_table: symbol_table[s] = Symbol(s)
     return symbol_table[s]
 
-_quote, _if, _set, _define, _lambda, _begin, _definemacro, = map(Sym,
-"quote   if   set!  define   lambda   begin   define-macro".split())
+_quote, _if, _set, _define, _lambda, _begin, _definemacro, = list(map(Sym,
+"quote   if   set!  define   lambda   begin   define-macro".split()))
 
-_quasiquote, _unquote, _unquotesplicing = map(Sym,
-"quasiquote   unquote   unquote-splicing".split())
+_quasiquote, _unquote, _unquotesplicing = list(map(Sym,
+"quasiquote   unquote   unquote-splicing".split()))
 
 class Procedure(object):
     "A user-defined Scheme procedure."
@@ -35,7 +34,7 @@ class Procedure(object):
 def parse(inport):
     "Parse a program: read and expand/error-check it."
     # Backwards compatibility: given a str, convert it to an InPort
-    if isinstance(inport, str): inport = InPort(StringIO.StringIO(inport))
+    if isinstance(inport, str): inport = InPort(io.StringIO(inport))
     return expand(read(inport), toplevel=True)
 
 eof_object = Symbol('#<eof-object>') # Note: uninterned; can't be read
@@ -117,9 +116,9 @@ def repl(prompt='lispy> ', inport=InPort(sys.stdin), out=sys.stdout):
             x = parse(inport)
             if x is eof_object: return
             val = eval(x)
-            if val is not None and out: print >> out, to_string(val)
+            if val is not None and out: print(to_string(val), file=out)
         except Exception as e:
-            print '%s: %s' % (type(e).__name__, e)
+            print('%s: %s' % (type(e).__name__, e))
 
 ################ Environment class
 
@@ -134,7 +133,7 @@ class Env(dict):
             if len(args) != len(parms):
                 raise TypeError('expected %s, given %s, '
                                 % (to_string(parms), to_string(args)))
-            self.update(zip(parms,args))
+            self.update(list(zip(parms,args)))
     def find(self, var):
         "Find the innermost Env where var appears."
         if var in self: return self
@@ -232,7 +231,7 @@ def expand(x, toplevel=False):
     elif x[0] is _if:
         if len(x)==3: x = x + [None]     # (if t c) => (if t c None)
         require(x, len(x)==4)
-        return map(expand, x)
+        return list(map(expand, x))
     elif x[0] is _set:
         require(x, len(x)==3);
         var = x[1]                       # (set! non-var exp) => Error
@@ -271,13 +270,13 @@ def expand(x, toplevel=False):
     elif isa(x[0], Symbol) and x[0] in macro_table:
         return expand(macro_table[x[0]](*x[1:]), toplevel) # (m arg...)
     else:                                #        => macroexpand if m isa macro
-        return map(expand, x)            # (f arg...) => expand each
+        return list(map(expand, x))            # (f arg...) => expand each
 
 def require(x, predicate, msg="wrong length"):
     "Signal a syntax error if predicate is false."
     if not predicate: raise SyntaxError(to_string(x)+': '+msg)
 
-_append, _cons, _let = map(Sym, "append cons let".split())
+_append, _cons, _let = list(map(Sym, "append cons let".split()))
 
 def expand_quasiquote(x):
     """Expand `x => 'x; `,x => x; `(,@x y) => (append x y) """
@@ -300,8 +299,8 @@ def let(*args):
     bindings, body = args[0], args[1:]
     require(x, all(isa(b, list) and len(b)==2 and isa(b[0], Symbol)
                    for b in bindings), "illegal binding list")
-    vars, vals = zip(*bindings)
-    return [[_lambda, list(vars)]+map(expand, body)] + map(expand, vals)
+    vars, vals = list(zip(*bindings))
+    return [[_lambda, list(vars)]+list(map(expand, body))] + list(map(expand, vals))
 
 macro_table = {_let:let} ## More macros can go here
 
@@ -326,7 +325,7 @@ def f_lisp(kenni, input):
         output = parse(txt)
         output = eval(output)
         output = to_string(output)
-    except Exception, e:
+    except Exception as e:
         kenni.say('Scheme Lisp ERROR: %s' % (str(e)))
         return
     response = str()

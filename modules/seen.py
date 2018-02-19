@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-import time
+#!/usr/bin/env python3import time
 import tools
 
 
@@ -15,7 +14,7 @@ def f_seen(kenni, input):
     if not hasattr(kenni, 'seen'):
         return kenni.say('?')
 
-    if kenni.seen.has_key(nick):
+    if nick in kenni.seen:
         channel, t = kenni.seen[nick]
         t = time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime(t))
         msg = 'I last saw %s at %s in some channel.' % (nick, t)
@@ -31,9 +30,9 @@ def f_note(kenni, input):
             kenni.seen = dict()
         if tools.isChan(input.sender, False):
             kenni.seen[input.nick.lower()] = (input.sender, time.time())
-    except Exception, e: print e
+    except Exception as e: print(e)
 f_note.rule = r'(.*)'
 f_note.priority = 'low'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

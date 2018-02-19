@@ -1,6 +1,5 @@
-#!/usr/bin/env python2
-
-from modules import unicode as uc
+#!/usr/bin/env python3
+from modules import str as uc
 import os, re
 import tools
 
@@ -167,4 +166,4 @@ findandreplace.priority = 'high'
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

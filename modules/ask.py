@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import random, time
 
 random.seed()
@@ -29,4 +28,4 @@ ask.priority = 'low'
 ask.example = '.ask today or tomorrow or next week'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

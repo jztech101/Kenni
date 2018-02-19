@@ -1,6 +1,5 @@
-#!/usr/bin/env python2
-# coding=utf-8
-from modules import unicode as uc
+#!/usr/bin/env python3# coding=utf-8
+from modules import str as uc
 import json
 import re
 import socket
@@ -19,7 +18,7 @@ def ip_lookup(kenni, input):
     response = "[IP/Host Lookup] "
     try:
         page = web.get(base + txt)
-    except IOError, err:
+    except IOError as err:
         return kenni.say('Could not access given address. (Detailed error: %s)' % (err))
     try:
         results = json.loads(page)
@@ -59,4 +58,4 @@ ip_lookup.commands = ['ip', 'iplookup', 'host']
 ip_lookup.example = ".iplookup 8.8.8.8"
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

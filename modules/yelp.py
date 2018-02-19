@@ -1,14 +1,14 @@
 #1/usr/bin/env/python
 
-from urllib2 import HTTPError
-from urllib import quote
-from urllib import urlencode
+from urllib.error import HTTPError
+from urllib.parse import quote
+from urllib.parse import urlencode
 import random
 import requests
 import json
 import pprint
 import sys
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import argparse
 
 def request(host, path, api_key, url_params=None):
@@ -19,7 +19,7 @@ def request(host, path, api_key, url_params=None):
         'Authorization': 'Bearer %s' % api_key,
     }
 
-    print(u'Querying {0} ...'.format(url))
+    print(('Querying {0} ...'.format(url)))
 
     response = requests.request('GET', url, headers=headers, params=url_params)
 
@@ -69,4 +69,4 @@ yelp.priority = 'medium'
 yelp.example = '.food <location> <thing>'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

@@ -1,10 +1,9 @@
-#!/usr/bin/env python2
-import json
+#!/usr/bin/env python3import json
 import random
 import re
 import traceback
-import urllib2
-import urlparse
+import urllib.request, urllib.error, urllib.parse
+import urllib.parse
 
 # For information about the Github API check out https://developer.github.com/v3/
 
@@ -12,14 +11,14 @@ BASE_URL = "https://api.github.com"
 DEFAULT_HEADER = { "Accept": "application/vnd.github.v3+json" }
 
 def fetch_github(kenni, url, term):
-    t = urllib2.quote(term)
+    t = urllib.parse.quote(term)
     if '%' in term:
-        t = urllib.quote(term.replace('%', ''))
+        t = urllib.parse.quote(term.replace('%', ''))
 
-    request = urllib2.Request(url % t, headers=DEFAULT_HEADER)
+    request = urllib.request.Request(url % t, headers=DEFAULT_HEADER)
 
     try:
-        content = json.loads(urllib2.urlopen(request).read())
+        content = json.loads(urllib.request.urlopen(request).read())
         return content
     except Exception as e:
         kenni.say("An error occurred fetching information from Github: {0}".format(e))
@@ -221,4 +220,4 @@ gh_contribs.priority = 'low'
 gh_contribs.rate = 10
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

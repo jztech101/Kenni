@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 from datetime import datetime
 from subprocess import *
 
@@ -22,4 +21,4 @@ version.rate = 10
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

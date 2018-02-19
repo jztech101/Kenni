@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import re
 import web
 re_mark = re.compile('<dt><a href="(.*?)" target="_blank">(.*?)</a></dt>')
@@ -29,4 +28,4 @@ food.commands = ['food','breakfast','lunch', 'brunch','fucking_dinner', 'fucking
 food.priority = 'low'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

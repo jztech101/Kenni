@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import sys, os, imp, optparse
 from configs import Configs
 from textwrap import dedent as trim
@@ -9,13 +8,13 @@ configpath = os.path.expanduser(dotdir + '/default.py')
 
 if getattr(os, 'geteuid', None) and os.geteuid() == 0:
     error = 'Error: Refusing to run as root.'
-    print >> sys.stderr, error
+    sys.stderr.write(error)
     sys.exit(1)
 
 def check_python_version():
-    if sys.version_info < (2, 4):
-        error = 'Error: Requires Python 2.4 or later, from www.python.org'
-        print >> sys.stderr, error
+    if sys.version_info < (3, 5):
+        error = 'Error: Requires Python 3.5 or later, from www.python.org'
+        sys.stderr.write(error)
         sys.exit(1)
 
 def create_default_config(fn):
@@ -137,16 +136,16 @@ def create_default_config(fn):
 def create_configfile(dotdir):
 
     if not os.path.isdir(dotdir):
-        print 'Creating a config directory at ~/Kenni/config...'
+        sys.stderr.write('Creating a config directory at ~/Kenni/config...')
         try: os.mkdir(dotdir)
-        except Exception, e:
-            print >> sys.stderr, 'There was a problem creating %s:' % dotdir
-            print >> sys.stderr, e.__class__, str(e)
-            print >> sys.stderr, 'Please fix this and then run kenni again.'
+        except Exception as e:
+            sys.stderr.write('There was a problem creating %s:' % dotdir)
+            sys.stderr.write(e.__class__, str(e))
+            sys.stderr.write('Please fix this and then run kenni again.')
             sys.exit(1)
 
     create_default_config(configpath)
-    print >> sys.stdout, 'Config file generated. Please edit it at ' + configpath + ' and run ./kenni again.'
+    sys.stdout.write('Config file generated. Please edit it at ' + configpath + ' and run ./kenni again.')
 
     sys.exit(0)
 
@@ -169,7 +168,7 @@ def config_names(config):
     if os.path.isdir(here):
         here_files = files(here)
         if(len(here_files) == 0):
-            print >> sys.stderr, "Error: Config directory '{0}' contained no .py files".format(here)
+            sys.stderr.write("Error: Config directory '{0}' contained no .py files".format(here))
         return here_files
 
     there = os.path.join(dotdir, config)
@@ -180,10 +179,10 @@ def config_names(config):
     if os.path.isdir(there):
         there_files = files(there)
         if(len(there_files) == 0):
-            print >> sys.stderr, "Error: Config directory '{0}' contained no .py files".format(there)
+            sys.stderr.write("Error: Config directory '{0}' contained no .py files".format(there))
         return there_files
 
-    print >> sys.stderr, "Error: Couldn't find config '{0}' to import or .py files therein".format(config)
+    sys.stderr.write("Error: Couldn't find config '{0}' to import or .py files therein".format(config))
     sys.exit(1)
 
 def initialize_configs(config_path):
@@ -192,7 +191,7 @@ def initialize_configs(config_path):
     all_configs = config_names(config_path)
 
     if(len(all_configs) == 0):
-        print >> sys.stderr, "Error: no config files found in config path '{0}'".format(config_path)
+        sys.stderr.write("Error: no config files found in config path '{0}'".format(config_path))
         sys.exit(1)
 
     config_helper = Configs(all_configs)
@@ -207,7 +206,7 @@ def initialize_configs(config_path):
     except ImportError:
         try: from kenni import run
         except ImportError:
-            print >> sys.stderr, "Error: Couldn't find kenni to import"
+            sys.stderr.write("Error: Couldn't find kenni to import")
             sys.exit(1)
 
     # Step Five: Initialise And Run The kennies

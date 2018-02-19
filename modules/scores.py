@@ -1,6 +1,5 @@
-#!/usr/bin/env python2
-import codecs
-from modules import unicode as uc
+#!/usr/bin/env python3import codecs
+from modules import str as uc
 import pickle
 import os
 import time
@@ -97,8 +96,8 @@ class Scores:
             sort = True
             if ranking == 'b':
                 sort = False
-            scores = sorted(self.scores_dict[channel].iteritems(),
-                            key=lambda (k, v): (v[0] - v[1]), reverse=sort)
+            scores = sorted(iter(self.scores_dict[channel].items()),
+                            key=lambda k_v: (k_v[1][0] - k_v[1][1]), reverse=sort)
             for key, value in scores:
                 top_scores.append(self.str_score(key, channel))
                 if len(scores) == q + 1:
@@ -322,4 +321,4 @@ removeuser.priority = 'medium'
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

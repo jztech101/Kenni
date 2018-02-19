@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import re, unicodedata
 from itertools import islice
 import web
@@ -43,7 +42,7 @@ def load_data():
         start = cps[0]
         end = cps[1]
 
-        for number in xrange(int(start, 16), int(end, 16)):
+        for number in range(int(start, 16), int(end, 16)):
             cp_names['%04X' % (number)] = cp_range
 
 
@@ -96,7 +95,7 @@ def codepoint_simple(arg):
 
     ## loop over all codepoints that we have
     for cp in cp_names:
-        u = unichr(int(cp, 16))
+        u = chr(int(cp, 16))
         name = cp_names[cp]
         if r_label.search(name):
             results.append((len(name), u, cp, name))
@@ -105,7 +104,7 @@ def codepoint_simple(arg):
         r_label = re.compile('\\b' + arg.replace(' ', '.*\\b'))
 
         for cp in cp_names:
-            u = unichr(int(cp, 16))
+            u = chr(int(cp, 16))
             name = cp_names[cp]
             if r_label.search(name):
                 results.append((len(name), u, cp, name))
@@ -131,7 +130,7 @@ def codepoint_extended(arg):
 
     ## loop over all codepoints that we have
     for cp in cp_names:
-        u = unichr(int(cp, 16))
+        u = chr(int(cp, 16))
         name = '-'
         name = cp_names[cp]
         if r_search.search(name):
@@ -167,7 +166,7 @@ def u(kenni, input):
         ## since the official spec as of Unicode 7.0 only has
         ## hexadeciaml numbers with a length no greater than 6
         if 4 <= len(arg) <= 6:
-            try: u = unichr(int(arg, 16))
+            try: u = chr(int(arg, 16))
             except ValueError: pass
             else: return kenni.say(about(u))
 
@@ -211,4 +210,4 @@ bytes.commands = ['bytes']
 bytes.example = '.bytes \xe3\x8b\xa1'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

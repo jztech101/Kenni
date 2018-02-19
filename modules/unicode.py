@@ -1,19 +1,18 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import re
 import unicodedata
-import urlparse
+import urllib.parse
 
-control_chars = ''.join(map(unichr, range(0,32) + range(127,160)))
-control_char_re = re.compile(u'[%s]' % re.escape(control_chars))
+control_chars = ''.join(map(chr, list(range(0,32)) + list(range(127,160))))
+control_char_re = re.compile('[%s]' % re.escape(control_chars))
 
 
 def supercombiner(kenni, input):
     """.sc -- displays the infamous supercombiner"""
     s = 'u'
-    for i in xrange(1, 3000):
-        if unicodedata.category(unichr(i)) == "Mn":
-            s += unichr(i)
+    for i in range(1, 3000):
+        if unicodedata.category(chr(i)) == "Mn":
+            s += chr(i)
         if len(s) > 100:
             break
     kenni.say(s)
@@ -23,7 +22,7 @@ supercombiner.rate = 30
 
 def decode(bit):
     try:
-        if isinstance(bit, str) or isinstance(bit, unicode):
+        if isinstance(bit, str) or isinstance(bit, str):
             text = bit.decode('utf-8')
         else:
             text = str()
@@ -37,7 +36,7 @@ def decode(bit):
 
 def encode(bit):
     try:
-        if isinstance(bit, str) or isinstance(bit, unicode):
+        if isinstance(bit, str) or isinstance(bit, str):
             text = bit.encode('utf-8')
         else:
             text = str()
@@ -54,8 +53,8 @@ def urlEncodeNonAscii(b):
 
 
 def iriToUri(iri):
-    parts = urlparse.urlparse(iri)
-    return urlparse.urlunparse(
+    parts = urllib.parse.urlparse(iri)
+    return urllib.parse.urlunparse(
         part.encode('idna') if parti == 1 else urlEncodeNonAscii(
             part.encode('utf-8'))
         for parti, part in enumerate(parts)
@@ -67,4 +66,4 @@ def remove_control_chars(s):
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

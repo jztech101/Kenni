@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import re
 from modules import proxy
 import web
@@ -27,4 +26,4 @@ excuse.commands = ['excuse', 'excuses']
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

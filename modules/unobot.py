@@ -158,7 +158,7 @@ class UnoBot:
                     if self.players_pce.get(nickk, 0):
                         kenni.notice(nickk, STRINGS['ENABLED_PCE'] % nickk)
                     if self.deck:
-                        for i in xrange(0, 7):
+                        for i in range(0, 7):
                             self.players[nickk].append(self.getCard())
                         kenni.msg(CHANNEL, STRINGS['DEALING_IN'] % (nickk, self.playerOrder.index(nickk) + 1))
                     else:
@@ -189,7 +189,7 @@ class UnoBot:
         self.startTime = datetime.now()
         self.lastActive = datetime.now()
         self.deck = self.createnewdeck()
-        for i in xrange(0, 7):
+        for i in range(0, 7):
             for p in self.players:
                 self.players[p].append(self.getCard ())
         self.topCard = self.getCard()
@@ -442,9 +442,9 @@ class UnoBot:
                     else:
                         score += int(c[1])
             kenni.msg(CHANNEL, STRINGS['GAINS'] % (winner, score))
-            self.saveScores(self.players.keys(), winner, score, (datetime.now() - self.startTime).seconds)
-        except Exception, e:
-            print 'Score error: %s' % e
+            self.saveScores(list(self.players.keys()), winner, score, (datetime.now() - self.startTime).seconds)
+        except Exception as e:
+            print('Score error: %s' % e)
         self.players = dict()
         self.playerOrder = list()
         self.game_on = False
@@ -486,8 +486,8 @@ class UnoBot:
             for p in prescores:
                 f.write(' '.join ([str(s) for s in prescores[p]]) + '\n')
             f.close()
-        except Exception, e:
-            print 'Failed to write score file %s' % e
+        except Exception as e:
+            print('Failed to write score file %s' % e)
 
     # Custom added functions ============================================== #
     def rankings(self, rank_type):
@@ -794,4 +794,4 @@ uno_pce_clear.rate = 0
 user_triggered = False
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

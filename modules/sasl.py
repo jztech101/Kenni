@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-import base64
+#!/usr/bin/env python3import base64
 
 def irc_cap (kenni, input):
     cap, value = input.args[1], input.args[2]
@@ -129,4 +128,4 @@ def irc_cap_end (kenni, input):
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

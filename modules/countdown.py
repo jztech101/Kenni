@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-from datetime import datetime, timedelta
+#!/usr/bin/env python3from datetime import datetime, timedelta
 
 ## TODO: just scrape, https://www.timeanddate.com/countdown/generic?iso=20170411T070001&p0=1440&msg=DO+SFO2+DOWNTIME&ud=1&font=cursive
 
@@ -179,4 +178,4 @@ generic_countdown.priority = 'low'
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

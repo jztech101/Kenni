@@ -1,10 +1,9 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import random
 import re
 import traceback
-import urllib
-import urlparse
+import urllib.request, urllib.parse, urllib.error
+import urllib.parse
 
 try:
     from BeautifulSoup import BeautifulSoup as Soup
@@ -26,7 +25,7 @@ def animate_me(term):
     if ' ' in term:
         t = term.replace(' ', '-')
 
-    content = urllib.urlopen(giphy_uri % t).read()
+    content = urllib.request.urlopen(giphy_uri % t).read()
     soup = Soup(content)
     data_ids = [a['data-id'] for a in soup.findAll('a', 'a-gif', href=True)]
 
@@ -65,4 +64,4 @@ gif.priority = 'high'
 gif.rate = 10
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-import random
+#!/usr/bin/env python3import random
 from datetime import datetime, timedelta
 random.seed()
 
@@ -67,4 +66,4 @@ roulette.priority = 'low'
 roulette.rate = 60
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

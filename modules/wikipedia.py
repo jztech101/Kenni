@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-import re, urllib, gzip, StringIO
+#!/usr/bin/env python3import re, urllib.request, urllib.parse, urllib.error, gzip, io
 import web
 
 wikiuri = 'https://%s.wikipedia.org/wiki/%s'
@@ -38,12 +37,12 @@ def text(html):
     return unescape(html).strip()
 
 def search(term):
-    try: import search
-    except ImportError, e:
-        print e
+    try: from . import search
+    except ImportError as e:
+        print(e)
         return term
 
-    if isinstance(term, unicode):
+    if isinstance(term, str):
         term = term.encode('utf-8')
     else: term = term.decode('utf-8')
 
@@ -58,16 +57,16 @@ def search(term):
 def wikipedia(term, language='en', last=False):
     global wikiuri
     if not '%' in term:
-        if isinstance(term, unicode):
+        if isinstance(term, str):
             t = term.encode('utf-8')
         else: t = term
-        q = urllib.quote(t)
+        q = urllib.parse.quote(t)
         u = wikiuri % (language, q)
         bytes = web.get(u)
     else: bytes = web.get(wikiuri % (language, term))
 
     if bytes.startswith('\x1f\x8b\x08\x00\x00\x00\x00\x00'):
-        f = StringIO.StringIO(bytes)
+        f = io.StringIO(bytes)
         f.seek(0)
         gzip_file = gzip.GzipFile(fileobj=f)
         bytes = gzip_file.read()
@@ -79,7 +78,7 @@ def wikipedia(term, language='en', last=False):
     if not last:
         r = r_redirect.search(bytes[:4096])
         if r:
-            term = urllib.unquote(r.group(1))
+            term = urllib.parse.unquote(r.group(1))
             return wikipedia(term, language=language, last=True)
 
     paragraphs = r_paragraph.findall(bytes)
@@ -152,7 +151,7 @@ def wik(kenni, input):
     origterm = origterm.encode('utf-8')
     origterm = origterm.strip()
 
-    term = urllib.unquote(origterm)
+    term = urllib.parse.unquote(origterm)
     language = 'en'
     if term.startswith(':') and (' ' in term):
         a, b = term.split(' ', 1)
@@ -177,4 +176,4 @@ wik.priority = 'high'
 wik.rate = 5
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())
