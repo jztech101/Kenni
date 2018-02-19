@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
- import proxy
+from . import proxy
 import locale
 import json
 def nicecurrency(c):

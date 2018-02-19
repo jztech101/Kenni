@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import re
- import proxy
+from . import proxy
 import web
 
 
