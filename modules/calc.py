@@ -42,9 +42,9 @@ def c(kenni, input):
 
     ## handle some unicode conversions
     q = input.group(2).encode('utf-8')
-    q = q.replace('\xcf\x95', 'phi')  # utf-8 U+03D5
-    q = q.replace('\xcf\x80', 'pi')  # utf-8 U+03C0
-    temp_q = q.replace(' ', '')
+    q = q.replace(b'\xcf\x95', b'phi')  # utf-8 U+03D5
+    q = q.replace(b'\xcf\x80', b'pi')  # utf-8 U+03C0
+    temp_q = q.replace(b' ', b'')
 
     ## Attempt #1 (Google)
     uri_base = 'https://www.google.com/search?gbv=1&q='

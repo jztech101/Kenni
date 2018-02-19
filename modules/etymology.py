@@ -40,7 +40,7 @@ def etymology(word):
     word = {'axe': 'ax/axe'}.get(word, word)
 
     bytes = web.get(etyuri % word)
-    definitions = r_definition.findall(bytes)
+    definitions = r_definition.findall(bytes.decode('utf-8'))
 
     if not definitions:
         return None
