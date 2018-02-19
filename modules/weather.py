@@ -880,10 +880,10 @@ def forecastio_current_weather(kenni, input):
     output += ', \x1FApparent Temp\x1F: ' + str(APtemp)
     output += ', \x1FPressure\x1F: ' + pressure
     if cond:
-        output += ', \x1FCondition\x1F: ' + (cond).encode('utf-8')
+        output += ', \x1FCondition\x1F: ' + str(cond)
     output += ', \x1FWind\x1F: ' + wind
     output += ' - '
-    output += uc.encode(name)
+    output += uc.decode(name)
     output + '; %s UTC' % (time)
 
     ## required according to ToS by darksky.net
