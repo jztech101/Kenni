@@ -18,14 +18,12 @@ class Grab(urllib.request.URLopener):
         return urllib.addinfourl(fp, [headers, errcode], "http:" + url)
 urllib.request._urlopener = Grab()
 
-headers = {
-    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36'
-    }
 def get(uri):
     if not uri.startswith('http'):
         return
-    request = urllib.request.Request(uri, headers=headers)
-    u = urllib.request.urlopen(uri)
+    req = urllib.request.Request(uri, headers={'Accept':'*/*'})
+    req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Firefox/24.0')
+    u = urllib.request.urlopen(req)
     bytes = u.read()
     u.close()
     return bytes
