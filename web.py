@@ -2,7 +2,7 @@
 import urllib.request, urllib.parse, urllib.error
 import urllib.request, urllib.error, urllib.parse
 from html.entities import name2codepoint
-from .modules import str as uc
+from .modules uc = str
 
 r_entity = re.compile(r'&([^;\s]+);')
 

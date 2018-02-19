@@ -3,8 +3,8 @@ import json
 import re
 import urllib.request, urllib.parse, urllib.error
 import web
-from . import proxy
-from . import url
+import proxy
+import url
 r_tag = re.compile(r'<(?!!)[^>]+>')
 r_bing = re.compile(r'<h2><a href="([^"]+)"')
 

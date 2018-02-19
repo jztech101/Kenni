@@ -15,7 +15,7 @@ r_tag = re.compile(r'<(?!!)[^>]+>')
 WAKEY_NOTFOUND = "Please sign up for WolframAlpha's API to use this function. http://products.wolframalpha.com/api/"
 
 try:
-   from . import proxy
+   import proxy
 except:
     pass
 

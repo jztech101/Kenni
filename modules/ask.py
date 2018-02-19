@@ -4,7 +4,7 @@ import random, time
 random.seed()
 
 def ask(kenni, input):
-    '''.ask <item1> or <item2> or <item3> - Randomly picks from a set of items seperated by ' or '.'''
+    '''.ask <item1> or <item2> or <item3> - Randomly picks set of items seperated by ' or '.'''
 
     choices = input.group(2)
 

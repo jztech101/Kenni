@@ -6,7 +6,7 @@ import re
 import urllib.request, urllib.parse, urllib.error
 import web
 import sys
-import str as uc
+uc = str
 from icao import data
 
 install_geopy = "Please install geopy via 'pip' to use weather.py"
@@ -17,11 +17,11 @@ except ImportError:
     print(install_geopy)
 
 
-r_from = re.compile(r'(?i)([+-]\d+):00 from')
+r_re.compile(r'(?i)([+-]\d+):00 from')
 r_tag = re.compile(r'<(?!!)[^>]+>')
 
 def clean(txt, delim=''):
-    '''Remove HTML entities from a given text'''
+    '''Remove HTML entities given text'''
     if delim:
         return r_tag.sub(delim, txt)
     else:

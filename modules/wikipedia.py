@@ -37,7 +37,7 @@ def text(html):
     return unescape(html).strip()
 
 def search(term):
-    try: from . import search
+    try: import search
     except ImportError as e:
         print(e)
         return term

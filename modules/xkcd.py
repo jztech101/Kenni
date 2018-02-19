@@ -3,7 +3,7 @@ import json
 import random
 import web
 import re
-import str as uc
+uc = str
 
 '''
 Randall Munroe is nice and provides a simple JSON API for fetching comics.

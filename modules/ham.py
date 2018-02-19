@@ -1,7 +1,7 @@
 #!/usr/bin/env python3# -*- coding: utf-8 -*-
 # vim: set fileencoding=UTF-8 :
 
-import str as uc
+uc = str
 import re
 import web
 

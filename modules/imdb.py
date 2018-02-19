@@ -1,6 +1,6 @@
 # -*- coding: utf8 -*-
 
-from . import proxy
+import proxy
 import json
 import re
 import urllib.request, urllib.error, urllib.parse

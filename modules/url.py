@@ -2,8 +2,8 @@
 import json
 import re
 from html.entities import name2codepoint
-import str as uc
-from . import proxy
+uc = str
+import proxy
 import time
 import urllib.request, urllib.error, urllib.parse
 import web
@@ -245,7 +245,7 @@ re_meta = re.compile('(?i)content="\S+;\s*?url=(\S+)"\s*?>')
 
 
 def unbitly(kenni, input):
-    '''.longurl <link> -- obtain the final destination URL from a short URL'''
+    '''.longurl <link> -- obtain the final destination URL short URL'''
     url = input.group(2)
     if not url:
         if hasattr(kenni, 'last_seen_uri') and input.sender in kenni.last_seen_uri:

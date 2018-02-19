@@ -7,7 +7,7 @@
 
 
 import re, sys, io
-import str as uc
+uc = str
 
 class Symbol(str): pass
 
@@ -104,7 +104,7 @@ def to_string(x):
     else: return str(x)
 
 def load(filename):
-    "Eval every expression from a file."
+    "Eval every expression file."
     repl(None, InPort(open(filename)), None)
 
 def repl(prompt='lispy> ', inport=InPort(sys.stdin), out=sys.stdout):

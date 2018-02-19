@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import str as uc
+uc = str
 import os, re
 import tools
 
