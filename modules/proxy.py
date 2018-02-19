@@ -60,7 +60,7 @@ def remote_call(uri, size=0, info=False):
     u.close()
 
     try:
-        useful = json.loads(results)
+        useful = json.loads(results.decode('utf-8'))
         return True, useful
     except Exception as error:
         return False, str(results)

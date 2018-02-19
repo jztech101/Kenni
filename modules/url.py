@@ -121,7 +121,7 @@ def find_title(url):
     try:
         from bs4 import BeautifulSoup
         soup = BeautifulSoup(content, 'html.parser')
-        title = soup.title.text
+        title = soup.title.string
 
     except:
         regex = re.compile('<(/?)title( [^>]+)?>', re.IGNORECASE)
