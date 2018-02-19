@@ -2,8 +2,8 @@
 import random
 import re
 import traceback
-import urlib2.request, urlib2.parse, urlib2.error
-import urlib2.parse
+import urllib2.request, urllib2.parse, urllib2.error
+import urllib2.parse
 
 try:
     from bs4 import BeautifulSoup as Soup
@@ -25,7 +25,7 @@ def animate_me(term):
     if ' ' in term:
         t = term.replace(' ', '-')
 
-    content = urlib2.request.urlopen(giphy_uri % t).read()
+    content = urllib2.request.urlopen(giphy_uri % t).read()
     soup = Soup(content)
     data_ids = [a['data-id'] for a in soup.findAll('a', 'a-gif', href=True)]
 

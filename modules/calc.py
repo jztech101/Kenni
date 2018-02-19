@@ -5,7 +5,7 @@ import html.parser
 import json
 import re
 import string
-import urlib2.request, urlib2.parse, urlib2.error
+import urllib2.request, urllib2.parse, urllib2.error
 import web
 
 
@@ -48,7 +48,7 @@ def c(kenni, input):
 
     ## Attempt #1 (Google)
     uri_base = 'https://www.google.com/search?gbv=1&q='
-    uri = uri_base + web.urlib2.quote(temp_q)
+    uri = uri_base + web.urllib2.quote(temp_q)
 
     ## To the webs!
     page = str()
@@ -73,7 +73,7 @@ def c(kenni, input):
         kenni.say(answer)
     else:
         #### Attempt #1a
-        uri = uri_base + web.urlib2.quote(q)
+        uri = uri_base + web.urllib2.quote(q)
         try:
             page = proxy.get(uri)
         except:
@@ -91,7 +91,7 @@ def c(kenni, input):
         else:
             #### Attempt #2 (DuckDuckGo's API)
             ddg_uri = 'https://api.duckduckgo.com/?format=json&q='
-            ddg_uri += urlib2.parse.quote(q)
+            ddg_uri += urllib2.parse.quote(q)
 
             ## Try to grab page (results)
             ## If page can't be accessed, we shall fail!
@@ -148,7 +148,7 @@ def py(kenni, input):
     query = code.encode('utf-8')
     uri = 'https://tumbolia-two.appspot.com/py/'
     try:
-        answer = web.get(uri + web.urlib2.quote(query))
+        answer = web.get(uri + web.urllib2.quote(query))
         if answer is not None and answer != "\n":
             kenni.say(answer)
         else:
@@ -167,7 +167,7 @@ def math(kenni, input):
     txt = txt.encode('utf-8')
     txt = txt.decode('utf-8')
     txt = txt.encode('utf-8')
-    txt = urlib2.parse.quote(txt.replace('+', '%2B'))
+    txt = urllib2.parse.quote(txt.replace('+', '%2B'))
 
     url = 'http://gamma.sympy.org/input/?i='
 
@@ -188,7 +188,7 @@ def get_wa(search, appid):
     txt = search
     txt = txt.decode('utf-8')
     txt = txt.encode('utf-8')
-    txt = urlib2.parse.quote(txt)
+    txt = urllib2.parse.quote(txt)
 
     uri = 'https://api.wolframalpha.com/v2/query?reinterpret=true&appid=' + appid
     uri += '&input=' + txt

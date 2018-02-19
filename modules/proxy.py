@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 import json
 import re
-import urlib2.request, urlib2.parse, urlib2.error
+import urllib2.request, urllib2.parse, urllib2.error
 import time
 
 user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:38.0) Gecko/20100101 Firefox/38.0'
 
 
-class Grab(urlib2.request.URLopener):
+class Grab(urllib2.request.URLopener):
     def __init__(self, *args):
         self.version = user_agent
-        urlib2.request.URLopener.__init__(self, *args)
+        urllib2.request.URLopener.__init__(self, *args)
 
     def http_error_default(self, url, fp, errcode, errmsg, headers):
-        return urlib2.addinfourl(fp, [headers, errcode], "http:" + url)
-urlib2.request._urlopener = Grab()
+        return urllib2.addinfourl(fp, [headers, errcode], "http:" + url)
+urllib2.request._urlopener = Grab()
 
 
 def remote_call(uri, size=0, info=False):
@@ -54,8 +54,8 @@ def remote_call(uri, size=0, info=False):
         code += "rtn['code']=u.code;"
     code += "print json.dumps(rtn)"
     query = code % repr(uri)
-    temp = urlib2.parse.quote(query)
-    u = urlib2.request.urlopen(pyurl + temp)
+    temp = urllib2.parse.quote(query)
+    u = urllib2.request.urlopen(pyurl + temp)
     results = u.read()
     u.close()
 

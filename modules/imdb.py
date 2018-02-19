@@ -3,7 +3,7 @@
 import proxy
 import json
 import re
-import urlib2.request, urlib2.error, urlib2.parse
+import urllib2.request, urllib2.error, urllib2.parse
 
 API_BASE_URL = 'http://www.omdbapi.com/'
 
@@ -11,7 +11,7 @@ API_BASE_URL = 'http://www.omdbapi.com/'
 def prep_title(txt):
     txt = txt.replace(' ', '+')
     txt = (txt).encode('utf-8')
-    txt = urlib2.parse.quote(txt)
+    txt = urllib2.parse.quote(txt)
     return txt
 
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import re
-import urllib2.request, urlib2.parse, urlib2.error
+import urllib2.request, urllib2.parse, urllib2.error
 import urllib2.urlopen
 from html.entities import name2codepoint
 uc = str
@@ -8,13 +8,13 @@ uc = str
 r_entity = re.compile(r'&([^;\s]+);')
 
 
-class Grab(urlib2.request.URLopener):
+class Grab(urllib2.request.URLopener):
     def __init__(self, *args):
         self.version = 'Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Firefox/24.0'
-        urlib2.request.URLopener.__init__(self, *args)
+        urllib2.request.URLopener.__init__(self, *args)
 
     def http_error_default(self, url, fp, errcode, errmsg, headers):
-        return urlib2.addinfourl(fp, [headers, errcode], "http:" + url)
+        return urllib2.addinfourl(fp, [headers, errcode], "http:" + url)
 urllib2.request._urlopener = Grab()
 
 
@@ -30,7 +30,7 @@ def get(uri):
 def head(uri):
     if not uri.startswith('http'):
         return
-    u = urlib2.request.urlopen(uri)
+    u = urllib2.request.urlopen(uri)
     info = u.info()
     u.close()
     return info
@@ -41,7 +41,7 @@ def head_info(uri):
         return
     output = dict()
 
-    u = urlib2.request.urlopen(uri)
+    u = urllib2.request.urlopen(uri)
     if hasattr(u, 'geturl'):
         output['geturl'] = u.geturl()
     if hasattr(u, 'code'):
@@ -60,8 +60,8 @@ def head_info(uri):
 def post(uri, query):
     if not uri.startswith('http'):
         return
-    data = urlib2.parse.urlencode(query)
-    u = urlib2.request.urlopen(uri, data)
+    data = urllib2.parse.urlencode(query)
+    u = urllib2.request.urlopen(uri, data)
     bytes = u.read()
     u.close()
     return bytes
@@ -126,10 +126,10 @@ def get_urllib_object(uri, timeout):
     except:
         pass
     while True:
-        req = urlib2.request.Request(uri, headers={'Accept': '*/*', 'User-Agent': 'Mozilla/5.0 (kenni)'})
+        req = urllib2.request.Request(uri, headers={'Accept': '*/*', 'User-Agent': 'Mozilla/5.0 (kenni)'})
         try:
-            u = urlib2.request.urlopen(req, None, timeout)
-        except urlib2.error.HTTPError as e:
+            u = urllib2.request.urlopen(req, None, timeout)
+        except urllib2.error.HTTPError as e:
             return e.fp
         except:
             raise
@@ -153,14 +153,14 @@ def quote(string):
     '''Identical to urllib2.quote. Use this if you already importing web in
     your module and don't want to import urllib2 just to use the quote
     function.'''
-    return urlib2.parse.quote(string)
+    return urllib2.parse.quote(string)
 
 
 def urlencode(data):
-    '''Identical to urlib2.urlencode. Use this if you already importing web
+    '''Identical to urllib2.urlencode. Use this if you already importing web
     in your module and don't want to import urllib just to use the urlencode
     function.'''
-    return urlib2.parse.urlencode(data)
+    return urllib2.parse.urlencode(data)
 
 
 if __name__ == "__main__":
