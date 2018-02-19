@@ -8,7 +8,7 @@ import sqlite3
 import string
 import textwrap
 import time
-import urllib.request, urllib.parse, urllib.error
+import urlib2request, urlib2parse, urlib2error
 import web
 import tools
 

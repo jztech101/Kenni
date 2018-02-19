@@ -5,7 +5,7 @@ from html.entities import name2codepoint
 uc = str
 from modules import proxy
 import time
-import urllib.request, urllib.error, urllib.parse
+import urlib2request, urlib2error, urlib2parse
 import web
 import sys
 
@@ -29,9 +29,9 @@ noteuri.priority = 'low'
 
 
 def get_page_backup(url):
-    req = urllib.request.Request(url, headers={'Accept':'*/*'})
+    req = urlib2request.Request(url, headers={'Accept':'*/*'})
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Firefox/24.0')
-    u = urllib.request.urlopen(req)
+    u = urlib2request.urlopen(req)
     contents = u.read(262144)
     out = dict()
     try:

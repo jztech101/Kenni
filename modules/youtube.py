@@ -2,7 +2,7 @@
 import json
 import re
 import traceback
-import re, urllib.request, urllib.parse, urllib.error, gzip, io
+import re, urlib2request, urlib2parse, urlib2error, gzip, io
 import web
 from html.parser import HTMLParser
 

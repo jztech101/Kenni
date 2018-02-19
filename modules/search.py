@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import json
 import re
-import urllib.request, urllib.parse, urllib.error
+import urlib2request, urlib2parse, urlib2error
 import web
 from modules import proxy
 from modules import url
@@ -18,7 +18,7 @@ def remove_spaces(x):
 
 
 def bing_search(query, lang='en-GB'):
-    query = web.urllib.quote(query)
+    query = web.urlib2quote(query)
     base = 'https://www.bing.com/search?mkt=%s&q=' % lang
     page = proxy.get(base + query)
     m = r_bing.search(page)
@@ -84,7 +84,7 @@ def duck_search(query):
     else:
         ## if we still can't find a search result via the API
         ## let's try scraping the html page
-        uri = 'https://duckduckgo.com/html/?q=%s&kl=us-en&kp=-1' % web.urllib.quote(query)
+        uri = 'https://duckduckgo.com/html/?q=%s&kl=us-en&kp=-1' % web.urlib2quote(query)
         page = proxy.get(uri)
 
         r_duck = re.compile(r'nofollow" class="[^"]+" href="(.*?)">')
@@ -112,7 +112,7 @@ def min_size(key, dictt):
 
 def duck_api(query):
     '''Send 'query' to DDG's API and return results as a dictionary'''
-    #query = web.urllib.quote(query)
+    #query = web.urlib2quote(query)
     uri = 'https://api.duckduckgo.com/?q=%s&format=json&no_html=1&no_redirect=1&kp=-1' % query
     results = proxy.get(uri)
     results = json.loads(results)
