@@ -53,7 +53,7 @@ def irc_authenticated (kenni, input):
             user = nick
 
         auth = "\0".join((nick, user, password))
-        auth = base64.b64encode(auth)
+        auth = base64.b64encode(auth.encode('utf-8'))
 
     if not auth:
         kenni.write(('AUTHENTICATE', '+'))
