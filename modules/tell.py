@@ -78,7 +78,7 @@ def f_remind(kenni, input):
 
     ## handle unicode
     verb = verb.decode('utf-8').encode('utf-8')
-    tellee = tellee.decode('utf-8').encode('utf-8')
+    tellee = tellee.encode('utf-8')
     msg = msg.encode('utf-8')
 
     tellee = tellee.rstrip('.,:;')
