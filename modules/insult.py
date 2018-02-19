@@ -1,5 +1,5 @@
-#!/usr/bin/env python3import os, random
-from modules import str as uc
+#!/usr/bin/env python3
+import os, random
 
 def insult(kenni, input):
     """ insults <target> with configured language insult """

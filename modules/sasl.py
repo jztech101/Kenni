@@ -1,4 +1,5 @@
-#!/usr/bin/env python3import base64
+#!/usr/bin/env python3
+import base64
 
 def irc_cap (kenni, input):
     cap, value = input.args[1], input.args[2]

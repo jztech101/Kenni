@@ -1,4 +1,5 @@
-#!/usr/bin/env python3import random
+#!/usr/bin/env python3
+import random
 import re
 
 def rand(kenni, input):

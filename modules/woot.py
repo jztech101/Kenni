@@ -1,4 +1,5 @@
-#!/usr/bin/env python3import feedparser
+#!/usr/bin/env python3
+import feedparser
 
 api = "https://api.woot.com/1/sales/current.rss/www.woot.com"
 

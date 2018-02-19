@@ -1,4 +1,5 @@
-#!/usr/bin/env python3# coding=utf-8
+#!/usr/bin/env python3
+#coding=utf-8
 
 import html.parser
 import json
@@ -7,8 +8,6 @@ import string
 import urllib.request, urllib.parse, urllib.error
 import web
 
-from modules import str as uc
-
 
 c_pattern = r'(?ims)<(?:h2 class="r"|div id="aoba")[^>]*>(.*?)</(?:h2|div)>'
 c_answer = re.compile(c_pattern)
@@ -16,7 +15,7 @@ r_tag = re.compile(r'<(?!!)[^>]+>')
 WAKEY_NOTFOUND = "Please sign up for WolframAlpha's API to use this function. http://products.wolframalpha.com/api/"
 
 try:
-    from modules import proxy
+    import proxy
 except:
     pass
 

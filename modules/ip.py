@@ -1,5 +1,4 @@
 #!/usr/bin/env python3# coding=utf-8
-from modules import str as uc
 import json
 import re
 import socket

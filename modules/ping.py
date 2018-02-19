@@ -1,4 +1,5 @@
-#!/usr/bin/env python3import random
+#!/usr/bin/env python3
+import random
 
 def f_ping(kenni, input):
     """ping kenni in a channel or pm"""

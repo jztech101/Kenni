@@ -202,12 +202,7 @@ def initialize_configs(config_path):
 
     # Step Four: Load kenni
 
-    try: from __init__ import run
-    except ImportError:
-        try: from kenni import run
-        except ImportError:
-            sys.stderr.write("Error: Couldn't find kenni to import")
-            sys.exit(1)
+    from __init__ import run
 
     # Step Five: Initialise And Run The kennies
 

@@ -1,6 +1,7 @@
-#!/usr/bin/env python3import http.client, time
+#!/usr/bin/env python3
+import http.client, time
 from html.entities import name2codepoint
-from modules import proxy
+ import proxy
 import web
 
 

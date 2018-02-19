@@ -1,4 +1,5 @@
-#!/usr/bin/env python3from datetime import datetime, timedelta
+#!/usr/bin/env python3
+from datetime import datetime, timedelta
 import os
 import re
 import time
@@ -148,7 +149,7 @@ r_zone = re.compile(r'(?:[\d]{4}-[\d]{2}-[\d]{2})?\s+?(([A-Za-z]+|[+-]\d\d?)).*'
 r_date = re.compile(r'([\d]{4})-([\d]{2})-([\d]{2})')
 
 import calendar
-from modules import clock
+from . import clock
 
 def at(kenni, input):
     '''.at YYYY-MM-DD HH:MM TZ -- remind at a specific time.'''

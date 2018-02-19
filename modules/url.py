@@ -2,8 +2,8 @@
 import json
 import re
 from html.entities import name2codepoint
-from modules import str as uc
-from modules import proxy
+ import str as uc
+ import proxy
 import time
 import urllib.request, urllib.error, urllib.parse
 import web

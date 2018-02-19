@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import random
 import itertools
-from modules import str as uc
 
 def write_addquote(text):
     fn = open('quotes.txt', 'a')
@@ -127,7 +126,7 @@ delquote.example = '.rmquote'
 
 def grabquote(kenni, input):
     try:
-        from modules import find
+         import find
     except:
         return kenni.say('Could not load "find" module.')
 

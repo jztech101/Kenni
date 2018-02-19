@@ -1,4 +1,5 @@
-#!/usr/bin/env python3import random
+#!/usr/bin/env python3
+import random
 from datetime import datetime, timedelta
 random.seed()
 

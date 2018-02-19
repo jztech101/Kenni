@@ -1,4 +1,5 @@
-#!/usr/bin/env python3import re
+#!/usr/bin/env python3
+import re
 import web
 
 uri = 'https://en.wiktionary.org/w/index.php?title=%s&printable=yes'

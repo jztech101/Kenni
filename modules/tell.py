@@ -1,4 +1,5 @@
-#!/usr/bin/env python3import os, re, time, random
+#!/usr/bin/env python3
+import os, re, time, random
 import threading
 import tools
 

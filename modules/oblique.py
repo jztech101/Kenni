@@ -1,4 +1,5 @@
-#!/usr/bin/env python3import re, urllib.request, urllib.parse, urllib.error
+#!/usr/bin/env python3
+import re, urllib.request, urllib.parse, urllib.error
 import web
 
 definitions = 'https://github.com/myano/kenni/wiki/oblique'

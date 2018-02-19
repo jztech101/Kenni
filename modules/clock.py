@@ -1,4 +1,5 @@
-#!/usr/bin/env python3import re, math, time, urllib.request, urllib.parse, urllib.error, locale, socket, struct, datetime
+#!/usr/bin/env python3
+import re, math, time, urllib.request, urllib.parse, urllib.error, locale, socket, struct, datetime
 from decimal import Decimal as dec
 
 

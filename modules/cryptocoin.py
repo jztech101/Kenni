@@ -1,4 +1,5 @@
-#!/usr/bin/env python3from modules import proxy
+#!/usr/bin/env python3
+ import proxy
 import locale
 import json
 def nicecurrency(c):

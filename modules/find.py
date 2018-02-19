@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from modules import str as uc
+ import str as uc
 import os, re
 import tools
 

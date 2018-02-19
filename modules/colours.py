@@ -1,4 +1,5 @@
-#!/usr/bin/env python3import tools
+#!/usr/bin/env python3
+import tools
 colours = {
     "00": "white",
     "01": "black",

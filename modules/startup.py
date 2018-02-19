@@ -1,4 +1,5 @@
-#!/usr/bin/env python3import threading, time, sys
+#!/usr/bin/env python3
+import threading, time, sys
 import tools
 
 def setup(kenni):

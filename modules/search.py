@@ -1,9 +1,10 @@
-#!/usr/bin/env python3import json
+#!/usr/bin/env python3
+import json
 import re
 import urllib.request, urllib.parse, urllib.error
 import web
-from modules import proxy
-from modules.url import find_title
+ import proxy
+.url import find_title
 r_tag = re.compile(r'<(?!!)[^>]+>')
 r_bing = re.compile(r'<h2><a href="([^"]+)"')
 

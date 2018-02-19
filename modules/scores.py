@@ -1,5 +1,6 @@
-#!/usr/bin/env python3import codecs
-from modules import str as uc
+#!/usr/bin/env python3
+import codecs
+ import str as uc
 import pickle
 import os
 import time

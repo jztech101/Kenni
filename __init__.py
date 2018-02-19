@@ -1,5 +1,6 @@
-#!/usr/bin/env python3import sys, os, time, threading, signal
-from . import bot
+#!/usr/bin/env python3
+import sys, os, time, threading, signal
+import bot
 
 class Watcher(object):
     # Cf. http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/496735

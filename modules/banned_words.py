@@ -1,4 +1,5 @@
-#!/usr/bin/env python3import imp, os, re, time
+#!/usr/bin/env python3
+import imp, os, re, time
 import tools
 
 current_warnings = {}

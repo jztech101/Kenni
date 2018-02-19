@@ -1,4 +1,5 @@
-#!/usr/bin/env python3import web
+#!/usr/bin/env python3
+import web
 
 def val(kenni, input):
     """Check a webpage using the W3C Markup Validator."""

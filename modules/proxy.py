@@ -1,4 +1,5 @@
-#!/usr/bin/env python3import json
+#!/usr/bin/env python3
+import json
 import re
 import urllib.request, urllib.parse, urllib.error
 import time

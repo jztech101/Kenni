@@ -1,10 +1,11 @@
-#!/usr/bin/env python3import BeautifulSoup
+#!/usr/bin/env python3
+import bs4
 import datetime as dt
 import re
 import urllib.request, urllib.error, urllib.parse
 import web
 
-BS = BeautifulSoup.BeautifulSoup
+BS = bs4.BeautifulSoup
 
 uri = 'https://en.wikipedia.org/wiki/List_of_Internet_top-level_domains'
 r_tag = re.compile(r'<(?!!)[^>]+>')

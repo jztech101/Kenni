@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from modules import proxy
+ import proxy
 import re
 import web
 

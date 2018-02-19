@@ -1,4 +1,5 @@
-#!/usr/bin/env python3import json
+#!/usr/bin/env python3
+import json
 from random import randrange
 import urllib.request, urllib.parse, urllib.error
 
