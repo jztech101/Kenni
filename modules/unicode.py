@@ -23,7 +23,7 @@ supercombiner.rate = 30
 def decode(bit):
     try:
         if isinstance(bit, str):
-            text = bit
+            text = bit.encode('utf-8').decode('utf-8')
         else:
             text = str()
     except UnicodeDecodeError:

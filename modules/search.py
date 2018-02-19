@@ -52,7 +52,7 @@ bing.example = '.bing swhack'
 
 
 def duck_sanitize(incoming):
-    return web.decode((incoming).decode('utf-8'))
+    return web.decode(incoming)
 
 def duck_search(query):
     '''Do a DuckDuckGo Search'''
