@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import http.client, time
 from html.entities import name2codepoint
-from modules import proxy
 import web
 
 
@@ -23,7 +22,7 @@ def head(kenni, input):
     if '/#!' in uri:
         uri = uri.replace('/#!', '/?_escaped_fragment_=')
 
-    try: info = proxy.head(uri)
+    try: info = web.head(uri)
     except IOError: return kenni.say("Can't connect to %s" % uri)
     except http.client.InvalidURL: return kenni.say("Not a valid URI, sorry.")
 

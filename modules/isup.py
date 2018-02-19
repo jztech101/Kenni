@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-from modules import proxy
 import re
 import web
 
@@ -21,7 +20,7 @@ def isup(kenni, input):
         else:
             site = 'http://' + site
     try:
-        response = proxy.get(site)
+        response = web.get(site)
     except Exception as e:
         kenni.say(site + ' looks down from here.')
         return

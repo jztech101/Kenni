@@ -64,10 +64,7 @@ def c(kenni, input):
     else:
         #### Attempt #1a
         uri = uri_base + web.quote(q)
-        try:
-            page = proxy.get(uri)
-        except:
-            page = web.get(uri)
+        page = web.get(uri)
 
         answer = False
 
@@ -85,10 +82,7 @@ def c(kenni, input):
 
             ## Try to grab page (results)
             ## If page can't be accessed, we shall fail!
-            try:
-                page = proxy.get(ddg_uri)
-            except:
-                page = web.get(ddg_uri)
+            page = web.get(ddg_uri)
 
             ## Try to take page source and json-ify it!
             try:
@@ -162,7 +156,7 @@ def math(kenni, input):
 
     re_answer = re.compile(r'<script type="\S+; mode=display".*?>(.*?)</script>')
 
-    page = proxy.get(url + txt)
+    page = web.get(url + txt)
 
     results = re_answer.findall(page)
 

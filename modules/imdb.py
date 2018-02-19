@@ -1,9 +1,9 @@
 # -*- coding: utf8 -*-
 
-from modules import proxy
 import json
 import re
 import urllib.request, urllib.error, urllib.parse
+import web
 
 API_BASE_URL = 'http://www.omdbapi.com/'
 
@@ -36,7 +36,7 @@ def movie(kenni, input):
         uri = API_BASE_URL + '?t=%s&plot=short&r=json' % (title)
 
     try:
-        page = proxy.get(uri)
+        page = web.get(uri)
     except:
         return kenni.say('[IMDB] Connection to API did not succeed.')
 

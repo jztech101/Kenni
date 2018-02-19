@@ -2,7 +2,6 @@
 import json
 import re
 from html.entities import name2codepoint
-from modules import proxy
 from modules import unicode as uc
 import time
 import urllib.request, urllib.error, urllib.parse
@@ -28,7 +27,7 @@ noteuri.rule = r'(?u).*(http[s]?://[^<> "\x01]+)[,.]?'
 noteuri.priority = 'low'
 
 
-def get_page_backup(url):
+def get_page(url):
     req = urllib.request.Request(url, headers={'Accept':'*/*'})
     req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Firefox/24.0')
     u = urllib.request.urlopen(req)
@@ -78,18 +77,7 @@ def find_title(url):
         if k > 3:
             break
 
-        msg = dict()
-
-        try:
-            ## 256 kilobytes
-            status, msg = proxy.get_more(url, 1024 * 256)
-        except:
-            try:
-                status, msg = get_page_backup(url)
-                print("[url] Proxy isn't working!")
-            except:
-                print('[url] Proxy and "get_page_backup" have both failed!')
-                continue
+        status, msg = get_page(url)
 
         if type(msg) == type(dict()) and 'code' in msg:
             status = msg['code']
@@ -187,7 +175,7 @@ def unbitly(kenni, input):
     if not url.startswith(('http://', 'https://')):
         url = 'http://' + url
 
-    status, useful = proxy.get_more(url)
+    status, useful = web.get_more(url)
     try:
         new_url = re_meta.findall(useful['read'])
     except:
@@ -198,7 +186,7 @@ def unbitly(kenni, input):
     else:
         url = url.replace("'", r"\'")
         try:
-            status, results = proxy.get_more(url)
+            status, results = web.get_more(url)
             new_url = results['geturl']
         except:
             return kenni.say('Failed to grab URL: %s' % (url))
