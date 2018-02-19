@@ -81,7 +81,7 @@ def f_remind(kenni, input):
     tellee = tellee.encode('utf-8')
     msg = msg.encode('utf-8')
 
-    tellee = tellee.rstrip('.,:;')
+    tellee = tellee.rstrip(b'.,:;')
 
     if not os.path.exists(kenni.tell_filename):
         return
