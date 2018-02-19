@@ -62,6 +62,8 @@ def find_title(url):
     if 'zerobin.net' in url:
         return True, 'ZeroBin'
 
+    url = uc.decode(url)
+
     msg = str()
     k = 0
     status = False
