@@ -20,8 +20,8 @@ urllib.request._urlopener = Grab()
 def get(uri):
     if not uri.startswith('http'):
         return
-    u = urllib.request.urlopen(uri)
-    bytes = u.encode("utf-8")
+    u = urllib.urlopen(uri)
+    bytes = u.read()
     u.close()
     return bytes
 
