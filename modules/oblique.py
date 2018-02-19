@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import re, urllib2.request, urllib2.parse, urllib2.error
+import re, urllib.request, urllib.parse, urllib.error
 import web
 
 definitions = 'https://github.com/myano/kenni/wiki/oblique'
@@ -22,9 +22,9 @@ def mappings(uri):
 
 def service(kenni, input, command, args):
     t = o.services[command]
-    template = t.replace('${args}', urllib2.parse.quote(args.encode('utf-8'), ''))
-    template = template.replace('${nick}', urllib2.parse.quote(input.nick, ''))
-    uri = template.replace('${sender}', urllib2.parse.quote(input.sender, ''))
+    template = t.replace('${args}', urllib.parse.quote(args.encode('utf-8'), ''))
+    template = template.replace('${nick}', urllib.parse.quote(input.nick, ''))
+    uri = template.replace('${sender}', urllib.parse.quote(input.sender, ''))
 
     info = web.head(uri)
     if isinstance(info, list):
@@ -97,10 +97,10 @@ def snippet(kenni, input):
     if not o.services:
         refresh(kenni)
 
-    search = urllib2.parse.quote(input.group(2).encode('utf-8'))
+    search = urllib.parse.quote(input.group(2).encode('utf-8'))
     py = "BeautifulSoup.BeautifulSoup(re.sub('<.*?>|(?<= ) +', '', " + \
           "''.join(chr(ord(c)) for c in " + \
-          "eval(urllib2.urlopen('https://ajax.googleapis.com/ajax/serv" + \
+          "eval(urllib.urlopen('https://ajax.googleapis.com/ajax/serv" + \
           "ices/search/web?v=1.0&q=" + search + "').read()" + \
           ".replace('null', 'None'))['responseData']['resul" + \
           "ts'][0]['content'].decode('unicode-escape')).replace(" + \

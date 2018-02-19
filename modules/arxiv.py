@@ -17,7 +17,7 @@ no_newlines = re.compile(r'\n')
 
 def get_arxiv(query):
 
-    url = base_url + request.format(urllib2.parse.quote(query))
+    url = base_url + request.format(urllib.parse.quote(query))
     xml = web.get(url)
     feed = feedparser.parse(xml)
 

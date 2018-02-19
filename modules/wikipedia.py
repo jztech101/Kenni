@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import re, urllib2.request, urllib2.parse, urllib2.error, gzip, io
+import re, urllib.request, urllib.parse, urllib.error, gzip, io
 import web
 
 wikiuri = 'https://%s.wikipedia.org/wiki/%s'
@@ -61,7 +61,7 @@ def wikipedia(term, language='en', last=False):
         if isinstance(term, str):
             t = term.encode('utf-8')
         else: t = term
-        q = urllib2.parse.quote(t)
+        q = urllib.parse.quote(t)
         u = wikiuri % (language, q)
         bytes = web.get(u)
     else: bytes = web.get(wikiuri % (language, term))
@@ -79,7 +79,7 @@ def wikipedia(term, language='en', last=False):
     if not last:
         r = r_redirect.search(bytes[:4096])
         if r:
-            term = urllib2.parse.unquote(r.group(1))
+            term = urllib.parse.unquote(r.group(1))
             return wikipedia(term, language=language, last=True)
 
     paragraphs = r_paragraph.findall(bytes)
@@ -152,7 +152,7 @@ def wik(kenni, input):
     origterm = origterm.encode('utf-8')
     origterm = origterm.strip()
 
-    term = urllib2.parse.unquote(origterm)
+    term = urllib.parse.unquote(origterm)
     language = 'en'
     if term.startswith(':') and (' ' in term):
         a, b = term.split(' ', 1)

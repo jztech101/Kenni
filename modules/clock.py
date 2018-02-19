@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import re, math, time, urllib2.request, urllib2.parse, urllib2.error, locale, socket, struct, datetime
+import re, math, time, urllib.request, urllib.parse, urllib.error, locale, socket, struct, datetime
 from decimal import Decimal as dec
 
 
@@ -297,7 +297,7 @@ yi.priority = 'low'
 
 def tock(kenni, input):
     """Shows the time from the USNO's atomic clock."""
-    u = urllib2.request.urlopen('http://tycho.usno.navy.mil/cgi-bin/timer.pl')
+    u = urllib.request.urlopen('http://tycho.usno.navy.mil/cgi-bin/timer.pl')
     info = u.info()
     u.close()
     kenni.say('"' + info['Date'] + '" - tycho.usno.navy.mil')
