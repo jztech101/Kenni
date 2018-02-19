@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import re
 import urllib.request, urllib.parse, urllib.error
-import urllib.request, urllib.error, urllib.parse
 from html.entities import name2codepoint
 uc = str
 
@@ -24,7 +23,7 @@ def get(uri):
     u = urllib.request.urlopen(uri)
     bytes = u.read()
     u.close()
-    return bytes
+    return u
 
 
 def head(uri):
