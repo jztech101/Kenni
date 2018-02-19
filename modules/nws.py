@@ -2,7 +2,7 @@
 import copy
 import datetime
 import feedparser
- import weather
+import weather
 import re
 import sqlite3
 import string

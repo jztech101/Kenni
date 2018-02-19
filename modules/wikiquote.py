@@ -4,7 +4,7 @@ from random import randrange
 import urllib.request, urllib.parse, urllib.error
 
 try:
-    from BeautifulSoup import BeautifulSoup as Soup
+    from bs4 import BeautifulSoup as Soup
 except ImportError:
     raise ImportError("Could not find BeautifulSoup library,"
                       "please install to use the wikiquote module")
