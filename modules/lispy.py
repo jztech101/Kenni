@@ -7,7 +7,7 @@
 
 
 import re, sys, io
- import str as uc
+import str as uc
 
 class Symbol(str): pass
 
