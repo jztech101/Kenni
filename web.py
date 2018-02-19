@@ -23,7 +23,7 @@ def get(uri):
     u = urllib.request.urlopen(uri)
     bytes = u.read()
     u.close()
-    return u
+    return bytes
 
 
 def head(uri):
