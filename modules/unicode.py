@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import re
 import unicodedata
-import urlib2parse
+import urlib2.parse
 
 control_chars = ''.join(map(chr, list(range(0,32)) + list(range(127,160))))
 control_char_re = re.compile('[%s]' % re.escape(control_chars))
@@ -53,8 +53,8 @@ def urlEncodeNonAscii(b):
 
 
 def iriToUri(iri):
-    parts = urlib2parse.urlparse(iri)
-    return urlib2parse.urlunparse(
+    parts = urlib2.parse.urlparse(iri)
+    return urlib2.parse.urlunparse(
         part.encode('idna') if parti == 1 else urlEncodeNonAscii(
             part.encode('utf-8'))
         for parti, part in enumerate(parts)

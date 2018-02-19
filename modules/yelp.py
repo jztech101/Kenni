@@ -1,14 +1,14 @@
 #1/usr/bin/env/python
 
-from urlib2error import HTTPError
-from urlib2parse import quote
-from urlib2parse import urlencode
+from urlib2.error import HTTPError
+from urlib2.parse import quote
+from urlib2.parse import urlencode
 import random
 import requests
 import json
 import pprint
 import sys
-import urlib2request, urlib2parse, urlib2error
+import urlib2.request, urlib2.parse, urlib2.error
 import argparse
 
 def request(host, path, api_key, url_params=None):

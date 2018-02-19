@@ -2,7 +2,7 @@
 import bs4
 import datetime as dt
 import re
-import urlib2request, urlib2error, urlib2parse
+import urlib2.request, urlib2.error, urlib2.parse
 import web
 
 BS = bs4.BeautifulSoup

@@ -3,7 +3,7 @@
 import datetime
 import json
 import re
-import urlib2request, urlib2parse, urlib2error
+import urlib2.request, urlib2.parse, urlib2.error
 import web
 import sys
 uc = str
@@ -660,7 +660,7 @@ def forecast(kenni, input):
 
     url = 'https://api.darksky.net/forecast/%s/%s,%s'
 
-    url = url % (kenni.config.forecastio_apikey, urlib2parse.quote(lat), urlib2parse.quote(lng))
+    url = url % (kenni.config.forecastio_apikey, urlib2.parse.quote(lat), urlib2.parse.quote(lng))
 
     ## do some error checking
     try:
@@ -797,7 +797,7 @@ def forecastio_current_weather(kenni, input):
 
     url = 'https://api.darksky.net/forecast/%s/%s,%s'
 
-    url = url % (kenni.config.forecastio_apikey, urlib2parse.quote(lat), urlib2parse.quote(lng))
+    url = url % (kenni.config.forecastio_apikey, urlib2.parse.quote(lat), urlib2.parse.quote(lng))
 
     ## do some error checking
     try:
@@ -943,7 +943,7 @@ def weather_wunderground(kenni, input):
 
     txt = txt.encode('utf-8')
 
-    url_new = url % (apikey, urlib2parse.quote(txt))
+    url_new = url % (apikey, urlib2.parse.quote(txt))
 
     try:
         page = web.get(url_new)

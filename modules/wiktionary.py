@@ -15,7 +15,7 @@ def text(html):
     return text
 
 def wiktionary(word):
-    bytes = web.get(uri % web.urlib2quote(word.encode('utf-8')))
+    bytes = web.get(uri % web.urlib2.quote(word.encode('utf-8')))
     bytes = r_ul.sub('', bytes)
 
     mode = None
