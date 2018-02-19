@@ -28,7 +28,7 @@ def cryptocoin(kenni, input):
     except:
         return kenni.say('[CryptoCoin] Connection to API did not succeed.')
     try:
-        data = json.loads(page)
+        data = json.loads(page.decode('utf-8'))
     except:
         return kenni.say("[CryptoCoin] Couldn't make sense of information from API")
     currency = None
@@ -55,7 +55,7 @@ def cryptocoin(kenni, input):
         except:
             return kenni.say('[CryptoCoin] Connection to API did not succeed.')
         try:
-            data = json.loads(page)
+            data = json.loads(page.decode('utf-8'))
         except:
             return kenni.say("[CryptoCoin] Couldn't make sense of information from API")
         data=data[0]

@@ -48,7 +48,7 @@ def xkcd(kenni, input):
         except:
             return kenni.say('Failed to access xkcd.com: <' + xkcd_url + '>')
         try:
-            body = json.loads(page)
+            body = json.loads(page.decode('utf-8'))
         except:
             return kenni.say('Failed to make use of data loaded by xkcd.com: <' + xkcd_url + '>')
         return body

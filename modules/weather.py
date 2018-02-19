@@ -671,7 +671,7 @@ def forecast(kenni, input):
 
     ## we want some tasty JSON
     try:
-        data = json.loads(page)
+        data = json.loads(page.decode('utf-8'))
     except:
         return kenni.say('The server did not return anything that was readable as JSON.')
 
@@ -809,7 +809,7 @@ def forecastio_current_weather(kenni, input):
 
     try:
         ## we want tasty JSON
-        data = json.loads(page)
+        data = json.loads(page.decode('utf-8'))
     except:
         ## that wasn't tasty
         return kenni.say('The server did not return anything that was readable as JSON.')
@@ -953,7 +953,7 @@ def weather_wunderground(kenni, input):
     useful = False
 
     try:
-        useful = json.loads(page)
+        useful = json.loads(page.decode('utf-8'))
 
         if 'results' in useful['response']:
             txt = useful['response']['results'][0]['zmw']
@@ -1047,7 +1047,7 @@ def forecast_wg(kenni, input):
         return kenni.say("We could not access wunderground.com's API at the moment.")
 
     try:
-        useful = json.loads(page)
+        useful = json.loads(page.decode('utf-8'))
         if 'results' in useful['response']:
             txt = useful['response']['results'][0]['zmw']
             useful = json.loads(web.get(url % (apikey, 'zmw:'+txt)))

@@ -20,7 +20,7 @@ def ip_lookup(kenni, input):
     except IOError as err:
         return kenni.say('Could not access given address. (Detailed error: %s)' % (err))
     try:
-        results = json.loads(page)
+        results = json.loads(page.decode('utf-8'))
     except:
         return kenni.say('Did not receive proper JSON from %s' % (base))
     if results:

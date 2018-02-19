@@ -26,7 +26,7 @@ def get(uri):
     u = urllib.request.urlopen(request)
     bytes = u.read()
     u.close()
-    return bytes.decode('utf-8')
+    return bytes
 
 
 def head(uri):

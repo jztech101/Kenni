@@ -102,7 +102,7 @@ def c(kenni, input):
 
             ## Try to take page source and json-ify it!
             try:
-                json_response = json.loads(page)
+                json_response = json.loads(page.decode('utf-8'))
             except:
                 ## if it can't be json-ified, then we shall fail!
                 json_response = None
