@@ -6,7 +6,7 @@ import web
 from modules import unicode as uc
 
 
-base = 'http://freegeoip.net/json/'
+base = 'http://ip-api.com/json/'
 re_ip = re.compile('(?i)\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')
 re_country = re.compile('(?i)(.+), (.+ of)')
 
@@ -14,8 +14,6 @@ def ip_lookup(kenni, input):
     txt = input.group(2)
     if not txt:
         return kenni.say("No search term!")
-    txt = uc.encode(txt)
-    query = uc.decode(txt)
     response = "[IP/Host Lookup] "
     try:
         page = web.get(base + txt)
@@ -26,34 +24,23 @@ def ip_lookup(kenni, input):
     except:
         return kenni.say('Did not receive proper JSON from %s' % (base))
     if results:
-        if re_ip.findall(query):
-            ## IP Address
-            try:
-                hostname = socket.gethostbyaddr(query)[0]
-            except:
-                hostname = 'Unknown Host'
-            response += 'Hostname: ' + str(hostname)
-        else:
-            ## Host name
-            response += 'IP: ' + results['ip']
+        response += txt
         spacing = ' |'
         for param in results:
             if not results[param]:
                 results[param] = 'N/A'
         if 'city' in results:
             response += '%s City: %s' % (spacing, results['city'])
-        if 'region_name' in results:
-            response += '%s State: %s' % (spacing, results['region_name'])
-        if 'country_name' in results:
-            country = results['country_name']
+        if 'regionName' in results:
+            response += '%s State: %s' % (spacing, results['regionName'])
+        if 'country' in results:
+            country = results['country']
             match = re_country.match(country)
             if match:
                 country = ' '.join(reversed(match.groups()))
             response += '%s Country: %s' % (spacing, country)
-        if 'zipcode' in results:
-            response += '%s ZIP: %s' % (spacing, results['zipcode'])
-        response += '%s Latitude: %s' % (spacing, results['latitude'])
-        response += '%s Longitude: %s' % (spacing, results['longitude'])
+        if 'timezone' in results:
+            response += '%s Time Zone: %s' % (spacing, results['timezone'])
     kenni.say(response)
 ip_lookup.commands = ['ip', 'iplookup', 'host']
 ip_lookup.example = ".iplookup 8.8.8.8"

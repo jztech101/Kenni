@@ -69,7 +69,7 @@ def create_default_config(fn):
     # http://products.wolframalpha.com/api/
     # This is needed in order to make .calc/.c have more comprehensive answers.
     # wolframalpha_apikey = ''
-    
+    # omdb_apikey  = ''
     
     # yelp API Key
     # yelp_apikey = ''

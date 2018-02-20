@@ -11,7 +11,7 @@ r_entity = re.compile(r'&([^;\s]+);')
 
 class Grab(urllib.request.URLopener):
     def __init__(self, *args):
-        self.version = 'Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Firefox/24.0'
+        self.version = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36'
         urllib.request.URLopener.__init__(self, *args)
 
     def http_error_default(self, url, fp, errcode, errmsg, headers):
@@ -22,7 +22,7 @@ def get(uri):
     if not uri.startswith('http'):
         return
     req = urllib.request.Request(uri, headers={'Accept':'*/*'})
-    req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Firefox/24.0')
+    req.add_header('User-Agent', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36')
     u = urllib.request.urlopen(req)
     bytes = u.read()
     u.close()

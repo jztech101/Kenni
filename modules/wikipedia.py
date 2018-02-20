@@ -65,7 +65,7 @@ def wikipedia(term, language='en', last=False):
         u = wikiuri % (language, q)
         bytes = web.get(u)
     else: bytes = web.get(wikiuri % (language, term))
-
+    bytes = bytes.decode('utf-8')
     if bytes.startswith('\x1f\x8b\x08\x00\x00\x00\x00\x00'):
         f = io.StringIO(bytes)
         f.seek(0)
@@ -140,16 +140,12 @@ def wikipedia(term, language='en', last=False):
         return None
 
     sentence = '"' + sentence.replace('"', "'") + '"'
-    sentence = sentence.decode('utf-8').encode('utf-8')
-    wikiuri = wikiuri.decode('utf-8').encode('utf-8')
-    term = term.decode('utf-8').encode('utf-8')
     return sentence + ' - ' + (wikiuri % (language, term))
 
 def wik(kenni, input):
     origterm = input.groups()[1]
     if not origterm:
         return kenni.say('Perhaps you meant ".wik Zen"?')
-    origterm = origterm.encode('utf-8')
     origterm = origterm.strip()
 
     term = urllib.parse.unquote(origterm)

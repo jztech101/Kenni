@@ -40,19 +40,18 @@ def head(kenni, input):
         data = []
         if 'Status' in info:
             data.append(info['Status'])
-        if 'content-type' in info:
-            data.append(info['content-type'].replace('; charset=', ', '))
-        if 'last-modified' in info:
-            modified = info['last-modified']
+        if 'Content-Type' in info:
+            data.append(info['Content-Type'].replace('; charset=', ', '))
+        if 'Last-Modified' in info:
+            modified = info['Last-Modified']
             modified = time.strptime(modified, '%a, %d %b %Y %H:%M:%S %Z')
             data.append(time.strftime('%Y-%m-%d %H:%M:%S UTC', modified))
-        if 'content-length' in info:
-            data.append(info['content-length'] + ' bytes')
+        if 'Content-Length' in info:
+            data.append(info['Content-Length'] + ' bytes')
         kenni.say(', '.join(data))
     else:
-        headerlower = header.lower()
-        if headerlower in info:
-            kenni.say(header + ': ' + info.get(headerlower))
+        if header in info:
+            kenni.say(header + ': ' + info.get(header))
         else:
             msg = 'There was no %s header in the response.' % header
             kenni.say(msg)

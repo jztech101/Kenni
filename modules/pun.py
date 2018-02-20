@@ -8,7 +8,7 @@ def puns(kenni, input):
     exp = re.compile(r'<div class="dropshadow1">\n<p>(.*?)</p>\n</div>')
     page = web.get(url)
 
-    result = exp.search(page)
+    result = exp.search(page.decode('utf-8'))
     if result:
         pun = result.groups()[0]
         return kenni.say(pun)

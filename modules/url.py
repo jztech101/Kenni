@@ -29,7 +29,7 @@ noteuri.priority = 'low'
 
 def get_page(url):
     req = urllib.request.Request(url, headers={'Accept':'*/*'})
-    req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Firefox/24.0')
+    req.add_header('User-Agent', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36')
     u = urllib.request.urlopen(req)
     contents = u.read(262144)
     out = dict()

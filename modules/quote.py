@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 import random
 import itertools
+from modules import unicode as uc
 
 def write_addquote(text):
     fn = open('quotes.txt', 'a')
-    output = uc.encode(text)
-    fn.write(output)
+    fn.write(text)
     fn.write('\n')
     fn.close()
 
@@ -13,6 +13,8 @@ def write_addquote(text):
 def addquote(kenni, input):
     '''.addquote <nick> something they said here -- adds the quote to the quote database.'''
     text = input.group(2)
+    if not text.startswith("<"):
+        text = "<"+ text.split(" ")[0] + "> " + " ".join(text.split(" ")[1:])
     if not text:
         return kenni.say('No quote provided')
 

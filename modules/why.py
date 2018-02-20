@@ -8,7 +8,7 @@ r_paragraph = re.compile(r'<quote>.*?</quote>')
 
 def getwhy(kenni, input):
     page = web.get(whyuri)
-    paragraphs = r_paragraph.findall(page)
+    paragraphs = r_paragraph.findall(page.decode('utf-8'))
     out = str()
     if paragraphs:
         line = re.sub(r'<[^>]*?>', '', str(paragraphs[0]))
