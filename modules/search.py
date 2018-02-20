@@ -17,10 +17,10 @@ def remove_spaces(x):
 
 
 def bing_search(query, lang='en-GB'):
-    query = web.urllib.quote(query)
+    query = web.quote(query)
     base = 'https://www.bing.com/search?mkt=%s&q=' % lang
     page = web.get(base + query)
-    m = r_bing.search(page)
+    m = r_bing.search(page.decode('utf-8'))
     if m: return m.group(1)
 
 
@@ -34,7 +34,6 @@ def bing(kenni, input):
     if not query:
         return kenni.say('.bing what?')
 
-    query = query.encode('utf-8')
     uri = bing_search(query, lang)
     if uri:
         passs, title = url.find_title(uri)
@@ -114,7 +113,7 @@ def duck_api(query):
     #query = web.urllib.quote(query)
     uri = 'https://api.duckduckgo.com/?q=%s&format=json&no_html=1&no_redirect=1&kp=-1' % query
     results = web.get(uri)
-    results = json.loads(results)
+    results = json.loads(results.decode('utf-8'))
     return results
 
 def duck(kenni, input):
