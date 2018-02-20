@@ -1,10 +1,10 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 import json
 import random
 import re
 import traceback
-import urllib2
-import urlparse
+import urllib.request, urllib.error, urllib.parse
+import urllib.parse
 
 # For information about the Github API check out https://developer.github.com/v3/
 
@@ -12,14 +12,14 @@ BASE_URL = "https://api.github.com"
 DEFAULT_HEADER = { "Accept": "application/vnd.github.v3+json" }
 
 def fetch_github(kenni, url, term):
-    t = urllib2.quote(term)
+    t = urllib.parse.quote(term)
     if '%' in term:
-        t = urllib.quote(term.replace('%', ''))
+        t = urllib.parse.quote(term.replace('%', ''))
 
-    request = urllib2.Request(url % t, headers=DEFAULT_HEADER)
+    request = urllib.request.Request(url % t, headers=DEFAULT_HEADER)
 
     try:
-        content = json.loads(urllib2.urlopen(request).read())
+        content = json.loads(urllib.request.urlopen(request).read())
         return content
     except Exception as e:
         kenni.say("An error occurred fetching information from Github: {0}".format(e))
@@ -119,7 +119,7 @@ def gh_search(kenni, input):
     origterm = input.groups()[1]
     if not origterm:
         return kenni.say('Perhaps you meant ".github_search repo"?')
-    origterm = origterm.encode('utf-8')
+    #origterm = origterm.encode('utf-8')
     origterm = origterm.strip()
 
     error = None
@@ -140,7 +140,7 @@ def gh_user_search(kenni, input):
     origterm = input.groups()[1]
     if not origterm:
         return kenni.say('Perhaps you meant ".github_user_search user"?')
-    origterm = origterm.encode('utf-8')
+    #origterm = origterm.encode('utf-8')
     origterm = origterm.strip()
 
     error = None
@@ -153,7 +153,7 @@ def gh_user_search(kenni, input):
     except Exception as e:
         error = "An unknown error occurred: " + str(e)
         traceback.print_exc()
-gh_user_search.commands = ['gh_user_search', 'github_user_search', 'gh_usr_s']
+gh_user_search.commands = ['gh_user_search', 'github_user_search', 'ghus']
 gh_user_search.priority = 'low'
 gh_user_search.rate = 10
 
@@ -161,7 +161,7 @@ def gh_user_info(kenni, input):
     origterm = input.groups()[1]
     if not origterm:
         return kenni.say('Perhaps you meant ".github_user_info user"?')
-    origterm = origterm.encode('utf-8')
+    #origterm = origterm.encode('utf-8')
     origterm = origterm.strip()
 
     error = None
@@ -174,7 +174,7 @@ def gh_user_info(kenni, input):
     except Exception as e:
         error = "An unknown error occurred: " + str(e)
         traceback.print_exc()
-gh_user_info.commands = ['gh_user_info', 'github_user_info', 'gh_usr', 'gh_user', 'gh_u']
+gh_user_info.commands = ['gh_user_info', 'github_user_info', 'gh_usr', 'gh_user', 'ghu']
 gh_user_info.priority = 'low'
 gh_user_info.rate = 10
 
@@ -182,7 +182,7 @@ def gh_prs(kenni, input):
     origterm = input.groups()[1]
     if not origterm:
         return kenni.say('Perhaps you meant ".github_prs user/repo"?')
-    origterm = origterm.encode('utf-8')
+    #origterm = origterm.encode('utf-8')
     origterm = origterm.strip()
 
     error = None
@@ -195,7 +195,7 @@ def gh_prs(kenni, input):
     except Exception as e:
         error = "An unknown error occurred: " + str(e)
         traceback.print_exc()
-gh_prs.commands = ['gh_prs', 'github_prs']
+gh_prs.commands = ['ghpr', 'github_prs']
 gh_prs.priority = 'low'
 gh_prs.rate = 10
 
@@ -203,7 +203,7 @@ def gh_contribs(kenni, input):
     origterm = input.groups()[1]
     if not origterm:
         return kenni.say('Perhaps you meant ".github_contribs user/repo"?')
-    origterm = origterm.encode('utf-8')
+    #origterm = origterm.encode('utf-8')
     origterm = origterm.strip()
 
     error = None
@@ -216,9 +216,9 @@ def gh_contribs(kenni, input):
     except Exception as e:
         error = "An unknown error occurred: " + str(e)
         traceback.print_exc()
-gh_contribs.commands = ['gh_contribs', 'github_contribs']
+gh_contribs.commands = ['gh_contribs', 'github_contribs', 'ghc']
 gh_contribs.priority = 'low'
 gh_contribs.rate = 10
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

@@ -1,12 +1,10 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import json
 import re
-from htmlentitydefs import name2codepoint
+from html.entities import name2codepoint
 from modules import unicode as uc
-from modules import proxy
 import time
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import web
 import sys
 
@@ -29,10 +27,10 @@ noteuri.rule = r'(?u).*(http[s]?://[^<> "\x01]+)[,.]?'
 noteuri.priority = 'low'
 
 
-def get_page_backup(url):
-    req = urllib2.Request(url, headers={'Accept':'*/*'})
-    req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Firefox/24.0')
-    u = urllib2.urlopen(req)
+def get_page(url):
+    req = urllib.request.Request(url, headers={'Accept':'*/*'})
+    req.add_header('User-Agent', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36')
+    u = urllib.request.urlopen(req)
     contents = u.read(262144)
     out = dict()
     try:
@@ -42,7 +40,7 @@ def get_page_backup(url):
     out['code'] = u.code
     out['read'] = con
     out['geturl'] = u.geturl()
-    out['headers'] = u.headers.dict
+    out['headers'] = u.headers
     out['url'] = u.url
     return out['code'], out
 
@@ -79,18 +77,7 @@ def find_title(url):
         if k > 3:
             break
 
-        msg = dict()
-
-        try:
-            ## 256 kilobytes
-            status, msg = proxy.get_more(url, 1024 * 256)
-        except:
-            try:
-                status, msg = get_page_backup(url)
-                print "[url] Proxy isn't working!"
-            except:
-                print '[url] Proxy and "get_page_backup" have both failed!'
-                continue
+        status, msg = get_page(url)
 
         if type(msg) == type(dict()) and 'code' in msg:
             status = msg['code']
@@ -111,7 +98,7 @@ def find_title(url):
     try:
         mtype = info['content-type']
     except:
-        print 'failed mtype:', str(info)
+        print('failed mtype:', str(info))
         return False, 'mtype failed'
     if not (('/html' in mtype) or ('/xhtml' in mtype)):
         return False, str(mtype)
@@ -119,77 +106,9 @@ def find_title(url):
     content = page
 
 
-    try:
-        from bs4 import BeautifulSoup
-        soup = BeautifulSoup(content, 'html.parser')
-        title = soup.title.text
-
-    except:
-        regex = re.compile('<(/?)title( [^>]+)?>', re.IGNORECASE)
-        content = regex.sub(r'<\1title>', content)
-        regex = re.compile('[\'"]<title>[\'"]', re.IGNORECASE)
-        content = regex.sub('', content)
-        start = content.find('<title>')
-        if start == -1:
-            return False, 'NO <title> found'
-        end = content.find('</title>', start)
-        if end == -1:
-            return False, 'NO </title> found'
-        content = content[start + 7:end]
-        content = content.strip('\n').rstrip().lstrip()
-        title = content
-
-
-    def e(m):
-        entity = m.group()
-        if entity.startswith('&#x'):
-            cp = int(entity[3:-1], 16)
-            meep = unichr(cp)
-        elif entity.startswith('&#'):
-            cp = int(entity[2:-1])
-            meep = unichr(cp)
-        else:
-            entity_stripped = entity[1:-1]
-            try:
-                char = name2codepoint[entity_stripped]
-                meep = unichr(char)
-            except:
-                if entity_stripped in HTML_ENTITIES:
-                    meep = HTML_ENTITIES[entity_stripped]
-                else:
-                    meep = str()
-        try:
-            return uc.decode(meep)
-        except:
-            return uc.decode(uc.encode(meep))
-
-    title = r_entity.sub(e, title)
-
-    title = title.replace('\n', ' ')
-    title = title.replace('\r', ' ')
-    title = title.replace('\t', ' ')
-
-    def remove_spaces(x):
-        if '  ' in x:
-            x = x.replace('  ', ' ')
-            return remove_spaces(x)
-        else:
-            return x
-
-
-    new_title = str()
-    for char in title:
-        unichar = uc.encode(char)
-        if len(list(uc.encode(char))) <= 3:
-            new_title += uc.encode(char)
-    title = new_title
-
-    title = re.sub(r'(?i)dcc\ssend', '', title)
-
-    title = remove_spaces(title)
-    title = (title).strip()
-
-    title += '\x0F'
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(content, 'html.parser')
+    title = soup.title.string
 
     if len(title) > 350:
         title = title[:350] + '\x0F[...]'
@@ -246,7 +165,7 @@ re_meta = re.compile('(?i)content="\S+;\s*?url=(\S+)"\s*?>')
 
 
 def unbitly(kenni, input):
-    '''.longurl <link> -- obtain the final destination URL from a short URL'''
+    '''.longurl <link> -- obtain the final destination URL short URL'''
     url = input.group(2)
     if not url:
         if hasattr(kenni, 'last_seen_uri') and input.sender in kenni.last_seen_uri:
@@ -256,7 +175,7 @@ def unbitly(kenni, input):
     if not url.startswith(('http://', 'https://')):
         url = 'http://' + url
 
-    status, useful = proxy.get_more(url)
+    status, useful = web.get_more(url)
     try:
         new_url = re_meta.findall(useful['read'])
     except:
@@ -267,7 +186,7 @@ def unbitly(kenni, input):
     else:
         url = url.replace("'", r"\'")
         try:
-            status, results = proxy.get_more(url)
+            status, results = web.get_more(url)
             new_url = results['geturl']
         except:
             return kenni.say('Failed to grab URL: %s' % (url))
@@ -314,4 +233,4 @@ puny.commands = ['puny', 'idn', 'idna']
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

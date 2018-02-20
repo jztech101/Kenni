@@ -1,5 +1,5 @@
-#!/usr/bin/env python2
-import re, math, time, urllib, locale, socket, struct, datetime
+#!/usr/bin/env python3
+import re, math, time, urllib.request, urllib.parse, urllib.error, locale, socket, struct, datetime
 from decimal import Decimal as dec
 
 
@@ -195,9 +195,9 @@ def f_time(kenni, input):
         People = kenni.config.timezones
     else: People = {}
 
-    if People.has_key(tz):
+    if tz in People:
         tz = People[tz]
-    elif (not input.group(2)) and People.has_key(input.nick):
+    elif (not input.group(2)) and input.nick in People:
         tz = People[input.nick]
 
     TZ = tz.upper()
@@ -210,7 +210,7 @@ def f_time(kenni, input):
         locale.setlocale(locale.LC_TIME, (tz[1:-1], 'UTF-8'))
         msg = time.strftime("%A, %d %B %Y %H:%M:%SZ", time.gmtime())
         kenni.msg(input.sender, msg)
-    elif TimeZones.has_key(TZ):
+    elif TZ in TimeZones:
         offset = TimeZones[TZ] * 3600
         timenow = time.gmtime(time.time() + offset)
         msg = time.strftime("%a, %d %b %Y %H:%M:%S " + str(TZ), timenow)
@@ -297,7 +297,7 @@ yi.priority = 'low'
 
 def tock(kenni, input):
     """Shows the time from the USNO's atomic clock."""
-    u = urllib.urlopen('http://tycho.usno.navy.mil/cgi-bin/timer.pl')
+    u = urllib.request.urlopen('http://tycho.usno.navy.mil/cgi-bin/timer.pl')
     info = u.info()
     u.close()
     kenni.say('"' + info['Date'] + '" - tycho.usno.navy.mil')
@@ -316,7 +316,7 @@ def npl(kenni, input):
         d = dec('0.0')
         for i in range(8):
             d += dec(buf[32 + i]) * dec(str(math.pow(2, (3 - i) * 8)))
-        d -= dec(2208988800L)
+        d -= dec(2208988800)
         a, b = str(d).split('.')
         f = '%Y-%m-%d %H:%M:%S'
         result = datetime.datetime.fromtimestamp(d).strftime(f) + '.' + b[:6]
@@ -380,4 +380,4 @@ def IanTaylorEasterJscr(year):
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

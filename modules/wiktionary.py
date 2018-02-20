@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 import re
 import web
 
@@ -15,7 +15,7 @@ def text(html):
     return text
 
 def wiktionary(word):
-    bytes = web.get(uri % web.urllib.quote(word.encode('utf-8')))
+    bytes = web.get(uri % web.quote(word)).decode('utf-8')
     bytes = r_ul.sub('', bytes)
 
     mode = None
@@ -54,11 +54,11 @@ parts = ('preposition', 'particle', 'noun', 'verb',
     'adjective', 'adverb', 'interjection')
 
 def format(word, definitions, number=2):
-    result = '%s' % word.encode('utf-8')
+    result = '%s' % word
     for part in parts:
-        if definitions.has_key(part):
+        if part in definitions:
             defs = definitions[part][:number]
-            result += u' \u2014 '.encode('utf-8') + ('%s: ' % part)
+            result += ' \u2014 ' + ('%s: ' % part)
             n = ['%s. %s' % (i + 1, e.strip(' .')) for i, e in enumerate(defs)]
             result += ', '.join(n)
     return result.strip(' .,')
@@ -87,4 +87,4 @@ define.commands = ['dict', 'define', 'word']
 define.example = '.w bailiwick'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

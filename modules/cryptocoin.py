@@ -1,7 +1,7 @@
-#!/usr/bin/env python2
-from modules import proxy
+#!/usr/bin/env python3
 import locale
 import json
+import web
 def nicecurrency(c):
     locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
     if not c:
@@ -24,11 +24,11 @@ def nicedeci(c):
 
 def cryptocoin(kenni, input): 
     try:
-        page = proxy.get("https://files.coinmarketcap.com/generated/search/quick_search.json")
+        page = web.get("https://files.coinmarketcap.com/generated/search/quick_search.json")
     except:
         return kenni.say('[CryptoCoin] Connection to API did not succeed.')
     try:
-        data = json.loads(page)
+        data = json.loads(page.decode('utf-8'))
     except:
         return kenni.say("[CryptoCoin] Couldn't make sense of information from API")
     currency = None
@@ -51,11 +51,11 @@ def cryptocoin(kenni, input):
         kenni.say("Currency not found")
     else:
         try:
-            page = proxy.get("https://api.coinmarketcap.com/v1/ticker/" + currency +"/")
+            page = web.get("https://api.coinmarketcap.com/v1/ticker/" + currency +"/")
         except:
             return kenni.say('[CryptoCoin] Connection to API did not succeed.')
         try:
-            data = json.loads(page)
+            data = json.loads(page.decode('utf-8'))
         except:
             return kenni.say("[CryptoCoin] Couldn't make sense of information from API")
         data=data[0]

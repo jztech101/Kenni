@@ -1,10 +1,9 @@
-#!/usr/bin/env python2
-# vim: set fileencoding=UTF-8 :
+#!/usr/bin/env python3# vim: set fileencoding=UTF-8 :
 
 import datetime
 import json
 import re
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import web
 import sys
 from modules import unicode as uc
@@ -15,14 +14,14 @@ install_geopy = "Please install geopy via 'pip' to use weather.py"
 try:
     import geopy
 except ImportError:
-    print install_geopy
+    print(install_geopy)
 
 
 r_from = re.compile(r'(?i)([+-]\d+):00 from')
 r_tag = re.compile(r'<(?!!)[^>]+>')
 
 def clean(txt, delim=''):
-    '''Remove HTML entities from a given text'''
+    '''Remove HTML entities given text'''
     if delim:
         return r_tag.sub(delim, txt)
     else:
@@ -179,23 +178,23 @@ def speed_desc(speed):
 def wind_dir(degrees):
     '''Provide a nice little unicode character of the wind direction'''
     if degrees == 'VRB':
-        degrees = u'\u21BB'.encode('utf-8')
+        degrees = '\u21BB'.encode('utf-8')
     elif (degrees <= 22.5) or (degrees > 337.5):
-        degrees = u'\u2191'.encode('utf-8')
+        degrees = '\u2191'.encode('utf-8')
     elif (degrees > 22.5) and (degrees <= 67.5):
-        degrees = u'\u2197'.encode('utf-8')
+        degrees = '\u2197'.encode('utf-8')
     elif (degrees > 67.5) and (degrees <= 112.5):
-        degrees = u'\u2192'.encode('utf-8')
+        degrees = '\u2192'.encode('utf-8')
     elif (degrees > 112.5) and (degrees <= 157.5):
-        degrees = u'\u2198'.encode('utf-8')
+        degrees = '\u2198'.encode('utf-8')
     elif (degrees > 157.5) and (degrees <= 202.5):
-        degrees = u'\u2193'.encode('utf-8')
+        degrees = '\u2193'.encode('utf-8')
     elif (degrees > 202.5) and (degrees <= 247.5):
-        degrees = u'\u2199'.encode('utf-8')
+        degrees = '\u2199'.encode('utf-8')
     elif (degrees > 247.5) and (degrees <= 292.5):
-        degrees = u'\u2190'.encode('utf-8')
+        degrees = '\u2190'.encode('utf-8')
     elif (degrees > 292.5) and (degrees <= 337.5):
-        degrees = u'\u2196'.encode('utf-8')
+        degrees = '\u2196'.encode('utf-8')
 
     return degrees
 
@@ -206,14 +205,14 @@ def f_weather(kenni, input):
     text = input.group(2)
 
     status, icao_code = get_icao(kenni, text)
-    print 'status:', status
-    print 'icao_code:', icao_code
+    print('status:', status)
+    print('icao_code:', icao_code)
     if not status:
         return kenni.say(icao_code)
 
     status, page = get_metar(icao_code)
-    print 'status:', status
-    print 'page:', page
+    print('status:', status)
+    print('page:', page)
     if not status:
         return kenni.say(page)
 
@@ -370,13 +369,13 @@ def f_weather(kenni, input):
                     level = 0
 
         if level == 8:
-            cover = u'Overcast \u2601'.encode('utf-8')
+            cover = 'Overcast \u2601'.encode('utf-8')
         elif level == 5:
             cover = 'Cloudy'
         elif level == 3:
             cover = 'Scattered'
         elif (level == 1) or (level == 0):
-            cover = u'Clear \u263C'.encode('utf-8')
+            cover = 'Clear \u263C'.encode('utf-8')
         else: cover = 'Cover Unknown'
     else: cover = 'Cover Unknown'
 
@@ -414,10 +413,10 @@ def f_weather(kenni, input):
 
         if icao_code.startswith('K'):
             ## if in North America
-            windchill = u'%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (f, windchill)
+            windchill = '%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (f, windchill)
         else:
             ## else, anywhere else in the worldd
-            windchill = u'%.1f\u00B0C'.encode('utf-8') % (windchill)
+            windchill = '%.1f\u00B0C'.encode('utf-8') % (windchill)
 
     heatindex = False
     if isinstance(temp, float) and isinstance(dew, float):
@@ -425,7 +424,7 @@ def f_weather(kenni, input):
         temp_f = (temp * 1.8) + 32.0
         if rh >= 40.0 and temp_f >= 80.0:
             heatindex = gen_heat_index(temp_f, rh)
-            heatindex = u'%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (heatindex, (heatindex - 32.0) / (1.8) )
+            heatindex = '%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (heatindex, (heatindex - 32.0) / (1.8) )
 
     if pressure:
         if pressure.startswith('Q'):
@@ -443,16 +442,16 @@ def f_weather(kenni, input):
 
             if isinstance(temp, float):
                 f = (temp * 1.8) + 32
-                temp = u'%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (f, temp)
+                temp = '%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (f, temp)
             if isinstance(dew, float):
                 f = (dew * 1.8) + 32
-                dew = u'%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (f, dew)
+                dew = '%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (f, dew)
     else: pressure = '?mb'
 
     if isinstance(temp, float):
-        temp = u'%.1f\u00B0C'.encode('utf-8') % temp
+        temp = '%.1f\u00B0C'.encode('utf-8') % temp
     if isinstance(dew, float):
-        dew = u'%.1f\u00B0C'.encode('utf-8') % dew
+        dew = '%.1f\u00B0C'.encode('utf-8') % dew
 
     if cond:
         conds = cond
@@ -556,7 +555,7 @@ def windchill(kenni, input):
 
     if len(text) == 1:
         ## show them what we want
-        return kenni.say(u'.windchill <temp> <wind speed> -- shows Windchill in \u00B0F')
+        return kenni.say('.windchill <temp> <wind speed> -- shows Windchill in \u00B0F')
 
     if len(text) >= 3:
         try:
@@ -571,7 +570,7 @@ def windchill(kenni, input):
         return kenni.say('Invalid arguments! Try, .windchill without any parameters.')
 
     if temp > 50:
-        return kenni.say(u'The windchill formula only works on temperatures below 50 \u00B0F')
+        return kenni.say('The windchill formula only works on temperatures below 50 \u00B0F')
 
     if wind < 0:
         ## yes, yes, I know about vectors, but this is a scalar equation
@@ -583,7 +582,7 @@ def windchill(kenni, input):
     ## cf. https://is.gd/mgLuzU
     wc = 35.74 + (0.6215 * temp) - (35.75 * (wind ** (0.16))) + (0.4275 * temp * (wind ** (0.16)))
 
-    kenni.say(u'Windchill: %2.f \u00B0F' % (wc))
+    kenni.say('Windchill: %2.f \u00B0F' % (wc))
 windchill.commands = ['windchill', 'wc']
 windchill.priority = 'low'
 windchill.rate = 10
@@ -661,7 +660,7 @@ def forecast(kenni, input):
 
     url = 'https://api.darksky.net/forecast/%s/%s,%s'
 
-    url = url % (kenni.config.forecastio_apikey, urllib.quote(lat), urllib.quote(lng))
+    url = url % (kenni.config.forecastio_apikey, urllib.parse.quote(lat), urllib.parse.quote(lng))
 
     ## do some error checking
     try:
@@ -672,7 +671,7 @@ def forecast(kenni, input):
 
     ## we want some tasty JSON
     try:
-        data = json.loads(page)
+        data = json.loads(page.decode('utf-8'))
     except:
         return kenni.say('The server did not return anything that was readable as JSON.')
 
@@ -703,7 +702,7 @@ def forecast(kenni, input):
 
     for day in days:
         ## give me floats with only one significant digit
-        form = u'%.1f'
+        form = '%.1f'
 
         hi = form % (day['temperatureMax'])
         low = form % (day['temperatureMin'])
@@ -724,9 +723,9 @@ def forecast(kenni, input):
             day_ts = int(day['sunriseTime'])
 
         dotw_day = datetime.datetime.fromtimestamp(day_ts).weekday()
-        dotw_day_pretty = u'\x0310\x02\x1F%s\x1F\x02\x03' % (dotw[dotw_day])
+        dotw_day_pretty = '\x0310\x02\x1F%s\x1F\x02\x03' % (dotw[dotw_day])
 
-        line = u'%s: \x02\x0304%sF (%sC)\x03\x02 / \x02\x0312%sF (%sC)\x03\x02, \x1FDew\x1F: %sF (%sC), \x1FWind\x1F: %smph (%skmh), %s | '
+        line = '%s: \x02\x0304%sF (%sC)\x03\x02 / \x02\x0312%sF (%sC)\x03\x02, \x1FDew\x1F: %sF (%sC), \x1FWind\x1F: %smph (%skmh), %s | '
 
         ## remove extra whitespace
         dotw_day_pretty = (dotw_day_pretty).strip()
@@ -798,7 +797,7 @@ def forecastio_current_weather(kenni, input):
 
     url = 'https://api.darksky.net/forecast/%s/%s,%s'
 
-    url = url % (kenni.config.forecastio_apikey, urllib.quote(lat), urllib.quote(lng))
+    url = url % (kenni.config.forecastio_apikey, urllib.parse.quote(lat), urllib.parse.quote(lng))
 
     ## do some error checking
     try:
@@ -810,7 +809,7 @@ def forecastio_current_weather(kenni, input):
 
     try:
         ## we want tasty JSON
-        data = json.loads(page)
+        data = json.loads(page.decode('utf-8'))
     except:
         ## that wasn't tasty
         return kenni.say('The server did not return anything that was readable as JSON.')
@@ -846,13 +845,13 @@ def forecastio_current_weather(kenni, input):
         cover_word = 'Clear'
 
     temp_c = (temp - 32) / 1.8
-    temp = u'%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (temp, temp_c)
+    temp = '%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (temp, temp_c)
 
     dew_c = (dew - 32) / 1.8
-    dew = u'%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (dew, dew_c)
+    dew = '%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (dew, dew_c)
 
     APtemp_c = (APtemp - 32) / 1.8
-    APtemp = u'%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (APtemp, APtemp_c)
+    APtemp = '%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (APtemp, APtemp_c)
 
     humidity = str(int(float(humidity) * 100)) + '%'
 
@@ -881,10 +880,10 @@ def forecastio_current_weather(kenni, input):
     output += ', \x1FApparent Temp\x1F: ' + str(APtemp)
     output += ', \x1FPressure\x1F: ' + pressure
     if cond:
-        output += ', \x1FCondition\x1F: ' + (cond).encode('utf-8')
+        output += ', \x1FCondition\x1F: ' + str(cond)
     output += ', \x1FWind\x1F: ' + wind
     output += ' - '
-    output += uc.encode(name)
+    output += uc.decode(name)
     output + '; %s UTC' % (time)
 
     ## required according to ToS by darksky.net
@@ -920,14 +919,14 @@ def gen_heat_index(temp, rh):
 
 def add_degree(txt):
     if ' F' in txt:
-        txt = re.sub(' F', u'\u00B0F', txt)
+        txt = re.sub(' F', '\u00B0F', txt)
     else:
-        txt = re.sub('F', u'\u00B0F', txt)
+        txt = re.sub('F', '\u00B0F', txt)
 
     if ' C' in txt:
-        txt = re.sub(' C', u'\u00B0C', txt)
+        txt = re.sub(' C', '\u00B0C', txt)
     else:
-        txt = re.sub('C', u'\u00B0C', txt)
+        txt = re.sub('C', '\u00B0C', txt)
     return ((txt).encode('utf-8')).decode('utf-8')
 
 
@@ -944,7 +943,7 @@ def weather_wunderground(kenni, input):
 
     txt = txt.encode('utf-8')
 
-    url_new = url % (apikey, urllib.quote(txt))
+    url_new = url % (apikey, urllib.parse.quote(txt))
 
     try:
         page = web.get(url_new)
@@ -954,7 +953,7 @@ def weather_wunderground(kenni, input):
     useful = False
 
     try:
-        useful = json.loads(page)
+        useful = json.loads(page.decode('utf-8'))
 
         if 'results' in useful['response']:
             txt = useful['response']['results'][0]['zmw']
@@ -988,12 +987,12 @@ def weather_wunderground(kenni, input):
 
     if pressure_trend == '-':
         #pressure_trend = re.sub('-', u'\u2193', pressure_trend)
-        pressure_trend = u'\u2193'
+        pressure_trend = '\u2193'
     elif pressure_trend == '+':
         #pressure_trend = re.sub('\+', u'\u2191', pressure_trend)
-        pressure_trend = u'\u2191'
+        pressure_trend = '\u2191'
     elif pressure_trend == '0':
-        pressure_trend = u'\u2192'
+        pressure_trend = '\u2192'
 
     time_updated = re.sub('Last Updated on ', '\x1FLast Updated\x1F: ', time_updated)
 
@@ -1048,7 +1047,7 @@ def forecast_wg(kenni, input):
         return kenni.say("We could not access wunderground.com's API at the moment.")
 
     try:
-        useful = json.loads(page)
+        useful = json.loads(page.decode('utf-8'))
         if 'results' in useful['response']:
             txt = useful['response']['results'][0]['zmw']
             useful = json.loads(web.get(url % (apikey, 'zmw:'+txt)))
@@ -1093,8 +1092,8 @@ def forecast_wg(kenni, input):
     for day in days:
         day_of_week = day['date']['weekday_short']
         conditions = day['conditions']
-        highs = u'\x02\x0304%s\u00B0F (%s\u00B0C)\x03\x02' % (day['high']['fahrenheit'], day['high']['celsius'])
-        lows = u'\x02\x0302%s\u00B0F (%s\u00B0C)\x03\x02' % (day['low']['fahrenheit'], day['low']['celsius'])
+        highs = '\x02\x0304%s\u00B0F (%s\u00B0C)\x03\x02' % (day['high']['fahrenheit'], day['high']['celsius'])
+        lows = '\x02\x0302%s\u00B0F (%s\u00B0C)\x03\x02' % (day['low']['fahrenheit'], day['low']['celsius'])
         #wind = 'From %s at %s-mph (%s-kph)' % (day['avewind']['dir'], day['maxwind']['mph'], day['maxwind']['kph'])
 
         days_text_temp = days_text[k]
@@ -1132,4 +1131,4 @@ radar_us.priority = 'low'
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

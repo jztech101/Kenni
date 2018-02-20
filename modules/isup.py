@@ -1,6 +1,4 @@
-#!/usr/bin/env python2
-
-from modules import proxy
+#!/usr/bin/env python3
 import re
 import web
 
@@ -22,7 +20,7 @@ def isup(kenni, input):
         else:
             site = 'http://' + site
     try:
-        response = proxy.get(site)
+        response = web.get(site)
     except Exception as e:
         kenni.say(site + ' looks down from here.')
         return
@@ -35,4 +33,4 @@ isup.commands = ['isup']
 isup.example = '.isup google.com'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

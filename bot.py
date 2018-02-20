@@ -1,16 +1,8 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 import time, sys, os, re, threading, imp
-import irc
+import irc, os
 
 home = os.getcwd()
-
-def decode(bytes):
-    try: text = bytes.decode('utf-8')
-    except UnicodeDecodeError:
-        try: text = bytes.decode('iso-8859-1')
-        except UnicodeDecodeError:
-            text = bytes.decode('cp1252')
-    return text
 
 class kenni(irc.Bot):
     def __init__(self, config):
@@ -66,8 +58,8 @@ class kenni(irc.Bot):
             # if name in sys.modules:
             #     del sys.modules[name]
             try: module = imp.load_source(name, filename)
-            except Exception, e:
-                print >> sys.stderr, "Error loading %s: %s (in bot.py)" % (name, e)
+            except Exception as e:
+                print("Error loading %s: %s (in bot.py)" % (name, e), file=sys.stderr)
             else:
                 if hasattr(module, 'setup'):
                     module.setup(self)
@@ -75,15 +67,15 @@ class kenni(irc.Bot):
                 modules.append(name)
 
         if modules:
-            print >> sys.stderr, 'Registered modules:', ', '.join(sorted(modules))
+            print('Registered modules:', ', '.join(sorted(modules)), file=sys.stderr)
         else:
-            print >> sys.stderr, "Warning: Couldn't find any modules"
+            print("Warning: Couldn't find any modules", file=sys.stderr)
 
         self.bind_commands()
 
     def register(self, variables):
         # This is used by reload.py, hence it being methodised
-        for name, obj in variables.iteritems():
+        for name, obj in variables.items():
             if hasattr(obj, 'commands') or hasattr(obj, 'rule'):
                 self.variables[name] = obj
 
@@ -133,7 +125,7 @@ class kenni(irc.Bot):
             pattern = pattern.replace('$nickname', re.escape(self.nick))
             return pattern.replace('$nick', r'%s[,:] +' % re.escape(self.nick))
 
-        for name, func in self.variables.iteritems():
+        for name, func in self.variables.items():
             # print name, func
             if not hasattr(func, 'priority'):
                 func.priority = 'medium'
@@ -209,14 +201,14 @@ class kenni(irc.Bot):
 
         return kenniWrapper(self)
 
-    def input(self, origin, text, bytes, match, event, args):
-        class CommandInput(unicode):
-            def __new__(cls, text, origin, bytes, match, event, args):
-                s = unicode.__new__(cls, text)
+    def input(self, origin, text, match, event, args):
+        class CommandInput(str):
+            def __new__(cls, text, origin, match, event, args):
+                s = str.__new__(cls, text)
                 s.sender = origin.sender
                 s.nick = origin.nick
                 s.event = event
-                s.bytes = bytes
+                s.bytes = text.encode('utf-8')
                 s.match = match
                 s.group = match.group
                 s.groups = match.groups
@@ -246,7 +238,7 @@ class kenni(irc.Bot):
                 s.host = origin.host
                 return s
 
-        return CommandInput(text, origin, bytes, match, event, args)
+        return CommandInput(text, origin, match, event, args)
 
     def call(self, func, origin, kenni, input):
         nick = (input.nick).lower()
@@ -256,22 +248,22 @@ class kenni(irc.Bot):
                     if '!' in self.excludes[(input.sender).lower()]:
                         # block all function calls for this channel
                         return
-                    fname = func.func_code.co_filename.split('/')[-1].split('.')[0]
+                    fname = func.__code__.co_filename.split('/')[-1].split('.')[0]
                     if fname in self.excludes[(input.sender).lower()]:
                         # block function call if channel is blacklisted
                         return
-        except Exception, e:
-            print "Error attempting to block:", str(func.name)
+        except Exception as e:
+            print("Error attempting to block:", str(func.name))
             self.error(origin)
 
         try:
             func(kenni, input)
-        except Exception, e:
+        except Exception as e:
             self.error(origin)
 
-    def dispatchcommand(self,origin,args, bytes,  text, match, event, func):
+    def dispatchcommand(self,origin,args,  text, match, event, func):
         kenni = self.wrapped(origin, text, match)
-        input = self.input(origin, text, bytes, match, event, args)
+        input = self.input(origin, text, match, event, args)
 
         nick = (input.nick).lower()
 
@@ -350,19 +342,18 @@ class kenni(irc.Bot):
                 self.stats[(func.name, source)] = 1
 
     def dispatch(self, origin, args):
-        bytes, event, args = args[0], args[1], args[2:]
-        text = decode(bytes)
+        text, event, args = args[0], args[1], args[2:]
 
         for priority in ('high', 'medium', 'low'):
-            items = self.rules[priority].items()
+            items = list(self.rules[priority].items())
             for regexp, funcs in items:
                 for func in funcs:
                     if event != func.event: continue
                     match = regexp.match(text)
                     if match:
-                        self.dispatchcommand(origin,args, bytes, text, match, event, func)
+                        self.dispatchcommand(origin,args, text, match, event, func)
 
-            items = self.commands[priority].items()
+            items = list(self.commands[priority].items())
             for command, funcs in items:
                 for func in funcs:
                     if event != func.event: continue
@@ -375,8 +366,8 @@ class kenni(irc.Bot):
                     command = re.compile(pattern)
                     match = command.match(text)
                     if match:
-                        self.dispatchcommand(origin,args,bytes, text, match, event, func)
-            items = self.commandrules[priority].items()
+                        self.dispatchcommand(origin,args, text, match, event, func)
+            items = list(self.commandrules[priority].items())
             for commandrule, funcs in items:
                 for func in funcs:
                     if event != func.event: continue
@@ -387,9 +378,9 @@ class kenni(irc.Bot):
                     commandrule = re.compile(prefix + commandrule)
                     match = commandrule.match(text)
                     if match:
-                        self.dispatchcommand(origin,args,bytes, text, match, event, func)
+                        self.dispatchcommand(origin,args, text, match, event, func)
 
 
 if __name__ == '__main__':
-    print __doc__
+    print(__doc__)
 

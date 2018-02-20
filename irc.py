@@ -1,5 +1,5 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
+from __future__ import unicode_literals, absolute_import, print_function, division
 import sys, re, time, traceback
 import socket, asyncore, asynchat, ssl, select
 import os, codecs
@@ -43,10 +43,10 @@ class Origin(object):
 
 def create_logdir():
     try: os.mkdir(cwd + "/logs")
-    except Exception, e:
-        print >> sys.stderr, 'There was a problem creating the logs directory.'
-        print >> sys.stderr, e.__class__, str(e)
-        print >> sys.stderr, 'Please fix this and then run kenni again.'
+    except Exception as e:
+        print('There was a problem creating the logs directory.', file=sys.stderr)
+        print(e.__class__, str(e), file=sys.stderr)
+        print('Please fix this and then run kenni again.', file=sys.stderr)
         sys.exit(1)
 
 def check_logdir():
@@ -72,7 +72,7 @@ def log_raw(line):
 class Bot(asynchat.async_chat):
     def __init__(self, nick, name, channels, user=None, password=None, logchan_pm=None, logging=False, ipv6=False):
         asynchat.async_chat.__init__(self)
-        self.set_terminator('\n')
+        self.set_terminator(b'\n')
         self.buffer = ''
 
         self.nick = nick
@@ -119,14 +119,17 @@ class Bot(asynchat.async_chat):
         and then disconnect.'''
         trace = traceback.format_exc()
         try:
-            print trace
-        except Exception, e:
-            print 'Uncaptured error!!!', e
+            print(trace)
+        except Exception as e:
+            print('Uncaptured error!!!', e)
 
 
     def __write(self, args, text=None, raw=False):
         # print '%r %r %r' % (self, args, text)
         try:
+            args = [self.safe(arg) for arg in args]
+            if text is not None:
+                text = self.safe(text)
             if raw:
                 temp = ' '.join(args)[:510] + " :" + text + '\r\n'
             elif not raw:
@@ -135,25 +138,23 @@ class Bot(asynchat.async_chat):
                     temp = (' '.join(args) + ' :' + text)[:510] + '\r\n'
                 else:
                     temp = ' '.join(args)[:510] + '\r\n'
-            self.push(temp)
-            if self.logging:
-                log_raw(temp)
-        except Exception, e:
-            print time.time()
-            print '[__WRITE FAILED]', e
-            #pass
+            self.send(temp.encode('utf-8'))
+        except Exception as e:
+            print(time.time())
+            print('[__WRITE FAILED]', e)
+            sys.exit(0)
 
     def write(self, args, text=None, raw=False):
         try:
-            args = [self.safe(arg, u=True) for arg in args]
+            args = [self.safe(arg) for arg in args]
             if text is not None:
-                text = self.safe(text, u=True)
+                text = self.safe(text)
             if raw:
                 self.__write(args, text, raw)
             else:
                 self.__write(args, text)
-        except Exception, e:
-            print '[WRITE FAILED]', e
+        except Exception as e:
+            print('[WRITE FAILED]', e)
     def join(self, channel, key):
         if not key:
             self.write(['JOIN'], channel)
@@ -162,13 +163,16 @@ class Bot(asynchat.async_chat):
         self.write(['WHO', channel])
 
 
-    def safe(self, input, u=False):
-        if input:
-            input = input.replace('\n', '')
-            input = input.replace('\r', '')
-            if u:
-                input = input.encode('utf-8')
-        return input
+    def safe(self, string):
+        """Remove newlines string."""
+        if sys.version_info.major >= 3 and isinstance(string, bytes):
+                string = string.decode('utf8')
+        elif sys.version_info.major < 3:
+            if not isinstance(string, str):
+                string = str(string, encoding='utf8')
+        string = string.replace('\n', '')
+        string = string.replace('\r', '')
+        return string
 
     def run(self, host, port=6667):
         self.initiate_connect(host, port)
@@ -176,7 +180,7 @@ class Bot(asynchat.async_chat):
     def initiate_connect(self, host, port):
         if self.verbose:
             message = 'Connecting to %s:%s...' % (host, port)
-            print >> sys.stderr, message,
+            print(message, end=' ', file=sys.stderr)
 
         if self.use_ssl:
             self.send = self._ssl_send
@@ -204,17 +208,17 @@ class Bot(asynchat.async_chat):
         try: asyncore.loop()
         except KeyboardInterrupt:
             sys.exit()
-        except Exception, e:
-            print '[asyncore]', e
+        except Exception as e:
+            print('[asyncore]', e)
 
     def handle_connect(self):
         if self.use_ssl:
-            self.ssl = ssl.wrap_socket(self.socket, do_handshake_on_connect=False)
+            self.ssl = ssl.wrap_socket(self.socket, do_handshake_on_connect=False, suppress_ragged_eofs=True)
             while True:
                 try:
                     self.ssl.do_handshake()
                     break
-                except ssl.SSLError, err:
+                except ssl.SSLError as err:
                     if err.args[0] == ssl.SSL_ERROR_WANT_READ:
                         select.select([self.ssl], [], [])
                     elif err.args[0] == ssl.SSL_ERROR_WANT_WRITE:
@@ -226,7 +230,7 @@ class Bot(asynchat.async_chat):
             self.set_socket(self.ssl)
 
         if self.verbose:
-            print >> sys.stderr, 'connected!'
+            print('connected!', file=sys.stderr)
 
         if self.use_sasl:
             self.write(('CAP', 'LS'))
@@ -240,53 +244,58 @@ class Bot(asynchat.async_chat):
 
     def handle_close(self):
         self.close()
-        print >> sys.stderr, 'Closed!'
+        print('Closed!', file=sys.stderr)
 
     def _ssl_send(self, data):
-        """ Replacement for self.send() during SSL connections. """
-        """ Thank you - http://www.evanfosmark.com/2010/09/ssl-support-in-asynchatasync_chat/ """
+        """Replacement for self.send() during SSL connections."""
         try:
             result = self.socket.send(data)
             return result
-        except ssl.SSLError, why:
+        except ssl.SSLError as why:
             if why[0] in (asyncore.EWOULDBLOCK, errno.ESRCH):
                 return 0
             else:
-                raise ssl.SSLError, why
+                raise why
             return 0
 
     def _ssl_recv(self, buffer_size):
-        """ Replacement for self.recv() during SSL connections. """
-        """ Thank you - http://www.evanfosmark.com/2010/09/ssl-support-in-asynchatasync_chat/ """
+        """Replacement for self.recv() during SSL connections.
+        From: http://evanfosmark.com/2010/09/ssl-support-in-asynchatasync_chat
+        """
         try:
-            data = self.read(buffer_size)
+            data = self.socket.read(buffer_size)
             if not data:
                 self.handle_close()
-                return ''
+                return b''
             return data
-        except ssl.SSLError, why:
+        except ssl.SSLError as why:
             if why[0] in (asyncore.ECONNRESET, asyncore.ENOTCONN,
                           asyncore.ESHUTDOWN):
                 self.handle_close()
-                return ''
+                return b''
             elif why[0] == errno.ENOENT:
                 # Required in order to keep it non-blocking
-                return ''
+                return b''
             else:
                 raise
 
     def collect_incoming_data(self, data):
+        # We can't trust clients to pass valid str.
+        try:
+            data = str(data, encoding='utf-8')
+        except UnicodeDecodeError:
+            # not str, let's try cp1252
+            try:
+                data = str(data, encoding='cp1252')
+            except UnicodeDecodeError:
+                # Okay, let's try ISO8859-1
+                try:
+                    data = str(data, encoding='iso8859-1')
+                except:
+                    # Discard line if encoding is unknown
+                    return
+
         self.buffer += data
-        '''
-        if data:
-            if self.logchan_pm:
-                dlist = data.split()
-                if len(dlist) >= 3:
-                    if "#" not in dlist[2] and dlist[1].strip() not in IRC_CODES:
-                        self.msg(self.logchan_pm, data, True)
-            if self.logging:
-                log_raw(data)
-        '''
 
     def found_terminator(self):
         line = self.buffer
@@ -345,17 +354,17 @@ class Bot(asynchat.async_chat):
         self.sending.acquire()
 
         # Cf. http://swhack.com/logs/2006-03-01#T19-43-25
-        if isinstance(text, unicode):
+        if isinstance(text, str):
             try: text = text.encode('utf-8')
-            except UnicodeEncodeError, e:
+            except UnicodeDecodeError as e:
                 text = e.__class__ + ': ' + str(e)
-        if isinstance(recipient, unicode):
+        if isinstance(recipient, str):
             try: recipient = recipient.encode('utf-8')
-            except UnicodeEncodeError, e:
+            except UnicodeDecodeError as e:
                 return
 
         if not x:
-            text = text.replace('\x01', '')
+            text = text.replace(b'\x01', b'')
 
         if wait_time < 1: wait_time = 1
 
@@ -402,7 +411,7 @@ class Bot(asynchat.async_chat):
         try:
             import traceback
             trace = traceback.format_exc()
-            print trace
+            print(trace)
             lines = list(reversed(trace.splitlines()))
 
             report = [lines[0].strip()]
@@ -466,7 +475,7 @@ class TestBot(Bot):
 def main():
     # bot = TestBot('testbot', ['#d8uv.com'])
     # bot.run('irc.freenode.net')
-    print __doc__
+    print(__doc__)
 
 if __name__ == "__main__":
     main()

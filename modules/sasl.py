@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 import base64
 
 def irc_cap (kenni, input):
@@ -53,7 +53,7 @@ def irc_authenticated (kenni, input):
             user = nick
 
         auth = "\0".join((nick, user, password))
-        auth = base64.b64encode(auth)
+        auth = base64.b64encode(auth.encode('utf-8'))
 
     if not auth:
         kenni.write(('AUTHENTICATE', '+'))
@@ -129,4 +129,4 @@ def irc_cap_end (kenni, input):
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

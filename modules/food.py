@@ -1,7 +1,7 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import re
 import web
+from modules import url as ur
 re_mark = re.compile('<dt><a href="(.*?)" target="_blank">(.*?)</a></dt>')
 
 def food(kenni, input):
@@ -12,7 +12,7 @@ def food(kenni, input):
         url = 'http://whatthefuckshouldimakefordinner.com/veg.php'
     page = web.get(url)
 
-    results = re_mark.findall(page)
+    results = re_mark.findall(page.decode('utf-8'))
 
     if results:
 
@@ -29,4 +29,4 @@ food.commands = ['food','breakfast','lunch', 'brunch','fucking_dinner', 'fucking
 food.priority = 'low'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3# -*- coding: utf-8 -*-
 # vim: set fileencoding=UTF-8 :
 
 from modules import unicode as uc
@@ -66,35 +65,35 @@ morse = {
         '"': ".-..-.",
         "$": "...-..-",
         "@": ".--.-.",
-        u"ä": ".-.-",
-        u"æ": ".-.-",
-        u"ą": ".-.-",
-        u"à": ".--.-",
-        u"å": ".--.-",
-        u"ç": "-.-..",
-        u"ĉ": "-.-..",
-        u"ć": "-.-..",
-        u"š": "----",
-        u"ð": "..--.",
-        u"ś": "...-...",
-        u"è": ".-..-",
-        u"é": "..-..",
-        u"đ": "..-..",
-        u"ę": "..-..",
-        u"ĝ": "--.-.",
-        u"ĥ": "----",
-        u"ĵ": ".---.",
-        u"ź": "--..-.",
-        u"ñ": "--.--",
-        u"ń": "--.--",
-        u"ö": "---.",
-        u"ø": "---.",
-        u"ó": "---.",
-        u"ŝ": "...-.",
-        u"þ": ".--..",
-        u"ü": "..--",
-        u"ŭ": "..--",
-        u"ż": "--..-",
+        "ä": ".-.-",
+        "æ": ".-.-",
+        "ą": ".-.-",
+        "à": ".--.-",
+        "å": ".--.-",
+        "ç": "-.-..",
+        "ĉ": "-.-..",
+        "ć": "-.-..",
+        "š": "----",
+        "ð": "..--.",
+        "ś": "...-...",
+        "è": ".-..-",
+        "é": "..-..",
+        "đ": "..-..",
+        "ę": "..-..",
+        "ĝ": "--.-.",
+        "ĥ": "----",
+        "ĵ": ".---.",
+        "ź": "--..-.",
+        "ñ": "--.--",
+        "ń": "--.--",
+        "ö": "---.",
+        "ø": "---.",
+        "ó": "---.",
+        "ŝ": "...-.",
+        "þ": ".--..",
+        "ü": "..--",
+        "ŭ": "..--",
+        "ż": "--..-",
         }
 
 def reverse_lookup(v, d=morse):
@@ -109,8 +108,8 @@ def cs(kenni, input):
     cs = input.group(2).upper()
     try:
         link = "http://www.qth.com/callsign.php?cs=" + uc.decode(web.quote(cs))
-    except Exception, e:
-        print e
+    except Exception as e:
+        print(e)
         return kenni.say('Failed to obtain data from qth.com')
     page = web.get(link)
     info = re_look.findall(page)
@@ -172,5 +171,5 @@ cw.commands = ['cw', 'morse', 'm']
 cw.thread = True
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())
 

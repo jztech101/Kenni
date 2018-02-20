@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import re
 import web
 
@@ -41,7 +40,7 @@ def etymology(word):
     word = {'axe': 'ax/axe'}.get(word, word)
 
     bytes = web.get(etyuri % word)
-    definitions = r_definition.findall(bytes)
+    definitions = r_definition.findall(bytes.decode('utf-8'))
 
     if not definitions:
         return None
@@ -53,7 +52,7 @@ def etymology(word):
     sentence = m.group(0)
 
     try:
-        sentence = unicode(sentence, 'iso-8859-1')
+        sentence = str(sentence, 'iso-8859-1')
         sentence = sentence.encode('utf-8')
     except: pass
 
@@ -70,7 +69,7 @@ def etymology(word):
 def f_etymology(kenni, input):
     word = input.group(2)
 
-    try: result = etymology(word.encode('utf-8'))
+    try: result = etymology(word)
     except IOError:
         msg = "Can't connect to etymonline.com (%s)" % (etyuri % word)
         kenni.msg(input.sender, msg)
@@ -91,4 +90,4 @@ f_etymology.priority = 'high'
 
 if __name__=="__main__":
     import sys
-    print etymology(sys.argv[1])
+    print(etymology(sys.argv[1]))

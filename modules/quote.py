@@ -1,13 +1,11 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import random
 import itertools
 from modules import unicode as uc
 
 def write_addquote(text):
     fn = open('quotes.txt', 'a')
-    output = uc.encode(text)
-    fn.write(output)
+    fn.write(text)
     fn.write('\n')
     fn.close()
 
@@ -15,6 +13,8 @@ def write_addquote(text):
 def addquote(kenni, input):
     '''.addquote <nick> something they said here -- adds the quote to the quote database.'''
     text = input.group(2)
+    if not text.startswith("<"):
+        text = "<"+ text.split(" ")[0] + "> " + " ".join(text.split(" ")[1:])
     if not text:
         return kenni.say('No quote provided')
 
@@ -54,8 +54,8 @@ def retrievequote(kenni, input):
         except:
             nick = "<" + text + ">"
 
-            indices = range(1, len(lines) + 1)
-            selectors = map(lambda x: x.split()[0] == nick, lines)
+            indices = list(range(1, len(lines) + 1))
+            selectors = [x.split()[0] == nick for x in lines]
             filtered_indices = list(itertools.compress(indices, selectors))
 
             if len(filtered_indices) < 1:
@@ -128,7 +128,7 @@ delquote.example = '.rmquote'
 
 def grabquote(kenni, input):
     try:
-        from modules import find
+         import find
     except:
         return kenni.say('Could not load "find" module.')
 
@@ -163,4 +163,4 @@ grabquote.commands = ['grab']
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

@@ -1,7 +1,5 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import re
-from modules import proxy
 import web
 
 
@@ -9,7 +7,7 @@ def excuse(kenni, input):
     a = re.compile('<a [\s\S]+>(.*)</a>')
 
     try:
-        page = proxy.get('http://programmingexcuses.com/')
+        page = web.get('http://programmingexcuses.com/')
     except:
         return kenni.say("I'm all out of excuses!")
 
@@ -27,4 +25,4 @@ excuse.commands = ['excuse', 'excuses']
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

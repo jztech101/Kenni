@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import re
 import web
 
@@ -9,7 +8,7 @@ def puns(kenni, input):
     exp = re.compile(r'<div class="dropshadow1">\n<p>(.*?)</p>\n</div>')
     page = web.get(url)
 
-    result = exp.search(page)
+    result = exp.search(page.decode('utf-8'))
     if result:
         pun = result.groups()[0]
         return kenni.say(pun)
@@ -18,4 +17,4 @@ def puns(kenni, input):
 puns.commands = ['puns', 'pun', 'badpun', 'badpuns']
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

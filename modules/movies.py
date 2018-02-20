@@ -1,23 +1,22 @@
 # -*- coding: utf8 -*-
 
-from modules import proxy
 import json
 import re
-import urllib2
-
-API_BASE_URL = 'http://www.omdbapi.com/'
-
+import urllib.request, urllib.error, urllib.parse
+import web
 
 def prep_title(txt):
     txt = txt.replace(' ', '+')
     txt = (txt).encode('utf-8')
-    txt = urllib2.quote(txt)
+    txt = urllib.parse.quote(txt)
     return txt
 
 
 def movie(kenni, input):
-    '''.imdb movie/show title -- displays information about a production'''
-
+    '''.omdb movie/show title -- displays information about a production'''
+    if not hasattr(kenni.config,'omdb_apikey'):
+        return kenni,say("Please sign up for an OMDb apikey")
+    API_BASE_URL = "http://www.omdbapi.com/?apikey=" +  kenni.config.omdb_apikey + "&"
     if not input.group(2):
         return kenni.say('Please enter a movie or TV show title. '
                          'Year is optional.')
@@ -29,31 +28,31 @@ def movie(kenni, input):
         title = matchObj.group(1)
         year = matchObj.group(2)
         title = prep_title(title)
-        uri = API_BASE_URL + '?t=%s&y=%s&plot=short&r=json' % (title, year)
+        uri = API_BASE_URL + 't=%s&y=%s&plot=short&r=json' % (title, year)
     else:
         title = word
         title = prep_title(title)
-        uri = API_BASE_URL + '?t=%s&plot=short&r=json' % (title)
+        uri = API_BASE_URL + 't=%s&plot=short&r=json' % (title)
 
     try:
-        page = proxy.get(uri)
+        page = web.get(uri)
     except:
-        return kenni.say('[IMDB] Connection to API did not succeed.')
+        return kenni.say('[OMDB] Connection to API did not succeed.')
 
     try:
         data = json.loads(page)
     except:
-        return kenni.say("[IMDB] Couldn't make sense of information from API")
+        return kenni.say("[OMDB] Couldn't make sense of information from API")
 
-    message = '[IMDB] '
+    message = '[OMDB] '
 
     if data['Response'] == 'False':
         if 'Error' in data:
             message += data['Error']
         else:
-            message += 'Got an error from imdbapi'
+            message += 'Got an error from omdbapi'
     else:
-        pre_plot_output = u'Title: {0} | Released: {1} | Rated: {2} '
+        pre_plot_output = 'Title: {0} | Released: {1} | Rated: {2} '
         pre_plot_output += '| Rating: {3} | Metascore: {4} | Genre: {5} '
         pre_plot_output += '| Runtime: {6} | Plot: '
         genre = data['Genre']
@@ -79,8 +78,8 @@ def movie(kenni, input):
         message = pre_plot + new_plot + after_plot
 
     kenni.say(message)
-movie.commands = ['imdb', 'movie', 'movies', 'show', 'tv', 'television']
+movie.commands = ['imdb', 'movie', 'movies', 'omdb', 'show', 'tv', 'television']
 movie.example = '.imdb Movie Title, 2015'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

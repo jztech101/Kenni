@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import re
 import web
 
@@ -9,10 +8,10 @@ r_paragraph = re.compile(r'<quote>.*?</quote>')
 
 def getwhy(kenni, input):
     page = web.get(whyuri)
-    paragraphs = r_paragraph.findall(page)
+    paragraphs = r_paragraph.findall(page.decode('utf-8'))
     out = str()
     if paragraphs:
-        line = re.sub(r'<[^>]*?>', '', unicode(paragraphs[0]))
+        line = re.sub(r'<[^>]*?>', '', str(paragraphs[0]))
         out = line.lower().capitalize() + "."
     else:
         out = 'We are unable to find any reasons *why* this should work.'
@@ -23,4 +22,4 @@ getwhy.thread = False
 getwhy.rate = 30
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

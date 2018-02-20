@@ -1,10 +1,9 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 import json
 import re
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import web
-from modules import proxy
-from modules.url import find_title
+from modules import url
 r_tag = re.compile(r'<(?!!)[^>]+>')
 r_bing = re.compile(r'<h2><a href="([^"]+)"')
 
@@ -20,7 +19,7 @@ def remove_spaces(x):
 def bing_search(query, lang='en-GB'):
     query = web.urllib.quote(query)
     base = 'https://www.bing.com/search?mkt=%s&q=' % lang
-    page = proxy.get(base + query)
+    page = web.get(base + query)
     m = r_bing.search(page)
     if m: return m.group(1)
 
@@ -38,7 +37,7 @@ def bing(kenni, input):
     query = query.encode('utf-8')
     uri = bing_search(query, lang)
     if uri:
-        passs, title = find_title(uri)
+        passs, title = url.find_title(uri)
         if passs:
             kenni.say("[" + title +"] " + uri)
         else:
@@ -52,7 +51,7 @@ bing.example = '.bing swhack'
 
 
 def duck_sanitize(incoming):
-    return web.decode((incoming).decode('utf-8'))
+    return web.decode(incoming)
 
 def duck_search(query):
     '''Do a DuckDuckGo Search'''
@@ -85,7 +84,7 @@ def duck_search(query):
         ## if we still can't find a search result via the API
         ## let's try scraping the html page
         uri = 'https://duckduckgo.com/html/?q=%s&kl=us-en&kp=-1' % web.urllib.quote(query)
-        page = proxy.get(uri)
+        page = web.get(uri)
 
         r_duck = re.compile(r'nofollow" class="[^"]+" href="(.*?)">')
 
@@ -114,7 +113,7 @@ def duck_api(query):
     '''Send 'query' to DDG's API and return results as a dictionary'''
     #query = web.urllib.quote(query)
     uri = 'https://api.duckduckgo.com/?q=%s&format=json&no_html=1&no_redirect=1&kp=-1' % query
-    results = proxy.get(uri)
+    results = web.get(uri)
     results = json.loads(results)
     return results
 
@@ -130,7 +129,7 @@ def duck(kenni, input):
     ## try to find a search result via the API
     uri = duck_search(query)
     if uri:
-        passs, title = find_title(uri)
+        passs, title = url.find_title(uri)
         if passs:
             kenni.say("[" + title +"] " + uri)
         else:
@@ -140,4 +139,4 @@ def duck(kenni, input):
 duck.commands = ['duck', 'ddg', 'g', 'search']
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

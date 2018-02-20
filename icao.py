@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 data = {
     "AGAF": (-9.19138888889, 160.948333333),
     "AGAR": (-9.85472222222, 161.979166667),

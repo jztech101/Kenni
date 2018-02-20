@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 import random
 import hashlib
 from time import time
@@ -46,4 +46,4 @@ magic8Ball.priority = 'low'
 magic8Ball.example = '.m8b will it rain tomorrow?'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

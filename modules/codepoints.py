@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import re, unicodedata
 from itertools import islice
 import web
@@ -12,6 +11,7 @@ data_loaded = False
 
 def load_data():
     all_code = web.get('http://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt')
+    all_code = all_code.decode('utf-8')
     for line in all_code.split('\n'):
         parts = line.split(';')
         if len(parts) >= 10:
@@ -43,7 +43,7 @@ def load_data():
         start = cps[0]
         end = cps[1]
 
-        for number in xrange(int(start, 16), int(end, 16)):
+        for number in range(int(start, 16), int(end, 16)):
             cp_names['%04X' % (number)] = cp_range
 
 
@@ -77,7 +77,7 @@ def about(u, cp=None, name=None):
     else:
         template = 'U+%04X %s (\xe2\x97\x8c%s)'
 
-    return template % (cp, name, u.encode('utf-8'))
+    return template % (cp, name, u)
 
 
 def codepoint_simple(arg):
@@ -96,7 +96,7 @@ def codepoint_simple(arg):
 
     ## loop over all codepoints that we have
     for cp in cp_names:
-        u = unichr(int(cp, 16))
+        u = chr(int(cp, 16))
         name = cp_names[cp]
         if r_label.search(name):
             results.append((len(name), u, cp, name))
@@ -105,7 +105,7 @@ def codepoint_simple(arg):
         r_label = re.compile('\\b' + arg.replace(' ', '.*\\b'))
 
         for cp in cp_names:
-            u = unichr(int(cp, 16))
+            u = chr(int(cp, 16))
             name = cp_names[cp]
             if r_label.search(name):
                 results.append((len(name), u, cp, name))
@@ -131,7 +131,7 @@ def codepoint_extended(arg):
 
     ## loop over all codepoints that we have
     for cp in cp_names:
-        u = unichr(int(cp, 16))
+        u = chr(int(cp, 16))
         name = '-'
         name = cp_names[cp]
         if r_search.search(name):
@@ -144,7 +144,7 @@ def u(kenni, input):
     # kenni.msg('#inamidst', '%r' % arg)
     if not arg:
         return kenni.say('You gave me zero length input.')
-    elif not arg.strip(' '):
+    elif not arg.strip(b' '):
         if len(arg) > 1: return kenni.say('%s SPACEs (U+0020)' % len(arg))
         return kenni.say('1 SPACE (U+0020)')
 
@@ -167,7 +167,7 @@ def u(kenni, input):
         ## since the official spec as of Unicode 7.0 only has
         ## hexadeciaml numbers with a length no greater than 6
         if 4 <= len(arg) <= 6:
-            try: u = unichr(int(arg, 16))
+            try: u = chr(int(arg, 16))
             except ValueError: pass
             else: return kenni.say(about(u))
 
@@ -202,13 +202,5 @@ def u(kenni, input):
 u.commands = ['u', 'unicode']
 u.example = '.u 203D'
 
-
-def bytes(kenni, input):
-    '''Show the input as pretty printed bytes.'''
-    b = input.bytes
-    kenni.say('%r' % b[b.find(' ') + 1:])
-bytes.commands = ['bytes']
-bytes.example = '.bytes \xe3\x8b\xa1'
-
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

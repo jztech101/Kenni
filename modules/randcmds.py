@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3# -*- coding: utf-8 -*-
 
 def potato(kenni, input):
     kenni.write(['PRIVMSG', input.sender], '\x01ACTION is a potato\x01')
@@ -25,4 +24,4 @@ def shrug(kenni, input):
 shrug.commands = ['shrug']
 shrug.priority = 'high'
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

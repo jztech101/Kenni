@@ -1,11 +1,10 @@
-#!/usr/bin/env python2
-# vim: set fileencoding=UTF-8 :
+#!/usr/bin/env python3# vim: set fileencoding=UTF-8 :
 import json
 import re
 import traceback
-import re, urllib, gzip, StringIO
+import re, urllib.request, urllib.parse, urllib.error, gzip, io
 import web
-from HTMLParser import HTMLParser
+from html.parser import HTMLParser
 
 BASE_URL = "https://www.googleapis.com/youtube/v3/"
 
@@ -21,9 +20,9 @@ def ytsearch(kenni, trigger):
         return kenni.say('Please sign up for a Google Developer API key to use this function.')
     key = kenni.config.google_dev_apikey
 
-    query = trigger.group(2).encode('utf-8').strip()
+    query = trigger.group(2).strip().replace(" ","%20")
     uri = BASE_URL + "search?part=snippet&type=video&q=" + query + "&key=" + key
-    result = json.loads(web.get(uri))
+    result = json.loads(web.get(uri).decode('utf-8'))
 
     num_results = result['pageInfo']['totalResults']
     return_text = "YouTube returned {0} results: ".format(num_results)
@@ -32,7 +31,6 @@ def ytsearch(kenni, trigger):
     for item in result['items']:
         try:
             title = item['snippet']['title']
-            title = title.encode('utf8')
         except KeyError:
             title = "N/A"
         if len(title) > 50:
@@ -41,12 +39,10 @@ def ytsearch(kenni, trigger):
 
         try:
             author = item['snippet']['channelTitle']
-            author = author.encode('utf8')
         except KeyError:
             author = 'N/A'
 
         link = 'https://youtu.be/' + item['id']['videoId']
-        link = link.encode('utf8')
 
         entry_text.append("{0} by {1} ({2})".format(title, author, link))
 
@@ -83,14 +79,14 @@ youtube_search.rate = 10
 def ytinfo(kenni, input):
     video_entry = ytget(kenni, input)
 
-    title = video_entry['title'].encode('utf8')
+    title = video_entry['title']
     if len(title) > 50:
         title = title[:50] + ' ...'
     title = colorize(title)
 
-    link = video_entry['link'].encode('utf8')
-    author = video_entry['uploader'].encode('utf8')
-    description = video_entry["description"].encode('utf8')
+    link = video_entry['link']
+    author = video_entry['uploader']
+    description = video_entry["description"]
 
     if len(description) > 75:
         description = description[:75] + ' ...'
@@ -282,4 +278,4 @@ yt_title.commands = ['ytitle']
 
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())

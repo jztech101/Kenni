@@ -1,11 +1,10 @@
-#!/usr/bin/env python2
-
+#!/usr/bin/env python3
 import random, time
 
 random.seed()
 
 def ask(kenni, input):
-    '''.ask <item1> or <item2> or <item3> - Randomly picks from a set of items seperated by ' or '.'''
+    '''.ask <item1> or <item2> or <item3> - Randomly picks set of items seperated by ' or '.'''
 
     choices = input.group(2)
 
@@ -29,4 +28,4 @@ ask.priority = 'low'
 ask.example = '.ask today or tomorrow or next week'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())
