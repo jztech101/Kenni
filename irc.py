@@ -269,7 +269,9 @@ class Bot(asynchat.async_chat):
                 return b''
             return data
         except ssl.SSLError as why:
-            if why[0] in (asyncore.ECONNRESET, asyncore.ENOTCONN,
+            if type(why) is ssl.SSLWantReadError:
+                return b''
+            elif why[0] in (asyncore.ECONNRESET, asyncore.ENOTCONN,
                           asyncore.ESHUTDOWN):
                 self.handle_close()
                 return b''
