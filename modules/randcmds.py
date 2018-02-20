@@ -23,5 +23,12 @@ def shrug(kenni, input):
     kenni.say('┻━┻ ︵ ¯\_(ツ)_/¯ ︵ ┻━┻')
 shrug.commands = ['shrug']
 shrug.priority = 'high'
+def snake(kenni, input):
+    msg = "\x01ACTION 's snake slithers by and wraps around " + input.nick + " whispering \"oooo dinnner\"\x01"
+    if input.group(2):
+        msg = input.nick + "\'s snake slithers by and wraps around " + input.group(2) + " whispering \"oooo dinnner\""
+    kenni.write(['PRIVMSG', input.sender], msg)
+snake.commands = ['snake']
+snake.priority = 'high'
 if __name__ == '__main__':
     print(__doc__.strip())
