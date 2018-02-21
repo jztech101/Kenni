@@ -264,9 +264,7 @@ class kenni(irc.Bot):
     def dispatchcommand(self,origin,args,  text, match, event, func):
         kenni = self.wrapped(origin, text, match)
         input = self.input(origin, text, match, event, args)
-
         nick = (input.nick).lower()
-
         # blocking ability
         if os.path.isfile("blocks"):
             g = open("blocks", "r")
@@ -343,7 +341,8 @@ class kenni(irc.Bot):
 
     def dispatch(self, origin, args):
         text, event, args = args[0], args[1], args[2:]
-
+        #print(text)
+        #self.msg(self.logchan_pm,  text, True)
         for priority in ('high', 'medium', 'low'):
             items = list(self.rules[priority].items())
             for regexp, funcs in items:
