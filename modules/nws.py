@@ -194,7 +194,7 @@ def nws_lookup(kenni, input):
                 except:
                     return kenni.say('ZIP could not be validated.')
             urlz = zip_code_lookup.format(zip_code)
-            pagez = web.get(urlz)
+            pagez = web.get(urlz).decode('utf-8')
             fips = re_fips.findall(pagez)
             if fips:
                 state = re_state.findall(pagez)
@@ -264,115 +264,6 @@ nws_lookup.priority = 'high'
 nws_lookup.thread = True
 nws_lookup.rate = 10
 
-
-def warns_control(kenni, input):
-    global stop
-    if not input.admin:
-        return kenni.say('You need to be an admin to use this!')
-
-    if input.group(2) == 'start':
-        stop = False
-        kenni.say('Starting...')
-        weather_feed(kenni)
-    elif input.group(2) == 'stop':
-        stop = True
-        kenni.say('Stopping...')
-warns_control.commands = ['warns']
-warns_control.priority = 'high'
-warns_control.thread = True
-
-
-def weather_feed(kenni):
-    global stop
-    conn = sqlite3.connect('nws.db')
-    c = conn.cursor()
-    c.execute('CREATE TABLE IF NOT EXISTS nws ( area text, state text, title text )')
-    conn.commit()
-    c.close()
-
-    word_re = re.compile('\w+')
-
-    def _cap(match):
-        return match.group(0).capitalize()
-
-    def capitalize_all(s):
-        return word_re.sub(_cap, s)
-
-    if not stop:
-        while True:
-            if stop:
-                conn.commit()
-                c.close()
-                stop = False
-                return kenni.say('Checking... I\'m comleteply stopped. (stopped in "Master")')
-            parsed = feedparser.parse(warning_list)
-            if not len(parsed['entries']) > 0:
-                continue
-            all_entries = parsed['entries']
-            for entity in all_entries:
-                if stop:
-                    conn.commit()
-                    c.close()
-                    stop = False
-                    return kenni.say('Checking... I\'m completely stopped. (stopped inside XML Parse)')
-                entry = entity
-                try:
-                    area = entry['cap_areadesc']
-                    link = entry['link']
-                    title = entry['title']
-                    state = link.split('?x=')[1][:2]
-                    summary = entry['summary']
-                    cert = entry['cap_certainty']
-                    severity = entry['cap_severity']
-                    status = entry['cap_status']
-                    urgency = entry['cap_urgency']
-                except Exception as e:
-                    kenni.msg(kenni.logchan_pm, 'No entry available. See stdout for more information.')
-                    print(time.time(), str(e))
-                    print(str(entry))
-                    print('')
-
-                ch_state = '{0}-{1}-{2}'.format(CHANNEL, 'us', state.lower())
-
-                sql_text = (area, state, title,)
-                conn = sqlite3.connect('nws.db')
-                c = conn.cursor()
-                c.execute('SELECT * FROM nws WHERE area = ? AND state = ? AND title = ?', sql_text)
-                if len(c.fetchall()) < 1:
-                    t = (area, state, title,)
-                    c.execute('INSERT INTO nws VALUES (?, ?, ?)', t)
-                    conn.commit()
-
-                    for st in states:
-                        if states[st] == state.lower():
-                            state = st[0].upper() + st[1:]
-
-                    #for condition in conditions:
-                    #    if condition in title:
-                    #        title = title.replace(condition, conditions[condition])
-                    title = colourize(title)
-                    state = capitalize_all(state)
-
-                    line1 = '\x02[\x0302{1}\x03] Part {2} of {3}: {0}\x02'
-                    line2 = '{0}. \x02Certainty\x02: {1}\x02, Severity\x02: {2}, \x02Status\x02: {3}, \x02Urgency\x02: {4}'
-                    areas = textwrap.wrap(area, 450)
-                    len_areas = len(areas)
-                    counter_areas = 1
-                    for each in areas:
-                        kenni.msg(ch_state, line1.format(each, state, str(counter_areas).zfill(2), str(len_areas).zfill(2)))
-                        counter_areas += 1
-
-                    kenni.msg(ch_state, line2.format(title, cert, severity, status, urgency))
-
-                    summaries = textwrap.wrap(summary, 450)
-                    len_summaries = len(summaries)
-                    counter_summaries = 1
-                    for each in summaries:
-                        kenni.msg(ch_state, 'Part %s of %s: %s' % (str(counter_summaries).zfill(2), str(len_summaries).zfill(2), each))
-                        counter_summaries += 1
-
-            conn.commit()
-            c.close()
 
 if __name__ == '__main__':
     print(__doc__.strip())
