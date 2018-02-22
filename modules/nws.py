@@ -194,11 +194,11 @@ def nws_lookup(kenni, input):
                 except:
                     return kenni.say('ZIP could not be validated.')
             urlz = zip_code_lookup.format(zip_code)
-            pagez = web.get(urlz).decode('utf-8')
-            fips = re_fips.findall(pagez)
+            pagez = web.get(urlz)
+            fips = re_fips.findall(pagez.decode('utf-8',"ignore"))
             if fips:
-                state = re_state.findall(pagez)
-                city = re_city.findall(pagez)
+                state = re_state.findall(pagez.decode('utf-8', "ignore"))
+                city = re_city.findall(pagez.decode('utf-8', "ignore"))
                 if not state and not city:
                     return kenni.say('Could not match ZIP code to a state')
                 try:
