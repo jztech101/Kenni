@@ -202,6 +202,7 @@ def configureHostMask (mask, kenni):
 
     m = re.match('^([^!@]+)!(^[!@]+)@?$', mask)
     if m is not None: return '%s!%s@*' % (m.group(1), m.group(2))
+    if "!" in mask and "@" in mask: return mask
     return ''
 
 def ban (kenni, input):
