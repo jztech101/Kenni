@@ -286,7 +286,7 @@ char_replace = {
 def write_raw(kenni, input):
     if not input.owner: return
     txt = input.bytes[7:]
-    txt = txt.encode('utf-8')
+    txt = txt.decode('utf-8')
     a = txt.split(':')
     status = False
     if len(a) > 1:
