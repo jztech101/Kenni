@@ -79,9 +79,9 @@ def invite(kenni, input):
     if channel is not None:
         if not is_chan_admin(kenni,input,channel):
             return kenni.say('You must be an admin to perform this operation')
-        kenni.write(['PRIVMSG', channel], '\x01ACTION invites ' + nick + ' per ' + input.nick + 'x01')
-        kenni.write(['INVITE', channel, nick])
-invite.commands = ['voice']
+        kenni.write(['PRIVMSG', channel], '\x01ACTION invites ' + nick + ' per ' + input.nick + '\x01')
+        kenni.write(['INVITE', nick], channel)
+invite.commands = ['invite']
 invite.priority = 'low'
 
 def devoice(kenni, input):
@@ -169,10 +169,10 @@ def kick(kenni, input):
         channel = opt
         nick = text[2]
         if (argc > 3):
-            reasonidx = "[" + nick + "]" + " ".join(text[3:])
+            reasonidx = " ".join(text[3:])
     else:
         if (argc > 2):
-            reasonidx = "[" + nick + "]" + " ".join(text[2:])
+            reasonidx = " ".join(text[2:])
     if not is_chan_admin(kenni, input, channel):
         return kenni.say('You must be an admin to perform this operation')
     if "," in nick:
@@ -202,6 +202,7 @@ def configureHostMask (mask, kenni):
 
     m = re.match('^([^!@]+)!(^[!@]+)@?$', mask)
     if m is not None: return '%s!%s@*' % (m.group(1), m.group(2))
+    if "!" in mask and "@" in mask: return mask
     return ''
 
 def ban (kenni, input):
