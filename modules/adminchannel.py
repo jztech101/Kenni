@@ -321,7 +321,7 @@ def kickban (kenni, input):
    mask = configureHostMask(nick,kenni)
    if mask == '': return
    kenni.write(['MODE', channel, '+b', mask])
-   kenni.write(['KICK', channel, nick, ' :', "[" + input.nick + "] " + reasonidx])
+   kickx(kenni, channel, nick, input.nick, reasonidx)
 kickban.commands = ['kickban', 'kb', 'kban']
 kickban.priority = 'high'
 
