@@ -121,13 +121,18 @@ def kick(kenni, input):
         channel = opt
         nick = text[2]
         if (argc > 3):
-            reasonidx = " ".join(text[3:])
+            reasonidx = "[" + nick + "]" + " ".join(text[3:])
     else:
         if (argc > 2):
-            reasonidx = " ".join(text[2:])
+            reasonidx = "[" + nick + "]" + " ".join(text[2:])
     if not is_chan_admin(kenni, input, channel):
         return kenni.say('You must be an admin to perform this operation')
-    kenni.write(['KICK', channel, nick, ' :', "[" + input.nick + "] " + reasonidx])
+    if nick.contains(","):
+        nicks = nick.split(",")
+        for nic in nicks:
+            kenni.write(['KICK', channel, nic, ' :', "[" + input.nick + "] " + reasonidx])
+    else:
+        kenni.write(['KICK', channel, nick, ' :', "[" + input.nick + "] " + reasonidx])
 kick.commands = ['kick']
 kick.priority = 'high'
 
