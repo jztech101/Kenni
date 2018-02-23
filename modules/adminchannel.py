@@ -36,6 +36,54 @@ voice.commands = ['voice']
 voice.priority = 'low'
 voice.example = '.voice ##example or .voice ##example nick'
 
+def mode(kenni, input):
+    """
+    """
+    text = input.group().split()
+    argc = len(text)
+    channel = input.sender
+    if not tools.isChan(input.sender, False):
+        channel = None
+    if argc >= 2 and text[1] is not None:
+        if tools.isChan(text[1], False):
+            channel = text[1]
+            if argc >= 3 and text[2] is not None:
+                modex = " ".join(text[2:])
+        else:
+            modex = " ".join(text[1:])
+    if channel is not None:
+        if not is_chan_admin(kenni,input,channel):
+            return kenni.say('You must be an admin to perform this operation')
+        kenni.write(['MODE', channel, modex])
+mode.commands = ['mode']
+mode.priority = 'low'
+
+def invite(kenni, input):
+    """
+    Command to voice users in a room. If no nick is given,
+    kenni will voice the nick who sent the command
+    """
+    text = input.group().split()
+    argc = len(text)
+    nick = input.nick
+    channel = input.sender
+    if not tools.isChan(input.sender, False):
+        channel = None
+    if argc >= 2 and text[1] is not None:
+        if tools.isChan(text[1], False):
+            channel = text[1]
+            if argc >= 3 and text[2] is not None:
+                nick = text[2]
+        else:
+            nick = text[1]
+    if channel is not None:
+        if not is_chan_admin(kenni,input,channel):
+            return kenni.say('You must be an admin to perform this operation')
+        kenni.write(['PRIVMSG', channel], '\x01ACTION invites ' + nick + ' per ' + input.nick + 'x01')
+        kenni.write(['INVITE', channel, nick])
+invite.commands = ['voice']
+invite.priority = 'low'
+
 def devoice(kenni, input):
     """
     Command to devoice users in a room. If no nick is given,
@@ -130,11 +178,16 @@ def kick(kenni, input):
     if "," in nick:
         nicks = nick.split(",")
         for nic in nicks:
-            kenni.write(['KICK', channel, nic, ' :', "[" + input.nick + "] " + reasonidx])
+            kickx(kenni, channel, nic, input.nick, reasonidx)
     else:
-        kenni.write(['KICK', channel, nick, ' :', "[" + input.nick + "] " + reasonidx])
+        kickx(kenni, channel, nick, input.nick, reasonidx)
 kick.commands = ['kick']
 kick.priority = 'high'
+
+def kickx(kenni, channel, nick, sender, reasonidx):
+    if nick == kenni.nick:
+        nick = sender
+    kenni.write(['KICK', channel, nick, ' :', "[" + sender + "] " + reasonidx])
 
 def configureHostMask (mask, kenni):
     if mask == '*!*@*': return mask
