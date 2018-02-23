@@ -11,7 +11,7 @@ def excuse(kenni, input):
     except:
         return kenni.say("I'm all out of excuses!")
 
-    results = a.findall(page)
+    results = a.findall(page.decode('utf-8'))
 
     if results:
         result = results[0]
@@ -21,7 +21,7 @@ def excuse(kenni, input):
         kenni.say(result)
     else:
         kenni.say("I'm too lazy to find an excuse.")
-excuse.commands = ['excuse', 'excuses']
+excuse.commands = ['why', 'excuse', 'excuses']
 
 
 if __name__ == '__main__':
