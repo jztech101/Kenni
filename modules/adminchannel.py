@@ -127,7 +127,7 @@ def kick(kenni, input):
             reasonidx = "[" + nick + "]" + " ".join(text[2:])
     if not is_chan_admin(kenni, input, channel):
         return kenni.say('You must be an admin to perform this operation')
-    if nick.contains(","):
+    if "," in nick:
         nicks = nick.split(",")
         for nic in nicks:
             kenni.write(['KICK', channel, nic, ' :', "[" + input.nick + "] " + reasonidx])
