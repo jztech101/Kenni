@@ -30,5 +30,10 @@ def snake(kenni, input):
     kenni.write(['PRIVMSG', input.sender], msg)
 snake.commands = ['snake']
 snake.priority = 'high'
+def hmmm(kenni, input):
+    kenni.say('t' + u'\u200b' + 'est')
+hmmm.commands = ['hmmm']
+hmmm.priority = 'high'
+
 if __name__ == '__main__':
     print(__doc__.strip())
