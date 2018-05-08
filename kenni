@@ -45,7 +45,7 @@ def create_default_config(fn):
     # password is the NickServ password, serverpass is the server password
     # password = 'example'
     # serverpass = 'serverpass'
-
+    ident = 'kenni'
 
     ## API KEYS
 

@@ -70,12 +70,13 @@ def log_raw(line):
     f.close()
 
 class Bot(asynchat.async_chat):
-    def __init__(self, nick, name, channels, user=None, password=None, logchan_pm=None, logging=False, ipv6=False):
+    def __init__(self, nick, ident,  name, channels, user=None, password=None, logchan_pm=None, logging=False, ipv6=False):
         asynchat.async_chat.__init__(self)
         self.set_terminator(b'\n')
         self.buffer = ''
 
         self.nick = nick
+        self.ident = ident
         if user is not None:
             self.user = user
         else:
@@ -240,7 +241,7 @@ class Bot(asynchat.async_chat):
             # Store the fact that we authed, or at least tried
             self.auth_attempted = True
         self.write(('NICK', self.nick))
-        self.write(('USER', self.user, '+iw', self.nick), self.name)
+        self.write(('USER', self.ident, '+iw', self.nick), self.name)
 
     def handle_close(self):
         self.close()

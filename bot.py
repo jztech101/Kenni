@@ -16,7 +16,7 @@ class kenni(irc.Bot):
         if hasattr(config, 'serverpass'): serverpass = config.serverpass
         user = None
         if hasattr(config, 'user'): user = config.user
-        args = (config.nick, config.name, config.channels, user, serverpass, lc_pm, logging, ipv6)
+        args = (config.nick, config.ident,  config.name, config.channels, user, serverpass, lc_pm, logging, ipv6)
         ## next, try putting a try/except around the following line
         irc.Bot.__init__(self, *args)
         self.config = config
