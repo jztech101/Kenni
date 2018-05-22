@@ -24,11 +24,11 @@ def nicedeci(c):
 
 def cryptocoin(kenni, input): 
     try:
-        page = web.get("https://files.coinmarketcap.com/generated/search/quick_search.json")
+        page = web.get("https://api.coinmarketcap.com/v2/listings/")
     except:
-        return kenni.say('[CryptoCoin] Connection to API did not succeed.')
+        return kenni.say('[CryptoCoin] Connection to API Listings did not succeed.')
     try:
-        data = json.loads(page.decode('utf-8'))
+        data = json.loads(page.decode('utf-8'))["data"]
     except:
         return kenni.say("[CryptoCoin] Couldn't make sense of information from API")
     currency = None
@@ -37,34 +37,31 @@ def cryptocoin(kenni, input):
         return kenni.say("You must enter a currency to proceed")
     for x in data:
         if x["name"].lower() == text.lower():
-            currency = x["slug"]
+            currency = x["id"]
             break
-        #elif x["symbol"].lower() == text.lower():
-        #   currency = x["slug"]
-        #    break
-        else:
-            for y in x["tokens"]:
-                if y.lower() == text.lower():
-                    currency = x["slug"]
-                    break
+        elif x["symbol"].lower() == text.lower():
+            currency = x["id"]
+            break
     if currency is None:
         kenni.say("Currency not found")
     else:
+        currency = str(currency)
         try:
-            page = web.get("https://api.coinmarketcap.com/v1/ticker/" + currency +"/")
+            page = web.get("https://api.coinmarketcap.com/v2/ticker/" + currency +"/")
         except:
-            return kenni.say('[CryptoCoin] Connection to API did not succeed.')
+            return kenni.say('[CryptoCoin] Connection to API Ticker did not succeed.')
         try:
-            data = json.loads(page.decode('utf-8'))
+            data = json.loads(page.decode('utf-8'))["data"]
         except:
             return kenni.say("[CryptoCoin] Couldn't make sense of information from API")
-        data=data[0]
-        sevdchange = data['percent_change_7d']
+        quotes = data["quotes"]["USD"]
+        sevdchange = quotes['percent_change_7d']
         if not sevdchange:
             sevdchange = "Data Not Found"
         else:
-            sevdchange = sevdchange + "%"
-        kenni.say(data["name"] + " (" + data["symbol"] + ") - Price (USD): " + nicecurrency(data['price_usd']) + " - Price (BTC): " + nicedeci(data['price_btc']) + " - Market Cap (USD): " + nicecurrency(data['market_cap_usd']) + " - In Circulation: " + nicenum(data["available_supply"]) + " - Volume (24 hours - USD): " + nicecurrency(data['24h_volume_usd']) + " - 1 hour: " + data['percent_change_1h'] + "% - 24 hours: " + data['percent_change_24h'] + "% - 7 days: " + sevdchange)
+            sevdchange = str(sevdchange) + "%"
+        kenni.say(data["name"] + " (" + data["symbol"] + ") - Price (USD): " + nicecurrency(quotes["price"]) + " - Market Cap (USD): " + nicecurrency(quotes['market_cap']) + " - In Circulation: " + nicenum(data["circulating_supply"]) + " - Max: " 
++ nicenum(data['max_supply']) +  " - Volume (24 hours - USD): " + nicecurrency(quotes['volume_24h']) + " - 1 hour: " + str(quotes['percent_change_1h']) + "% - 24 hours: " + str(quotes['percent_change_24h']) + "% - 7 days: " + sevdchange)
 cryptocoin.commands = ['cryptocoin', 'cc']
 cryptocoin.example = '.cryptocoin'
 cryptocoin.rate = 20
