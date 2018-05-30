@@ -285,7 +285,7 @@ char_replace = {
 
 def write_raw(kenni, input):
     if not input.owner: return
-    txt = input.bytes[7:]
+    txt = input.bytes[5:]
     txt = txt.decode('utf-8')
     a = txt.split(':')
     status = False
@@ -302,7 +302,7 @@ def write_raw(kenni, input):
         status = True
     if status:
         kenni.say('Message sent to server.')
-write_raw.commands = ['write']
+write_raw.commands = ['raw']
 write_raw.priority = 'high'
 write_raw.thread = False
 
