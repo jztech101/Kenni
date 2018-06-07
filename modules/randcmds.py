@@ -16,7 +16,7 @@ def cookie(kenni, input):
 cookie.commands = ['cookie']
 cookie.priority = 'high'
 def source(kenni, input):
-    kenni.say('https://github.com/jztech101/kenni')
+    kenni.say('Kenni: https://github.com/jztech101/kenni')
 source.commands = ['source']
 source.priority = 'high'
 def shrug(kenni, input):
