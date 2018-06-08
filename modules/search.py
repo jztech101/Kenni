@@ -3,6 +3,8 @@ import re
 import web
 import html.parser
 from bs4 import BeautifulSoup
+def colorize(text):
+    return '\x02\x0306' + text + '\x03\x02'
 def search(kenni, input):
     query = input.group(2)
     if not query:
@@ -23,11 +25,11 @@ def search(kenni, input):
                 title = results[y].find("div",class_="resultTitlePane").find("a",class_="resultTitle").text
                 url = results[y].find("div",class_="resultDisplayUrlPane").find("a",class_="resultDisplayUrl").text
                 if not msg:
-                    msg = title + " (" + url + ")"
+                    msg = colorize(title) + " (" + url + ")"
                 else:
-                    msg += title + " (" + url + ")"
+                    msg += colorize(title) + " (" + url + ")"
                 if y != x-1:
-                    msg += ", "
+                    msg += " - "
             kenni.say(msg)
 search.commands = ['google', 'yahoo', 'dogpile', 'search']
 

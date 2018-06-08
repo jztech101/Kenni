@@ -25,8 +25,6 @@ def ytsearch(kenni, trigger):
     result = json.loads(web.get(uri).decode('utf-8'))
 
     num_results = result['pageInfo']['totalResults']
-    return_text = "YouTube returned {0} results: ".format(num_results)
-
     entry_text = []
     for item in result['items']:
         try:
@@ -48,9 +46,9 @@ def ytsearch(kenni, trigger):
 
     all_entries = ""
     if int(num_results) > 0:
-      all_entries = ', '.join(entry_text[1:])
+      all_entries = ' - '.join(entry_text[1:])
 
-    kenni.say(return_text + all_entries)
+    kenni.say(all_entries)
 
 
 def youtube_search(kenni, input):
