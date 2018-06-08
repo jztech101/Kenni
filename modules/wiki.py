@@ -2,7 +2,6 @@
 import re
 import web
 import wikipedia
-
 def wiki(kenni, input):
     query = input.group(2)
     if not query:
