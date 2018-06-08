@@ -15,10 +15,20 @@ def search(kenni, input):
             kenni.say("No results found")
             return
         else:
-            title = results[0].find("div",class_="resultTitlePane").find("a",class_="resultTitle").text
-            url = results[0].find("div",class_="resultDisplayUrlPane").find("a",class_="resultDisplayUrl").text
-            content = results[0].find("div",class_="resultDescription").text
-            kenni.say("[" + title + "] " + content + " - " + url)
+            x = len(results)
+            if(x > 5):
+                x = 5
+            msg = None
+            for y in range(x):
+                title = results[y].find("div",class_="resultTitlePane").find("a",class_="resultTitle").text
+                url = results[y].find("div",class_="resultDisplayUrlPane").find("a",class_="resultDisplayUrl").text
+                if not msg:
+                    msg = title + " (" + url + ")"
+                else:
+                    msg += title + " (" + url + ")"
+                if y != x-1:
+                    msg += ", "
+            kenni.say(msg)
 search.commands = ['google', 'yahoo', 'dogpile', 'search']
 
 if __name__ == '__main__':
