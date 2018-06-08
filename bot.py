@@ -225,7 +225,7 @@ class kenni(irc.Bot):
                 s.admin = origin.nick in self.config.admins
                 if s.admin == False:
                     for each_admin in self.config.admins:
-                        if each_admin is origin.host:
+                        if each_admin == origin.host:
                             s.admin = True
                         elif '@' in each_admin:
                             if origin.nick + '@' + origin.host == each_admin:
@@ -234,7 +234,10 @@ class kenni(irc.Bot):
                 if hasattr(self.config, 'helpers'):
                     if origin.sender in self.config.helpers and origin.host in self.config.helpers[origin.sender]:
                         s.chanadmin = True
-                s.owner = origin.nick + '@' + origin.host == self.config.owner
+                if '@' in self.config.owner:
+                   s.owner = origin.nick + '@' + origin.host == self.config.owner
+                else:
+                   s.owner = origin.host == self.config.owner
                 s.host = origin.host
                 return s
 
