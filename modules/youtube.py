@@ -10,7 +10,7 @@ BASE_URL = "https://www.googleapis.com/youtube/v3/"
 
 
 def colorize(text):
-    return '\x02\x0306' + text + '\x03\x02'
+    return '\x02\x0303' + text + '\x03\x02'
 
 
 def ytsearch(kenni, trigger):

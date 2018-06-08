@@ -4,7 +4,7 @@ import web
 import html.parser
 from bs4 import BeautifulSoup
 def colorize(text):
-    return '\x02\x0306' + text + '\x03\x02'
+    return '\x02\x0303' + text + '\x03\x02'
 def search(kenni, input):
     query = input.group(2)
     if not query:
