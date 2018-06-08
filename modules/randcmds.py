@@ -1,5 +1,5 @@
 #!/usr/bin/env python3# -*- coding: utf-8 -*-
-
+from random import randint
 def potato(kenni, input):
     kenni.write(['PRIVMSG', input.sender], '\x01ACTION is a potato\x01')
 potato.commands = ['potato']
@@ -34,6 +34,13 @@ def hmmm(kenni, input):
     kenni.say('t' + u'\u200b' + 'est')
 hmmm.commands = ['hmmm']
 hmmm.priority = 'high'
-
+def coin(kenni, input):
+    x = randint(1,100)
+    if x > 50:
+        kenni.say("heads")
+    else:
+        kenni.say("tails")
+coin.commands = ['coin', 'flip']
+coin.priority = 'high'
 if __name__ == '__main__':
     print(__doc__.strip())
