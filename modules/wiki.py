@@ -3,7 +3,7 @@ import re
 import web
 import wikipedia
 
-def wikipedia(kenni, input):
+def wiki(kenni, input):
     query = input.group(2)
     if not query:
         kenni.say("Please enter a query")
@@ -14,13 +14,13 @@ def wikipedia(kenni, input):
         else:
             try:
                page = wikipedia.page(results[0])
-            except wikipedia.DisambiguationError, err:
+            except wikipedia.DisambiguationError as err:
                page = wikipedia.page(err.options[0])
             wikiTitle = page.title
-            wikiSummary = page.summary
+            wikiSummary = page.summary[:250] + "..."
             wikiUrl = page.url
         kenni.say(wikiTitle + " : " + wikiSummary + " - " + wikiUrl)
-wikipedia.commands = ['wikipedia', 'wiki']
+wiki.commands = ['wikipedia', 'wiki']
 
 if __name__ == '__main__':
     print(__doc__.strip())
