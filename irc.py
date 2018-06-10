@@ -445,9 +445,9 @@ class Bot(asynchat.async_chat):
     
     def set_ident(self, name, ident):
         if name not in self.ident:
-            self.ident[name] = hostmask
-        elif self.ident[name] != hostmask:
-            self.ident[name] = hostmask
+            self.ident[name] = ident
+        elif self.ident[name] != ident:
+            self.ident[name] = ident
 
     def add_halfop(self, channel, name):
         if channel in self.hops:
