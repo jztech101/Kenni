@@ -41,6 +41,10 @@ def ip_lookup(kenni, input):
             response += '%s Country: %s' % (spacing, country)
         if 'timezone' in results:
             response += '%s Time Zone: %s' % (spacing, results['timezone'])
+        if 'as' in results:
+            response += '%s AS: %s' % (spacing, results['as'])
+        if  'isp' in results:
+            response += '%s ISP: %s' % (spacing, results['isp'])
     kenni.say(response)
 ip_lookup.commands = ['ip','geoip', 'iplookup']
 ip_lookup.example = ".iplookup 8.8.8.8"
