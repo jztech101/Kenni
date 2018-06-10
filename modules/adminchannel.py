@@ -190,20 +190,15 @@ def kickx(kenni, channel, nick, sender, reasonidx):
     kenni.write(['KICK', channel, nick, ' :', "[" + sender + "] " + reasonidx])
 
 def configureHostMask (mask, kenni):
-    if mask == '*!*@*': return mask
-    if re.match('^[^.@!/]+$', mask) is not None: return '*!*@%s' % kenni.hostmasks[mask]
-    if re.match('^[^@!]+$', mask) is not None: return '*!*@%s' % mask
-
-    m = re.match('^([^!@]+)@$', mask)
-    if m is not None: return '*!%s@*' % m.group(1)
-
-    m = re.match('^([^!@]+)@([^@!]+)$', mask)
-    if m is not None: return '*!%s@%s' % (m.group(1), m.group(2))
-
-    m = re.match('^([^!@]+)!(^[!@]+)@?$', mask)
-    if m is not None: return '%s!%s@*' % (m.group(1), m.group(2))
-    if "!" in mask and "@" in mask: return mask
-    return ''
+    if "!" not in mask and "@" not in mask and ":" not in mask:
+        ident = kenni.ident[mask]
+        host = kenni.hostmasks[mask]
+        if "~" not in ident:
+            return "*!" + ident + "@" + host
+        else
+            return "*!*@" + host
+    else:
+        return mask
 
 def ban (kenni, input):
     """
