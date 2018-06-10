@@ -103,6 +103,7 @@ class Bot(asynchat.async_chat):
         self.channels = channels or list()
         self.stack = list()
         self.hostmasks = dict()
+        self.idents = dict()
         self.stack_log = list()
         self.logchan_pm = logchan_pm
         self.logging = logging
@@ -441,7 +442,12 @@ class Bot(asynchat.async_chat):
             self.hostmasks[name] = hostmask
         elif self.hostmasks[name] != hostmask:
             self.hostmasks[name] = hostmask
-
+    
+    def set_ident(self, name, ident):
+        if name not in self.ident:
+            self.ident[name] = hostmask
+        elif self.ident[name] != hostmask:
+            self.ident[name] = hostmask
 
     def add_halfop(self, channel, name):
         if channel in self.hops:
