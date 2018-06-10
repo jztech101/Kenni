@@ -29,6 +29,8 @@ def ip_lookup(kenni, input):
         for param in results:
             if not results[param]:
                 results[param] = 'N/A'
+        if 'query' in results:
+            response += '%s Query: %s' %(spacing, results['query'])
         if 'city' in results:
             response += '%s City: %s' % (spacing, results['city'])
         if 'regionName' in results:
