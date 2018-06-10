@@ -212,7 +212,7 @@ class kenni(irc.Bot):
                 s.match = match
                 s.group = match.group
                 s.groups = match.groups
-                s.ident = origin.user
+                s.user = origin.user
                 s.raw = origin
                 s.args = args
                 s.mode = origin.mode

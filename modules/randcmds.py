@@ -32,7 +32,7 @@ snake.commands = ['snake']
 snake.priority = 'high'
 def hmmm(kenni, input):
 #    kenni.say('t' + u'\u200b' + 'est')
-    kenni.say(input.host)
+    kenni.say(kenni.hostmasks["JZTech101"])
 hmmm.commands = ['hmmm']
 hmmm.priority = 'high'
 def coin(kenni, input):
