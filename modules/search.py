@@ -2,6 +2,7 @@
 import re
 import web
 import html.parser
+import requests
 from bs4 import BeautifulSoup
 def colorize(text):
     return '\x02\x0303' + text + '\x03\x02'
@@ -18,8 +19,8 @@ def search(kenni, input):
             return
         else:
             x = len(results)
-            if(x > 5):
-                x = 5
+            if(x > 3):
+                x = 3
             msg = None
             for y in range(x):
                 title = results[y].find("div",class_="resultTitlePane").find("a",class_="resultTitle").text
@@ -31,7 +32,34 @@ def search(kenni, input):
                 if y != x-1:
                     msg += " - "
             kenni.say(msg)
-search.commands = ['google', 'yahoo', 'dogpile', 'search']
+search.commands = ['yahoo', 'dogpile', 'search']
 
+def google(kenni, input):
+    query = input.group(2)
+    if not query:
+        kenni.say("Please enter a query")
+    else:
+        url = "https://www.google.com/search?safe=strict&query=" + query.replace(" ","%20")
+        page = BeautifulSoup(requests.get(url).text, 'html.parser')
+        results = page.find_all("div", class_="g")
+        if(len(results) <1):
+            kenni.say("No results found")
+            return
+        else:
+            x = len (results)
+            if (x > 3):
+                x = 3
+            msg = None
+            for y in range(x):
+                title = results[y].find("h3",class_="r").find("a").text
+                url = results[y].find("cite").text
+                if not msg:
+                    msg = colorize(title) + " (" + url + ")"
+                else:
+                    msg += colorize(title) + " (" + url + ")"
+                if y != x-1:
+                    msg += " - "
+            kenni.say(msg)
+google.commands = ['google']
 if __name__ == '__main__':
     print(__doc__.strip())
