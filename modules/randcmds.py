@@ -5,7 +5,7 @@ def potato(kenni, input):
 potato.commands = ['potato']
 potato.priority = 'high'
 def moo(kenni, input):
-    kenni.say('mooooooooooo')
+    kenni.say('MoooooOoooOooooooooooo')
 moo.commands = ['moo']
 moo.priority = 'high'
 def cookie(kenni, input):
