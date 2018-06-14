@@ -29,6 +29,7 @@ def urban(kenni, input):
             response = regex.sub(" ",tmp).replace("  "," ")
         else:
             kenni.say("No results found")
+            return
         while len(response) < 300:
             index += 1
             tmp = getDef(result, index)
@@ -45,7 +46,7 @@ def getDef(results, index):
     if results and len(results) >= index:
         word = results[0].get("word")
         response = word + " -- "
-        for x in range(0,index-1):
+        for x in range(0,index):
             if word.lower() == results[x].get("word").lower():
                 definition = results[x].get("definition")
                 if x == index-1:
