@@ -21,15 +21,19 @@ def urban(kenni, input):
         results = json.loads(page.decode('utf-8'))
     except:
         return kenni.say('Did not receive proper JSON from %s' % (base))
-    if results and len(results) > 0:
+    if results and len(results.get("list")) > 0:
         result = results.get("list")
         index = 1
-        response = regex.sub(" ",getDef(result, index)).replace("  "," ")
+        tmp = getDef(result,index)
+        if tmp:
+            response = regex.sub(" ",tmp).replace("  "," ")
+        else:
+            kenni.say("No results found")
         while len(response) < 300:
             index += 1
-            tmp = regex.sub(" ",getDef(result, index)).replace("  "," ")
+            tmp = getDef(result, index)
             if tmp:
-                response = tmp
+                response = regex.sub(" ",tmp).replace("  "," ")
             else:
                 break
         if len(response)>300:
