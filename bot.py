@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import time, sys, os, re, threading, imp
 import irc, os
+import traceback
 
 home = os.getcwd()
 
@@ -60,6 +61,7 @@ class kenni(irc.Bot):
             try: module = imp.load_source(name, filename)
             except Exception as e:
                 print("Error loading %s: %s (in bot.py)" % (name, e), file=sys.stderr)
+                traceback.print_exc()
             else:
                 if hasattr(module, 'setup'):
                     module.setup(self)
