@@ -51,6 +51,9 @@ def google(kenni, input):
                 x = 3
             msg = None
             for y in range(x):
+                if not results[y].find("h3",class_="r").find("a") or not results[y].find("cite"):
+                    x+=1
+                    continue
                 title = results[y].find("h3",class_="r").find("a").text
                 url = results[y].find("cite").text
                 if not msg:
