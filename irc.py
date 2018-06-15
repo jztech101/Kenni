@@ -323,8 +323,6 @@ class Bot(asynchat.async_chat):
                             self.msg(self.logchan_pm, '[PM] ' + dlist[0].replace(":","") + ': ' + ' '.join(dlist[3:]).replace(":",""), True)
                         elif dlist[1].strip() == 'INVITE':
                             self.msg(self.logchan_pm, '[Invite] ' + dlist[0].replace(":","") + ': ' + dlist[3].replace(":",""), True)
-                        else:
-                            self.msg(self.logchan_pm, line, True)
             if self.logging:
                 ## if logging (to log file) is enabled
                 ## send stuff to the log file
