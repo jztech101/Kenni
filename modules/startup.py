@@ -68,6 +68,16 @@ startup.rule = r'(.*)'
 startup.event = '251'
 startup.priority = 'low'
 
+
+def nick(kenni,input):
+    for channel in kenni.channels:
+        kenni.write(['WHO', channel])
+nick.rule = r'(.*)'
+nick.event = 'NICK'
+nick.priority = 'high'
+
+
+
 # Method for populating op/hop/voice information in channels on join
 def privs_on_join(kenni, input):
     if not input.mode_target or not tools.isChan(input.mode_target, False):
