@@ -70,7 +70,7 @@ def create_default_config(fn):
     # This is needed in order to make .calc/.c have more comprehensive answers.
     # wolframalpha_apikey = ''
     # omdb_apikey  = ''
-    
+    # yandex_apikey = ''
     # yelp API Key
     # yelp_apikey = ''
 
