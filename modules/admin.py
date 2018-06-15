@@ -23,6 +23,8 @@ def join(kenni, input):
             ## 2 inputs
             key = inc[1]
         kenni.join(channel, key)
+        if channel not in kenni.channels:
+            kenni.channels.append(channel)
 join.commands = ['join']
 join.priority = 'medium'
 join.example = '.join #example or .join #example key'
@@ -38,8 +40,10 @@ def part(kenni, input):
         intentional_part = True
         if tools.isChan(input.sender, False) and (not sendmessage or not tools.isChan(sendmessage2[0], False)):
             kenni.write(['PART', input.sender])
+            kenni.channels.remove(input.sender)
         else:
             kenni.write(['PART', sendmessage2[0] + " :" ' '.join(sendmessage2[1:])])
+            kenni.channels.remove(sendmessage2[0])
 part.commands = ['part']
 part.priority = 'medium'
 part.example = '.part #example'
