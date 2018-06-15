@@ -1,166 +1,24 @@
 #!/usr/bin/env python3
+import re
+import web
+import html.parser
+import requests
 import random
-import itertools
-from modules import unicode as uc
-
-def write_addquote(text):
-    fn = open('quotes.txt', 'a')
-    fn.write(text)
-    fn.write('\n')
-    fn.close()
-
-
-def addquote(kenni, input):
-    '''.addquote <nick> something they said here -- adds the quote to the quote database.'''
-    text = input.group(2)
-    if not text.startswith("<"):
-        text = "<"+ text.split(" ")[0] + "> " + " ".join(text.split(" ")[1:])
-    if not text:
-        return kenni.say('No quote provided')
-
-    write_addquote(text)
-
-    kenni.say('Quote added.')
-addquote.commands = ['addquote']
-addquote.priority = 'low'
-addquote.example = '.addquote'
-
-
-def retrievequote(kenni, input):
-    '''.quote <number | nick> -- displays a given quote'''
-    NO_QUOTES = 'There are currently no quotes saved.'
-    text = input.group(2)
-    if text:
-        text = text.strip()
-        text = text.split()[0]
-
-    try:
-        fn = open('quotes.txt', 'r')
-    except:
-        return kenni.say('Please add a quote first.')
-
-    lines = fn.readlines()
-    if len(lines) < 1:
-        return kenni.say(NO_QUOTES)
-    MAX = len(lines)
-    fn.close()
-    random.seed()
-
-    if text != None:
-        try:
-            number = int(text)
-            if number < 0:
-                number = MAX - abs(number) + 1
-        except:
-            nick = "<" + text + ">"
-
-            indices = list(range(1, len(lines) + 1))
-            selectors = [x.split()[0] == nick for x in lines]
-            filtered_indices = list(itertools.compress(indices, selectors))
-
-            if len(filtered_indices) < 1:
-                return kenni.say('No quotes by that nick!')
-
-            filtered_index_index = random.randint(1, len(filtered_indices))
-            number = filtered_indices[filtered_index_index - 1]
-    else:
-        number = random.randint(1, MAX)
-    if not (0 <= number <= MAX):
-        kenni.say("I'm not sure which quote you would like to see.")
-    else:
-        if lines:
-            if number == 0:
-                return kenni.say('There is no "0th" quote!')
-            else:
-                line = lines[number - 1]
-            kenni.say('Quote %s of %s: ' % (number, MAX) + line)
-        else:
-            kenni.say(NO_QUOTES)
-retrievequote.commands = ['quote']
-retrievequote.priority = 'low'
-retrievequote.example = '.quote'
-
-
-def delquote(kenni, input):
-    '''.rmquote <number> -- removes a given quote from the database. Can only be done by the owner of the bot.'''
-    if not input.owner:
-        return
-    text = input.group(2)
-    number = int()
-
-    try:
-        fn = open('quotes.txt', 'r')
-    except:
-        return kenni.say('No quotes to delete.')
-
-    lines = fn.readlines()
-    MAX = len(lines)
-    fn.close()
-
-    try:
-        number = int(text)
-    except:
-        kenni.say('Please enter the quote number you would like to delete.')
-        return
-
-    if number > 0:
-        newlines = lines[:number - 1] + lines[number:]
-    elif number == 0:
-        return kenni.say('There is no "0th" quote!')
-    elif number == -1:
-        newlines = lines[:number]
-    else:
-        ## number < -1
-        newlines = lines[:number] + lines[number + 1:]
-    fn = open('quotes.txt', 'w')
-    for line in newlines:
-        txt = line
-        if txt:
-            fn.write(txt)
-            if txt[-1] != '\n':
-                fn.write('\n')
-    fn.close()
-    kenni.say('Successfully deleted quote %s.' % (number))
-delquote.commands = ['rmquote', 'delquote']
-delquote.priority = 'low'
-delquote.example = '.rmquote'
-
-
-def grabquote(kenni, input):
-    try:
-         import find
-    except:
-        return kenni.say('Could not load "find" module.')
-
-    txt = input.group(2)
-
-    if not txt:
-        return kenni.say('Please provide a nick for me to look for recent activity.')
-
-    parts = txt.split()
-
-    if not parts:
-        return kenni.say('Please provide me with a valid nick.')
-
-    nick = parts[0]
-    channel = input.sender
-    channel = (channel).lower()
-
-    quote_db = find.load_db()
-    if quote_db and channel in quote_db and nick in quote_db[channel]:
-        quotes_by_nick = quote_db[channel][nick]
-    else:
-        return kenni.say('There are currently no existing quotes by the provided nick in this channel.')
-
-    quote_by_nick = quotes_by_nick[-1]
-
-    quote = '<%s> %s' % (nick, quote_by_nick)
-
-    write_addquote(quote)
-
-    kenni.say('quote added: %s' % (quote))
-grabquote.commands = ['grab']
-
+from bs4 import BeautifulSoup
+def quote(kenni, input):
+    regex = re.compile('<.*?>|&.*;')
+    topics = ['love','life','inspirational','humor','philosophy','truth','religion','wisdom','inspiration','happiness','romance','hope','death','poetry','faith','writing','success','knowledge','relationships','education','motivation','life-lessons','time','science','funny','books','spirituality']
+    topic = random.choice(topics)
+    url = "https://www.goodreads.com/quotes/tag/" + topic + "?page=" + str(random.randint(1,101))
+    page = BeautifulSoup(web.get(url), 'html.parser')
+    results = page.find_all("div",class_= "quote")
+    quote = random.choice(results).find("div",class_="quoteText")
+    quote = "["+ topic.capitalize() + "] " + re.sub(regex, '', quote.text).replace("\n"," ").replace("  "," ").replace("  "," ").split("//")[0]
+    splitquote = quote.split("―")
+    if len(quote) > 300:
+        quote = splitquote[0][:250] + "[...] ― " +  splitquote[1]
+    kenni.say(quote)
+quote.commands = ['quote']
 
 if __name__ == '__main__':
     print(__doc__.strip())
