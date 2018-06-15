@@ -3,6 +3,7 @@ import json
 import re
 import socket
 import web
+import urllib.parse
 from modules import unicode as uc
 
 
@@ -17,7 +18,7 @@ def translate(kenni, input):
         return kenni.say("No search term!")
     response = "["
     try:
-        page = web.get(base + txt.replace(" ","%20"))
+        page = web.get(base+urllib.parse.quote_plus(txt))
     except IOError as err:
         return kenni.say('Could not access given address. (Detailed error: %s)' % (err))
     try:
