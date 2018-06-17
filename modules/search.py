@@ -51,8 +51,16 @@ def google(kenni, input):
                 x = 3
             msg = None
             for y in range(x):
-                if not results[y].find("h3",class_="r").find("a") or not results[y].find("cite"):
-                    x+=1
+                continues = False
+                while (not results[y].find("h3",class_="r") or not results[y].find("h3",class_="r").find("a") or not results[y].find("cite")):
+                    if y == x and len(results) >= y+1:
+                        y += 1
+                    elif len(results) >= x+1:
+                        y=x+1
+                    else:
+                        continues = True
+                        break
+                if continues:
                     continue
                 title = results[y].find("h3",class_="r").find("a").text
                 url = results[y].find("cite").text
@@ -62,6 +70,8 @@ def google(kenni, input):
                     msg += colorize(title) + " (" + url + ")"
                 if y != x-1:
                     msg += " - "
+            if len(msg) > 300:
+                msg = msg[:295]+"[...]"
             kenni.say(msg)
 google.commands = ['google']
 if __name__ == '__main__':
