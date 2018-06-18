@@ -43,5 +43,10 @@ def coin(kenni, input):
         kenni.say("tails")
 coin.commands = ['coin', 'flip']
 coin.priority = 'high'
+
+def burn(kenni, input):
+    kenni.write(['PRIVMSG', input.sender], '\x01ACTION watches the world burn\x01')
+burn.commands = ['burn']
+burn.priority = 'high'
 if __name__ == '__main__':
     print(__doc__.strip())
