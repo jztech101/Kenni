@@ -191,8 +191,8 @@ def kickx(kenni, channel, nick, sender, reasonidx):
 
 def configureHostMask (mask, kenni):
     if "!" not in mask and "@" not in mask and ":" not in mask:
-        ident = kenni.idents[mask]
-        host = kenni.hostmasks[mask]
+        ident = kenni.idents[mask.lower()]
+        host = kenni.hostmasks[mask.lower()]
         if "~" not in ident:
             return "*!" + ident + "@" + host
         else:

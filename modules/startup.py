@@ -100,8 +100,8 @@ privs_on_join.priority = 'high'
 def hostmask_on_join(kenni, input):
     if not input.mode or not tools.isChan(input.mode, False):
         return
-    kenni.set_hostmask(input.other2, input.names)
-    kenni.set_ident(input.other2, input.mode_target)
+    kenni.set_hostmask(input.other2.lower(), input.names)
+    kenni.set_ident(input.other2.lower(), input.mode_target)
 hostmask_on_join.rule = r'(.*)'
 hostmask_on_join.event = '352'
 hostmask_on_join.priority = 'high'
@@ -109,8 +109,8 @@ hostmask_on_join.priority = 'high'
 def new_Join_Hostmask(kenni, input):
     if not input.sender or not tools.isChan(input.sender, False):
         return
-    kenni.set_hostmask(input.nick, input.host)
-    kenni.set_ident(input.nick, input.user)
+    kenni.set_hostmask(input.nick.lower(), input.host)
+    kenni.set_ident(input.nick.lower(), input.user)
 new_Join_Hostmask.rule = r'(.*)'
 new_Join_Hostmask.event = 'JOIN'
 new_Join_Hostmask.priority = 'high'
