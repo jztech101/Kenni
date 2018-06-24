@@ -3,8 +3,6 @@ import os
 import time
 import tools
 
-intentional_part = False
-
 def join(kenni, input):
     '''Join the specified channel. This is an owner-only command.'''
     if not input.owner:
@@ -31,13 +29,11 @@ join.example = '.join #example or .join #example key'
 
 def part(kenni, input):
     '''Part the specified channel. This is an admin-only command.'''
-    global intentional_part
     if input.admin:
         sendmessage = input.group(2)
         sendmessage2 = []
         if sendmessage:
             sendmessage2 = sendmessage.split(" ")
-        intentional_part = True
         if tools.isChan(input.sender, False) and (not sendmessage or not tools.isChan(sendmessage2[0], False)):
             kenni.write(['PART', input.sender])
             kenni.channels.remove(input.sender)
@@ -50,13 +46,11 @@ part.example = '.part #example'
 
 def cycle(kenni, input):
     '''Part the specified channel. This is an admin-only command.'''
-    global intentional_part
     if input.admin:
         sendmessage = input.group(2)
         sendmessage2 = []
         if sendmessage:
             sendmessage2 = sendmessage.split(" ")
-        intentional_part = True
         if tools.isChan(input.sender, False) and (not sendmessage or not tools.isChan(sendmessage2[0], False)):
             kenni.write(['PART'], input.sender)
             kenni.join(input.sender, None)
@@ -101,36 +95,6 @@ def act(kenni, input):
         kenni.write(['PRIVMSG', channel], '\x01ACTION ' + msg + '\x01')
 act.commands = ['act', 'do']
 act.priority = 'low'
-
-
-def defend_ground(kenni, input):
-    '''
-    This function monitors all kicks across all channels kenni is in. If she
-    detects that she is the one kicked she'll automatically join that channel.
-
-    WARNING: This may not be needed and could cause problems if kenni becomes
-    annoying. Please use this with caution.
-    '''
-    channel = input.sender
-    kenni.join(channel, None)
-    time.sleep(10)
-    kenni.join(channel, None)
-defend_ground.event = 'KICK'
-defend_ground.rule = '.*'
-defend_ground.priority = 'low'
-
-
-def defend_ground2(kenni, input):
-    global intentional_part
-    if not intentional_part and input.nick == kenni.config.nick:
-        intentional_part = False
-        channel = input.sender
-        kenni.join(channel, None)
-        time.sleep(10)
-        kenni.join(channel, None)
-defend_ground2.event = 'PART'
-defend_ground2.rule = '.*'
-defend_ground2.priority = 'low'
 
 
 def blocks(kenni, input):
