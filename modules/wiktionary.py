@@ -15,7 +15,11 @@ def text(html):
     return text
 
 def wiktionary(word):
-    bytes = web.get(uri % web.quote(word)).decode('utf-8')
+    bytes = None
+    try:
+         bytes = web.get(uri % web.quote(word)).decode('utf-8')
+    except:
+          return None,None
     bytes = r_ul.sub('', bytes)
 
     mode = None
@@ -61,7 +65,7 @@ def format(word, definitions, number=2):
             result += ' \u2014 ' + ('%s: ' % part)
             n = ['%s. %s' % (i + 1, e.strip(' .')) for i, e in enumerate(defs)]
             result += ', '.join(n)
-    return result.strip(' .,')
+    return result.strip(' .,').replace('&#32;',' ')
 
 def define(kenni, input):
     word = input.group(2)
@@ -77,8 +81,12 @@ def define(kenni, input):
     result = format(word, definitions)
     y=3
     while len(result) < tools.charlimit-20:
-        result = format(word, definitions, y)
-        y+=1
+        result2 = format(word, definitions, y)
+        if result == result2:
+            break
+        else:
+            y+=1
+            result = result2
     if len(result) > tools.charlimit:
         result = result[:tools.charlimit-5] + '[...]'
     kenni.say(result)
