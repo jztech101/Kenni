@@ -3,6 +3,7 @@ import re
 import web
 import html.parser
 import requests
+import tools
 from bs4 import BeautifulSoup
 def colorize(text):
     return '\x02\x0303' + text + '\x03\x02'
@@ -18,19 +19,18 @@ def search(kenni, input):
             kenni.say("No results found")
             return
         else:
-            x = len(results)
-            if(x > 3):
-                x = 3
             msg = None
-            for y in range(x):
+            y=0
+            while not msg or len(msg) < tools.charlimit-20:
                 title = results[y].find("div",class_="resultTitlePane").find("a",class_="resultTitle").text
                 url = results[y].find("div",class_="resultDisplayUrlPane").find("a",class_="resultDisplayUrl").text
                 if not msg:
                     msg = colorize(title) + " (" + url + ")"
                 else:
-                    msg += colorize(title) + " (" + url + ")"
-                if y != x-1:
-                    msg += " - "
+                    msg += " - " + colorize(title) + " ("+url+")"
+                y+=1
+            if len(msg) > tools.charlimit:
+                msg = msg[:tools.charlimit-5]+"[...]"
             kenni.say(msg)
 search.commands = ['yahoo', 'dogpile', 'search']
 
@@ -46,17 +46,13 @@ def google(kenni, input):
             kenni.say("No results found")
             return
         else:
-            x = len (results)
-            if (x > 3):
-                x = 3
             msg = None
-            for y in range(x):
+            y=0
+            while not msg or len(msg) < tools.charlimit-20:
                 continues = False
                 while (not results[y].find("h3",class_="r") or not results[y].find("h3",class_="r").find("a") or not results[y].find("cite")):
-                    if y == x and len(results) >= y+1:
+                    if len(results) >= y+1:
                         y += 1
-                    elif len(results) >= x+1:
-                        y=x+1
                     else:
                         continues = True
                         break
@@ -67,11 +63,10 @@ def google(kenni, input):
                 if not msg:
                     msg = colorize(title) + " (" + url + ")"
                 else:
-                    msg += colorize(title) + " (" + url + ")"
-                if y != x-1:
-                    msg += " - "
-            if len(msg) > 300:
-                msg = msg[:295]+"[...]"
+                    msg += " - " + colorize(title) + " (" + url + ")"
+                y+=1
+            if len(msg) > tools.charlimit:
+                msg = msg[:tools.charlimit-5]+"[...]"
             kenni.say(msg)
 google.commands = ['google']
 if __name__ == '__main__':

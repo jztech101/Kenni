@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import re
 import web
-
+import tools
 uri = 'https://en.wiktionary.org/w/index.php?title=%s&printable=yes'
 r_tag = re.compile(r'<[^>]+>')
 r_ul = re.compile(r'(?ims)<ul>.*?</ul>')
@@ -75,13 +75,12 @@ def define(kenni, input):
         return
 
     result = format(word, definitions)
-    if len(result) < 150:
-        result = format(word, definitions, 3)
-    if len(result) < 150:
-        result = format(word, definitions, 5)
-
-    if len(result) > 300:
-        result = result[:295] + '[...]'
+    y=3
+    while len(result) < tools.charlimit-20:
+        result = format(word, definitions, y)
+        y+=1
+    if len(result) > tools.charlimit:
+        result = result[:tools.charlimit-5] + '[...]'
     kenni.say(result)
 define.commands = ['dict', 'define', 'word']
 define.example = '.w bailiwick'

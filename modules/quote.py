@@ -4,6 +4,7 @@ import web
 import html.parser
 import requests
 import random
+import tools
 from bs4 import BeautifulSoup
 def quote(kenni, input):
     regex = re.compile('<.*?>|&.*;')
@@ -15,8 +16,8 @@ def quote(kenni, input):
     quote = random.choice(results).find("div",class_="quoteText")
     quote = "["+ topic.capitalize() + "] " + re.sub(regex, '', quote.text).replace("\n"," ").replace("  "," ").replace("  "," ").split("//")[0]
     splitquote = quote.split("―")
-    if len(quote) > 300:
-        quote = splitquote[0][:250] + "[...] ― " +  splitquote[1]
+    if len(quote) > tools.charlimit:
+        quote = splitquote[0][:tools.charlimit-5] + "[...] ― " +  splitquote[1]
     kenni.say(quote)
 quote.commands = ['quote']
 

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+charlimit = 450
 def isChan(chan, checkprefix):
     if not chan:
         return False
@@ -8,4 +9,7 @@ def isChan(chan, checkprefix):
         return True
     else:
         return False
+
+
+
 

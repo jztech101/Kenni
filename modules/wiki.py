@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import re
 import web
+import tools
 import wikipedia
 def wiki(kenni, input):
     query = input.group(2)
@@ -16,8 +17,8 @@ def wiki(kenni, input):
             except wikipedia.DisambiguationError as err:
                page = wikipedia.page(err.options[0])
             wikiTitle = page.title
-            wikiSummary = page.summary[:250] + "..."
             wikiUrl = page.url
+            wikiSummary = page.summary[:tools.charlimit-len(wikiUrl)-15] + " [...]"
         kenni.say(wikiTitle + " : " + wikiSummary + " - " + wikiUrl)
 wiki.commands = ['wikipedia', 'wiki']
 

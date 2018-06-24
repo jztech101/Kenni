@@ -4,6 +4,7 @@ import json
 import re
 import socket
 import web
+import tools
 from modules import unicode as uc
 
 
@@ -30,15 +31,15 @@ def urban(kenni, input):
         else:
             kenni.say("No results found")
             return
-        while len(response) < 300:
+        while len(response) < tools.charlimit-20:
             index += 1
             tmp = getDef(result, index)
             if tmp:
                 response = regex.sub(" ",tmp).replace("  "," ")
             else:
                 break
-        if len(response)>300:
-            response = response[:295]+"[...]"
+        if len(response)>tools.charlimit:
+            response = response[:tools.charlimit-5]+"[...]"
         kenni.say(response)
     else:
         kenni.say("No results found")
@@ -52,7 +53,7 @@ def getDef(results, index):
                 if x == index-1:
                     response += definition
                 else:
-                    response += definition + " -- "
+                    response += definition + " || "
         return response
     else:
         return
