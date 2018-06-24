@@ -323,6 +323,10 @@ class Bot(asynchat.async_chat):
                             self.msg(self.logchan_pm, '[PM] ' + dlist[0].replace(":","") + ': ' + ' '.join(dlist[3:]).replace(":",""), True)
                         elif dlist[1].strip() == 'INVITE':
                             self.msg(self.logchan_pm, '[Invite] ' + dlist[0].replace(":","") + ': ' + dlist[3].replace(":",""), True)
+                        elif dlist[1].strip() == 'PART'and dlist[0].startswith(self.nick):
+                            self.msg(self.logchan_pm, '[PART] ' + dlist[0].replace(":","") + ': (' + dlist[2] + ') + dlist[4:].replace(":",""), True)
+                        elif dlist[1].strip() == 'KICK' and dlist[3] == self.nick:
+                            self.msg(self.logchan_pm, '[KICK] ' + dlist[0].replace(":","") + ': (' + dlist[2] + ') + dlist[4:].replace(":",""), True)
             if self.logging:
                 ## if logging (to log file) is enabled
                 ## send stuff to the log file
