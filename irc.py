@@ -335,7 +335,7 @@ class Bot(asynchat.async_chat):
                                 self.msg(self.logchan_pm, '[Kick] ' + dlist[0].replace(":","") + ': (' + dlist[2] + ') '+ ' '.join(dlist[4:]).replace(":",""), True)
                             else:
                                 self.msg(self.logchan_pm, '[Kick] ' + dlist[0].replace(":","") + ': (' + dlist[2] + ') ', True)
-                        elif dlist[1].strip() == 'PRIVMSG' and currnick.match(' '.join(dlist[3:])):
+                        elif dlist[1].strip() == 'PRIVMSG'and dlist[2].strip() != self.logchan_pm and currnick.match(' '.join(dlist[3:])):
                             self.msg(self.logchan_pm, '[Ping] ' + dlist[0].replace(':','') + ': (' + dlist[2] + ') ' + ' '.join(dlist[3:]).replace(":",""), True)
 
         self.buffer = ''
