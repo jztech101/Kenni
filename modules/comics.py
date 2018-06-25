@@ -2,7 +2,11 @@
 import json
 import random
 import web
+from bs4 import BeautifulSoup
 import re
+import tools
+import requests
+import html.parser
 from modules import unicode as uc
 
 '''
@@ -77,26 +81,39 @@ def xkcd(kenni, input):
         xkcd_url = 'https://xkcd.com/' + str(xkcd_rand_num) + '/info.0.json'
         body = tryToGetJSON(xkcd_url)
 
-
     comic_date_str = body['year'] + '-' + str(body['month']).zfill(2) + '-' + str(body['day']).zfill(2)
     header_str = '\x02xkcd #\x02' + str(body['num']) + ' (' + comic_date_str + ') \x02' + body['title'] + '\x02'
-    kenni.say(header_str)
-
-    if body['transcript'].encode('UTF-8'):
-        transcript_text = '\x02Transcript:\x02 ' + body['transcript']
-        kenni.say(transcript_text)
-
+    msgs = header_str
 
     alt_text = '\x02Alt text\x02: ' + body['alt']
-    kenni.say(alt_text)
+    msgs += " - " + alt_text
 
     img_ssl_link = '[ ' + re.sub(r'http://', 'https://ssl', body['img']) + ' ]'
-    kenni.say(img_ssl_link)
-
+    msgs += " - " + img_ssl_link
+    kenni.say(msgs)
 
 xkcd.commands = ['xkcd']
 xkcd.example = '.xkcd  (for most recent), .xkcd [comic number]  (for specific comic), or .xkcd [r | ran | rand | random]  (for a random comic)'
 xkcd.priority = 'medium'
 
+def hellomouse(kenni, input):
+
+    url = "https://hellomouse.net/comics"
+    random = False
+    if input.group(2):
+       if input.group(2).isdigit():
+           url += "?id=" + input.group(2)
+       else:
+           random = True
+    page = BeautifulSoup(requests.get(url).text, 'html.parser')
+    if random:
+       url = "https://hellomouse.net" + page.find('div', class_="comic").find('a', text="Random")['href']
+       page = BeautifulSoup(requests.get(url).text, 'html.parser')
+    title = page.find('div', class_="comic").find('h1').text
+    text = page.find('div', class_="comic").find('small').text
+    kenni.say(title + " - " + text + " - " + url)
+hellomouse.commands = ['comic','comics', 'hellomouse']
+hellomouse.example = 'hellomouse'
+hellomouse.priority = 'medium'
 if __name__ == '__main__':
     print(__doc__.strip())
