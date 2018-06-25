@@ -312,6 +312,7 @@ class Bot(asynchat.async_chat):
                 ## if logging to logging channel is enabled
                 ## send stuff in PM to logging channel
                 dlist = line.split()
+                currnick = re.compile(".*" +self.nick + ".*",re.IGNORECASE)
                 if len(dlist) >= 3:
                     if (not tools.isChan(dlist[2],True) or dlist[1].strip() == 'NOTICE'):
                         if dlist[1].strip() == 'NOTICE':
@@ -323,7 +324,7 @@ class Bot(asynchat.async_chat):
                             self.msg(self.logchan_pm, '[PM] ' + dlist[0].replace(":","") + ': ' + ' '.join(dlist[3:]).replace(":",""), True)
                         elif dlist[1].strip() == 'INVITE':
                             self.msg(self.logchan_pm, '[Invite] ' + dlist[0].replace(":","") + ': ' + dlist[3].replace(":",""), True)
-                    elif tools.isChan(dlist[2],True):    
+                    elif tools.isChan(dlist[2],True):
                         if dlist[1].strip() == 'PART'and dlist[0].strip().startswith(":" + self.nick):
                             if len(dlist) > 3:
                                 self.msg(self.logchan_pm, '[Part] ' + dlist[0].replace(":","") + ': (' + dlist[2] + ') '+ ' '.join(dlist[3:]).replace(":",""), True)
@@ -334,6 +335,8 @@ class Bot(asynchat.async_chat):
                                 self.msg(self.logchan_pm, '[Kick] ' + dlist[0].replace(":","") + ': (' + dlist[2] + ') '+ ' '.join(dlist[4:]).replace(":",""), True)
                             else:
                                 self.msg(self.logchan_pm, '[Kick] ' + dlist[0].replace(":","") + ': (' + dlist[2] + ') ', True)
+                        elif dlist[1].strip() == 'PRIVMSG' and currnick.match(' '.join(dlist[3:])):
+                            self.msg(self.logchan_pm, '[Ping] ' + dlist[0].replace(':','') + ': (' + dlist[2] + ') ' + ' '.join(dlist[3:]).replace(":",""), True)
 
         self.buffer = ''
 
