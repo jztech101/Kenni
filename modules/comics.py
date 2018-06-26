@@ -67,11 +67,8 @@ def xkcd(kenni, input):
         if line.isdigit():
             xkcd_num = line.lstrip().rstrip()
             xkcd_url = 'https://xkcd.com/' + xkcd_num + '/info.0.json'
-        elif any([line.lower() in ['r', 'ran', 'rand', 'random']]):
-            show_random_comic = True
         else:
-            kenni.say('Incorrect argument for .xkcd: ' + line)
-
+            show_random_comic = True
 
     body = tryToGetJSON(xkcd_url)
 
