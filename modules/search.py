@@ -25,9 +25,9 @@ def search(kenni, input):
                 title = results[y].find("div",class_="resultTitlePane").find("a",class_="resultTitle").text
                 url = results[y].find("div",class_="resultDisplayUrlPane").find("a",class_="resultDisplayUrl").text
                 if not msg:
-                    msg = colorize(title) + " ( " + url + " )"
+                    msg = colorize(title) + " [ " + url + " ]"
                 else:
-                    msg += " - " + colorize(title) + " ( "+url+" )"
+                    msg += " - " + colorize(title) + " [ "+url+" ]"
                 y+=1
             if len(msg) > tools.charlimit:
                 msg = msg[:tools.charlimit-5]+"[...]"
@@ -61,9 +61,9 @@ def google(kenni, input):
                 title = results[y].find("h3",class_="r").find("a").text
                 url = results[y].find("cite").text
                 if not msg:
-                    msg = colorize(title) + " ( " + url + " )"
+                    msg = colorize(title) + " [ " + url + " ]"
                 else:
-                    msg += " - " + colorize(title) + " ( " + url + " )"
+                    msg += " - " + colorize(title) + " [ " + url + " ]"
                 y+=1
             if len(msg) > tools.charlimit:
                 msg = msg[:tools.charlimit-5]+"[...]"
