@@ -42,7 +42,7 @@ def ytsearch(kenni, trigger):
 
         link = 'https://youtu.be/' + item['id']['videoId']
 
-        entry_text.append("{0} by {1} ({2})".format(title, author, link))
+        entry_text.append("{0} by {1} ( {2} )".format(title, author, link))
 
     all_entries = ""
     if int(num_results) > 0:
