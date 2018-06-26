@@ -93,7 +93,7 @@ def wa(kenni, input):
         return kenni.say("No results found.")
 
     return kenni.say(result)
-wa.commands = ['wa', 'calc']
+wa.commands = ['wa', 'calc','convert']
 
 if __name__ == '__main__':
     print(__doc__.strip())
