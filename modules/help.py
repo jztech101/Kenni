@@ -9,7 +9,7 @@ def doc(kenni, input):
         else:
             kenni.say('No help found')
     else:
-        kenni.say('help: returns possibly helpful information')
+        kenni.say('help: Returns possibly helpful information')
 doc.commands = ['help']
 doc.example = 'help'
 doc.priority = 'low'
