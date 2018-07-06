@@ -5,6 +5,8 @@ import json
 import re
 import web
 import sys
+import urllib
+from modules import unicode as uc
 from icao import data
 
 install_geopy = "Please install geopy via 'pip' to use weather.py"
@@ -29,7 +31,7 @@ def clean(txt, delim=''):
 def location(name):
     try:
         import geopy.geocoders as geo
-        geolocator = geo.GoogleV3()
+        geolocator = geo.Nominatim()
     except ImportError:
         return 'ImportError', '', ''
 
