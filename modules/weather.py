@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3# vim: set fileencoding=UTF-8 :
 
 import datetime
@@ -98,7 +99,7 @@ def get_metar(icao_code):
     uri = 'http://tgftp.nws.noaa.gov/data/observations/metar/stations/%s.TXT'
 
     try:
-        page = web.get(uri % icao_code)
+        page = web.get(uri % icao_code).decode('UTF-8')
     except AttributeError:
         raise GrumbleError('OH CRAP NOAA HAS GONE DOWN THE WEB IS BROKEN')
     if 'Not Found' in page:
@@ -876,13 +877,13 @@ def forecastio_current_weather(kenni, input):
     ## a bit messy, but better than other alternatives
     output = str()
     output += '\x1FCover\x1F: ' + cover_word
-    output += ', \x1FTemp\x1F: ' + str(temp)
-    output += ', \x1FDew Point\x1F: ' + str(dew)
-    output += ', \x1FHumidity\x1F: ' + str(humidity)
-    output += ', \x1FApparent Temp\x1F: ' + str(APtemp)
+    output += ', \x1FTemp\x1F: ' + temp.decode('UTF-8')
+    output += ', \x1FDew Point\x1F: ' + dew.decode('UTF-8')
+    output += ', \x1FHumidity\x1F: ' + humidity
+    output += ', \x1FApparent Temp\x1F: ' + APtemp.decode('UTF-8')
     output += ', \x1FPressure\x1F: ' + pressure
     if cond:
-        output += ', \x1FCondition\x1F: ' + str(cond)
+        output += ', \x1FCondition\x1F: ' + cond
     output += ', \x1FWind\x1F: ' + wind
     output += ' - '
     output += uc.decode(name)
