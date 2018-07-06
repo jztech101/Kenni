@@ -534,7 +534,7 @@ def f_weather(kenni, input):
 
     output = str()
     output += 'Cover: ' + cover.decode()
-    output += ', Temp: ' + temp.decode()
+    output += ', Temp: ' + temp
     output += ', Dew Point: ' + dew.decode()
     if windchill:
         output += ', Windchill: ' + windchill.decode()
@@ -861,10 +861,10 @@ def forecastio_current_weather(kenni, input):
     ## a bit messy, but better than other alternatives
     output = str()
     output += '\x1FCover\x1F: ' + cover_word
-    output += ', \x1FTemp\x1F: ' + temp.decode('UTF-8')
-    output += ', \x1FDew Point\x1F: ' + dew.decode('UTF-8')
+    output += ', \x1FTemp\x1F: ' + temp
+    output += ', \x1FDew Point\x1F: ' + dew
     output += ', \x1FHumidity\x1F: ' + humidity
-    output += ', \x1FApparent Temp\x1F: ' + APtemp.decode('UTF-8')
+    output += ', \x1FApparent Temp\x1F: ' + APtemp
     output += ', \x1FPressure\x1F: ' + pressure
     if cond:
         output += ', \x1FCondition\x1F: ' + cond
@@ -994,7 +994,7 @@ def weather_wunderground(kenni, input):
     output += ', \x1FLocation\x1F: ' + (location).encode('utf-8').decode('utf-8')
     output += ', ' + time_updated
 
-    output += ', (Powered by wunderground.com)'
+    output += ', (Powered by Wunderground, wunderground.com)'
 
     kenni.say(output)
 
