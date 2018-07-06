@@ -3,10 +3,8 @@
 import datetime
 import json
 import re
-import urllib.request, urllib.parse, urllib.error
 import web
 import sys
-from modules import unicode as uc
 from icao import data
 
 install_geopy = "Please install geopy via 'pip' to use weather.py"
@@ -59,7 +57,8 @@ def local(icao, hour, minute):
     '''Grab local time based on ICAO code'''
     uri = ('http://www.flightstats.com/' +
              'go/Airport/airportDetails.do?airportCode=%s')
-    try: bytes = web.get(uri % icao)
+    try:
+        bytes = web.get(uri % icao)
     except AttributeError:
         raise GrumbleError('A WEBSITE HAS GONE DOWN WTF STUPID WEB')
     m = r_from.search(bytes)
@@ -177,6 +176,7 @@ def speed_desc(speed):
 
 def wind_dir(degrees):
     '''Provide a nice little unicode character of the wind direction'''
+    degrees = float(degrees)
     if degrees == 'VRB':
         degrees = '\u21BB'.encode('utf-8')
     elif (degrees <= 22.5) or (degrees > 337.5):
@@ -530,7 +530,7 @@ def f_weather(kenni, input):
                 cond += phenomenon
 
     output = str()
-    output += 'Cover: ' + cover
+    output += 'Cover: ' + str(cover)
     output += ', Temp: ' + str(temp)
     output += ', Dew Point: ' + str(dew)
     if windchill:
