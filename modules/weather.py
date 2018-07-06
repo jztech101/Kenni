@@ -61,7 +61,7 @@ def local(icao, hour, minute):
     uri = ('http://www.flightstats.com/' +
              'go/Airport/airportDetails.do?airportCode=%s')
     try:
-        bytes = web.get(uri % icao)
+        bytes = web.get(uri % icao).decode()
     except AttributeError:
         raise GrumbleError('A WEBSITE HAS GONE DOWN WTF STUPID WEB')
     m = r_from.search(bytes)
@@ -181,23 +181,23 @@ def wind_dir(degrees):
     '''Provide a nice little unicode character of the wind direction'''
     degrees = float(degrees)
     if degrees == 'VRB':
-        degrees = '\u21BB'.encode('utf-8')
+        degrees = '\u21BB'
     elif (degrees <= 22.5) or (degrees > 337.5):
-        degrees = '\u2191'.encode('utf-8')
+        degrees = '\u2191'
     elif (degrees > 22.5) and (degrees <= 67.5):
-        degrees = '\u2197'.encode('utf-8')
+        degrees = '\u2197'
     elif (degrees > 67.5) and (degrees <= 112.5):
-        degrees = '\u2192'.encode('utf-8')
+        degrees = '\u2192'
     elif (degrees > 112.5) and (degrees <= 157.5):
-        degrees = '\u2198'.encode('utf-8')
+        degrees = '\u2198'
     elif (degrees > 157.5) and (degrees <= 202.5):
-        degrees = '\u2193'.encode('utf-8')
+        degrees = '\u2193'
     elif (degrees > 202.5) and (degrees <= 247.5):
-        degrees = '\u2199'.encode('utf-8')
+        degrees = '\u2199'
     elif (degrees > 247.5) and (degrees <= 292.5):
-        degrees = '\u2190'.encode('utf-8')
+        degrees = '\u2190'
     elif (degrees > 292.5) and (degrees <= 337.5):
-        degrees = '\u2196'.encode('utf-8')
+        degrees = '\u2196'
 
     return degrees
 
@@ -372,7 +372,7 @@ def f_weather(kenni, input):
                     level = 0
 
         if level == 8:
-            cover = 'Overcast \u2601'.encode('utf-8')
+            cover = 'Overcast \u2601'
         elif level == 5:
             cover = 'Cloudy'
         elif level == 3:
@@ -416,10 +416,10 @@ def f_weather(kenni, input):
 
         if icao_code.startswith('K'):
             ## if in North America
-            windchill = '%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (f, windchill)
+            windchill = '%.1f\u00B0F (%.1f\u00B0C)' % (f, windchill)
         else:
             ## else, anywhere else in the worldd
-            windchill = '%.1f\u00B0C'.encode('utf-8') % (windchill)
+            windchill = '%.1f\u00B0C' % (windchill)
 
     heatindex = False
     if isinstance(temp, float) and isinstance(dew, float):
@@ -427,7 +427,7 @@ def f_weather(kenni, input):
         temp_f = (temp * 1.8) + 32.0
         if rh >= 40.0 and temp_f >= 80.0:
             heatindex = gen_heat_index(temp_f, rh)
-            heatindex = '%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (heatindex, (heatindex - 32.0) / (1.8) )
+            heatindex = '%.1f\u00B0F (%.1f\u00B0C)' % (heatindex, (heatindex - 32.0) / (1.8))
 
     if pressure:
         if pressure.startswith('Q'):
@@ -445,16 +445,16 @@ def f_weather(kenni, input):
 
             if isinstance(temp, float):
                 f = (temp * 1.8) + 32
-                temp = '%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (f, temp)
+                temp = '%.1f\u00B0F (%.1f\u00B0C)' % (f, temp)
             if isinstance(dew, float):
                 f = (dew * 1.8) + 32
-                dew = '%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (f, dew)
+                dew = '%.1f\u00B0F (%.1f\u00B0C)' % (f, dew)
     else: pressure = '?mb'
 
     if isinstance(temp, float):
-        temp = '%.1f\u00B0C'.encode('utf-8') % temp
+        temp = '%.1f\u00B0C' % temp
     if isinstance(dew, float):
-        dew = '%.1f\u00B0C'.encode('utf-8') % dew
+        dew = '%.1f\u00B0C' % dew
 
     if cond:
         conds = cond
@@ -533,13 +533,13 @@ def f_weather(kenni, input):
                 cond += phenomenon
 
     output = str()
-    output += 'Cover: ' + str(cover)
-    output += ', Temp: ' + str(temp)
-    output += ', Dew Point: ' + str(dew)
+    output += 'Cover: ' + cover.decode()
+    output += ', Temp: ' + temp.decode()
+    output += ', Dew Point: ' + dew.decode()
     if windchill:
-        output += ', Windchill: ' + str(windchill)
+        output += ', Windchill: ' + windchill.decode()
     if heatindex:
-        output += ', Heat Index: ' + str(heatindex)
+        output += ', Heat Index: ' + heatindex.decode()
     output += ', Pressure: ' + pressure
     if cond:
         output += ' Condition: ' + cond
@@ -738,22 +738,6 @@ def forecast(kenni, input):
         windspeed = (windspeed).strip()
         summary = (summary).strip()
 
-        ## toggle unicode nonsense
-        dotw_day_pretty = uc.encode(dotw_day_pretty)
-        hi = uc.encode(hi)
-        low = uc.encode(low)
-        dew = uc.encode(dew)
-        windspeed = uc.encode(windspeed)
-        summary = uc.encode(summary)
-
-        ## more unicode nonsense
-        dotw_day_pretty = uc.decode(dotw_day_pretty).upper()
-        hi = uc.decode(hi)
-        low = uc.decode(low)
-        dew = uc.decode(dew)
-        windspeed = uc.decode(windspeed)
-        summary = uc.decode(summary)
-
         summary = chomp_desc(summary)
 
         ## only show 'today' and the next 3-days.
@@ -848,13 +832,13 @@ def forecastio_current_weather(kenni, input):
         cover_word = 'Clear'
 
     temp_c = (temp - 32) / 1.8
-    temp = '%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (temp, temp_c)
+    temp = '%.1f\u00B0F (%.1f\u00B0C)' % (temp, temp_c)
 
     dew_c = (dew - 32) / 1.8
-    dew = '%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (dew, dew_c)
+    dew = '%.1f\u00B0F (%.1f\u00B0C)' % (dew, dew_c)
 
     APtemp_c = (APtemp - 32) / 1.8
-    APtemp = '%.1f\u00B0F (%.1f\u00B0C)'.encode('utf-8') % (APtemp, APtemp_c)
+    APtemp = '%.1f\u00B0F (%.1f\u00B0C)' % (APtemp, APtemp_c)
 
     humidity = str(int(float(humidity) * 100)) + '%'
 
