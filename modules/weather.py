@@ -55,6 +55,22 @@ def location(name):
 class GrumbleError(object):
     pass
 
+def local(icao, hour, minute):
+    '''Grab local time based on ICAO code'''
+    uri = 'https://airports-api.s3-us-west-2.amazonaws.com/icao/%s.json'
+    try:
+        content = web.get(uri % icao.lower()).decode()
+    except AttributeError:
+        raise GrumbleError('A WEBSITE HAS GONE DOWN WTF STUPID WEB')
+    offset = json.load(content)['utc_offset']
+    if offset:
+        lhour = int(hour) + int(offset)
+
+        return (str(lhour) + ':' + str(minute) + ', ' + str(hour) +
+                  str(minute) + 'Z')
+    return str(hour) + ':' + str(minute) + 'Z'
+
+
 def code(kenni, search):
     '''Find ICAO code in the provided database.py (findest the nearest one)'''
     if search.upper() in data:
@@ -297,7 +313,7 @@ def f_weather(kenni, input):
     if time:
         hour = time[2:4]
         minute = time[4:6]
-        time = hour +":" + minute
+        time = local(icao_code, hour, minute)
     else: time = '(time unknown)'
 
     speed = False
