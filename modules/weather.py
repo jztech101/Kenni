@@ -55,25 +55,6 @@ def location(name):
 class GrumbleError(object):
     pass
 
-
-def local(icao, hour, minute):
-    '''Grab local time based on ICAO code'''
-    uri = ('http://www.flightstats.com/' +
-             'go/Airport/airportDetails.do?airportCode=%s')
-    try:
-        bytes = web.get(uri % icao).decode()
-    except AttributeError:
-        raise GrumbleError('A WEBSITE HAS GONE DOWN WTF STUPID WEB')
-    m = r_from.search(bytes)
-    if m:
-        offset = m.group(1)
-        lhour = int(hour) + int(offset)
-        lhour = lhour % 24
-        return (str(lhour) + ':' + str(minute) + ', ' + str(hour) +
-                  str(minute) + 'Z')
-    return str(hour) + ':' + str(minute) + 'Z'
-
-
 def code(kenni, search):
     '''Find ICAO code in the provided database.py (findest the nearest one)'''
     if search.upper() in data:
@@ -316,7 +297,7 @@ def f_weather(kenni, input):
     if time:
         hour = time[2:4]
         minute = time[4:6]
-        time = local(icao_code, hour, minute)
+        time = hour +":" + minute
     else: time = '(time unknown)'
 
     speed = False
@@ -535,7 +516,7 @@ def f_weather(kenni, input):
     output = str()
     output += 'Cover: ' + cover.decode()
     output += ', Temp: ' + temp
-    output += ', Dew Point: ' + dew.decode()
+    output += ', Dew Point: ' + dew
     if windchill:
         output += ', Windchill: ' + windchill.decode()
     if heatindex:
