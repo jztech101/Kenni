@@ -59,10 +59,10 @@ def local(icao, hour, minute):
     '''Grab local time based on ICAO code'''
     uri = 'https://airports-api.s3-us-west-2.amazonaws.com/icao/%s.json'
     try:
-        content = web.get(uri % icao.lower()).decode()
+        content = web.get(uri % icao.lower())
     except AttributeError:
         raise GrumbleError('A WEBSITE HAS GONE DOWN WTF STUPID WEB')
-    offset = json.load(content)['utc_offset']
+    offset = json.loads(content.decode('UTF-8'))['utc_offset']
     if offset:
         lhour = int(hour) + int(offset)
 
