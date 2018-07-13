@@ -530,13 +530,13 @@ def f_weather(kenni, input):
                 cond += phenomenon
 
     output = str()
-    output += 'Cover: ' + cover.decode()
+    output += 'Cover: ' + cover
     output += ', Temp: ' + temp
     output += ', Dew Point: ' + dew
     if windchill:
         output += ', Windchill: ' + windchill.decode()
     if heatindex:
-        output += ', Heat Index: ' + heatindex.decode()
+        output += ', Heat Index: ' + heatindex
     output += ', Pressure: ' + pressure
     if cond:
         output += ' Condition: ' + cond
