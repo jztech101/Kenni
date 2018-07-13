@@ -530,6 +530,8 @@ def f_weather(kenni, input):
                 cond += phenomenon
 
     output = str()
+    if type(cover) is bytes:
+        cover = cover.decode()
     output += 'Cover: ' + cover
     output += ', Temp: ' + temp
     output += ', Dew Point: ' + dew
