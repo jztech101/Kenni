@@ -59,7 +59,7 @@ def google(kenni, input):
                 if continues:
                     continue
                 title = results[y].find("h3",class_="r").find("a").text
-                url = results[y].find("cite").text
+                url = results[y].find("cite").text.replace(" ","")
                 if not msg:
                     msg = colorize(title) + " [ " + url + " ]"
                 else:
