@@ -84,12 +84,6 @@ class Bot(asynchat.async_chat):
         self.name = name
         self.password = password
 
-        # Right now, only accounting for two op levels.
-        # These lists are filled in startup.py
-        self.ops = dict()
-        self.hops = dict()
-        self.voices = dict()
-
         self.use_ssl = False
         self.use_sasl = False
         self.is_connected = False
@@ -439,47 +433,16 @@ class Bot(asynchat.async_chat):
             self.msg(origin.sender, report[0] + ' (' + report[1] + ')')
         except: self.msg(origin.sender, "Got an error.")
 
-    # Functions to add/remove ops, hops, and voices
-    def add_op(self, channel, name):
-        if channel in self.ops:
-            self.ops[channel].add(name)
-        else:
-            self.ops[channel] = set([name])
     def set_hostmask(self, name, hostmask):
         if name not in self.hostmasks:
             self.hostmasks[name] = hostmask
         elif self.hostmasks[name] != hostmask:
             self.hostmasks[name] = hostmask
-    
     def set_ident(self, name, ident):
         if name not in self.idents:
             self.idents[name] = ident
         elif self.idents[name] != ident:
             self.idents[name] = ident
-
-    def add_halfop(self, channel, name):
-        if channel in self.hops:
-            self.hops[channel].add(name)
-        else:
-            self.hops[channel] = set([name])
-
-    def add_voice(self, channel, name):
-        if channel in self.voices:
-            self.voices[channel].add(name)
-        else:
-            self.voices[channel] = set([name])
-
-    def del_op(self, channel, name):
-        try: self.ops[channel].remove(name)
-        except: pass
-
-    def del_halfop(self, channel, name):
-        try: self.hops[channel].remove(name)
-        except: pass
-
-    def del_voice(self, channel, name):
-        try: self.voices[channel].remove(name)
-        except: pass
 
 class TestBot(Bot):
     def f_ping(self, origin, match, args):
