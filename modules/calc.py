@@ -92,7 +92,7 @@ def wa(kenni, input):
     if not result:
         return kenni.say("No results found.")
 
-    return kenni.say(result)
+    return kenni.say(html.unescape(result))
 wa.commands = ['wolf','wa', 'calc','convert']
 
 if __name__ == '__main__':
