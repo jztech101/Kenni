@@ -51,7 +51,7 @@ def google(kenni, input):
             while not msg or len(msg) < tools.charlimit-20:
                 continues = False
                 while (not results[y].find("h3",class_="r") or not results[y].find("h3",class_="r").find("a") or not results[y].find("cite")):
-                    if len(results) >= y+1:
+                    if len(results) > y+1:
                         y += 1
                     else:
                         continues = True
@@ -64,7 +64,10 @@ def google(kenni, input):
                     msg = colorize(title) + " [ " + url + " ]"
                 else:
                     msg += " - " + colorize(title) + " [ " + url + " ]"
-                y+=1
+                if len(results) > y+1:
+                    y+=1
+                else:
+                    break
             if len(msg) > tools.charlimit:
                 msg = msg[:tools.charlimit-5]+"[...]"
             kenni.say(msg)
