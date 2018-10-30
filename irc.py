@@ -430,9 +430,11 @@ class Bot(asynchat.async_chat):
                     break
             else: report.append('source unknown')
 
-            self.msg(origin.sender, report[0] + ' (' + report[1] + ')')
-        except: self.msg(origin.sender, "Got an error.")
-
+            if cenni.logchan_pm:
+                self.msg(cenni.logchan_pm, report[0] + ' (' + report[1] + ')')
+        except:
+            if cenni.logchan_pm:
+                self.msg(cenni.logchan_pm, "Got an error.")
     def set_hostmask(self, name, hostmask):
         if name not in self.hostmasks:
             self.hostmasks[name] = hostmask
