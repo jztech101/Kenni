@@ -13,11 +13,18 @@ def stripHTML(input):
     input = re.sub(pass2, "", input)
     input = re.sub(pass3, "", input)
 def button(kenni, input):
+    eofstring = re.compile(" $")
+    space = re.compile(" +")
+    begstring = re.compile("^[^A-Za-z0-9]+")
     url = "http://willyoupressthebutton.com"
     page = BeautifulSoup(web.get(url), 'html.parser')
     reward = page.find("div", id="cond")
+    reward = re.sub(space," ",reward.text.replace(".","").lower())
+    reward = re.sub(begstring,"",reward)
     but = page.find("div", id="res")
-    kenni.say("The button reads" + reward.text.replace("  "," ").replace("  "," ").lower() + "BUT" + but.text.replace("  "," ").replace("  ", " ").lower() + ", will you push the button?")
+    but = re.sub(space, " ", but.text.replace(".","").lower())
+    but = re.sub(eofstring,"",but)
+    kenni.say("The button reads \"" + reward.capitalize() + "BUT" + but + "\", will you push the button?")
 button.commands = ['button']
 
 if __name__ == '__main__':
