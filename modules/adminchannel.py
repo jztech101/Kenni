@@ -191,6 +191,8 @@ def kickx(kenni, channel, nick, sender, reasonidx):
 
 def configureHostMask (mask, kenni):
     if "!" not in mask and "@" not in mask and ":" not in mask:
+        if mask.lower() not in kenni.idents or mask.lower() not in kenni.hostmasks:
+            return mask.lower() + "!*@*"
         ident = kenni.idents[mask.lower()]
         host = kenni.hostmasks[mask.lower()]
         if "~" not in ident:
@@ -266,7 +268,7 @@ def quiet (kenni, input):
    quietmask = configureHostMask(banmask, kenni)
    if quietmask == '': return
    kenni.write(['MODE', channel, '+q', quietmask])
-quiet.commands = ['quiet']
+quiet.commands = ['quiet','mute']
 quiet.priority = 'high'
 
 def unquiet (kenni, input):
@@ -289,7 +291,7 @@ def unquiet (kenni, input):
    quietmask = configureHostMask(banmask, kenni)
    if quietmask == '': return
    kenni.write(['MODE', channel, '-q', quietmask])
-unquiet.commands = ['unquiet']
+unquiet.commands = ['unquiet','unmute']
 unquiet.priority = 'high'
 
 def kickban (kenni, input):
