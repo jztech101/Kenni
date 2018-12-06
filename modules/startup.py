@@ -63,7 +63,7 @@ def startup(kenni, input):
     # Cf. http://swhack.com/logs/2005-12-05#T19-32-36
     for channel in kenni.channels:
         kenni.join(channel, None)
-        time.sleep(0.5)
+        time.sleep(0.7)
 startup.rule = r'(.*)'
 startup.event = '251'
 startup.priority = 'low'
