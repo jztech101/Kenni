@@ -36,7 +36,7 @@ def magic8Ball(kenni, input):
     if (random.randint(1,5) == 1):
         kenni.say(random.choice(askAgainAnswers))
     else:  #else produce a real answer
-        hash = hashlib.sha224(input)
+        hash = hashlib.sha224(input.encode('utf-8'))
         hash.update(str(time()))
         kenni.say(answers[int(hash.hexdigest(), 16) % len(answers)])
 
