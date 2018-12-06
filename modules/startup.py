@@ -60,7 +60,6 @@ def startup(kenni, input):
         kenni.msg('NickServ', 'IDENTIFY %s %s' % (user, kenni.config.password))
         time.sleep(10)
 
-    # Cf. http://swhack.com/logs/2005-12-05#T19-32-36
     for channel in kenni.channels:
         kenni.join(channel, None)
         time.sleep(1)
