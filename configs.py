@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-import imp, os, sys
+import os, sys
+from importlib.machinery import SourceFileLoader
 
 class Configs():
     def __init__(self, config_paths):
@@ -8,7 +9,7 @@ class Configs():
     def load_modules(self, config_modules):
         for config_name in self.config_paths:
             name = os.path.basename(config_name).split('.')[0] + '_config'
-            module = imp.load_source(name, config_name)
+            module = SourceFileLoader(name, config_name).load_module()
             module.filename = config_name
 
             if not hasattr(module, 'prefix'):
