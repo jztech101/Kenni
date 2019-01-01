@@ -135,6 +135,7 @@ class Bot(asynchat.async_chat):
                 else:
                     temp = ' '.join(args)[:510] + '\r\n'
             self.send(temp.encode('utf-8'))
+#            print(temp)
         except Exception as e:
             print(time.time())
             print('[__WRITE FAILED]', e)
@@ -145,6 +146,7 @@ class Bot(asynchat.async_chat):
             args = [self.safe(arg) for arg in args]
             if text is not None:
                 text = self.safe(text)
+#                print(args.join(" ") + text)
             if raw:
                 self.__write(args, text, raw)
             else:
@@ -302,6 +304,7 @@ class Bot(asynchat.async_chat):
             line = line[:-1]
 
         if line:
+            #print(line)
             if self.logchan_pm:
                 ## if logging to logging channel is enabled
                 ## send stuff in PM to logging channel
