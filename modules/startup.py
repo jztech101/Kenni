@@ -69,8 +69,12 @@ startup.priority = 'low'
 
 
 def nick(kenni,input):
-    for channel in kenni.channels:
-        kenni.write(['WHO', channel])
+    oldnick = input.nick.lower()
+    newnick = input.sender.replace(":","").lower()
+    if oldnick == newnick:
+        return
+    kenni.set_hostmask(newnick, kenni.hostmasks[oldnick])
+    kenni.set_ident(newnick, kenni.idents[oldnick])
 nick.rule = r'(.*)'
 nick.event = 'NICK'
 nick.priority = 'high'
