@@ -311,11 +311,11 @@ class Bot(asynchat.async_chat):
                     if (not tools.isChan(dlist[2],True) or dlist[1].strip() == 'NOTICE'):
                         if dlist[1].strip() == 'NOTICE':
                             if tools.isChan(dlist[2],True):
-                                self.msg(self.logchan_pm, '[Notice] ' + dlist[0].replace(':','') + ': (' + dlist[2] + ') ' + ' '.join(dlist[3:]).replace(":",""), True)
+                                self.msg(self.logchan_pm, '[Notice] ' + dlist[0].replace(':','') + ': (' + dlist[2] + ') ' + ' '.join(dlist[3:]).replace(":","",1), True)
                             else:
-                                self.msg(self.logchan_pm, '[Notice] ' + dlist[0].replace(":","") + ': ' + ' '.join(dlist[3:]).replace(":",""), True)
+                                self.msg(self.logchan_pm, '[Notice] ' + dlist[0].replace(":","") + ': ' + ' '.join(dlist[3:]).replace(":","",1), True)
                         elif dlist[1].strip() == 'PRIVMSG' and dlist[2].isalnum():
-                            self.msg(self.logchan_pm, '[PM] ' + dlist[0].replace(":","") + ': ' + ' '.join(dlist[3:]).replace(":",""), True)
+                            self.msg(self.logchan_pm, '[PM] ' + dlist[0].replace(":","") + ': ' + ' '.join(dlist[3:]).replace(":","",1), True)
                         elif dlist[1].strip() == 'INVITE':
                             self.msg(self.logchan_pm, '[Invite] ' + dlist[0].replace(":","") + ': ' + dlist[3].replace(":",""), True)
                     elif tools.isChan(dlist[2],True):
@@ -326,11 +326,11 @@ class Bot(asynchat.async_chat):
                                 self.msg(self.logchan_pm, '[Part] ' + dlist[0].replace(":","") + ': (' + dlist[2] + ')', True)
                         elif dlist[1].strip() == 'KICK' and dlist[3].strip() == self.nick:
                             if len(dlist) > 3:
-                                self.msg(self.logchan_pm, '[Kick] ' + dlist[0].replace(":","") + ': (' + dlist[2] + ') '+ ' '.join(dlist[4:]).replace(":",""), True)
+                                self.msg(self.logchan_pm, '[Kick] ' + dlist[0].replace(":","") + ': (' + dlist[2] + ') '+ ' '.join(dlist[4:]).replace(":","",1), True)
                             else:
                                 self.msg(self.logchan_pm, '[Kick] ' + dlist[0].replace(":","") + ': (' + dlist[2] + ') ', True)
                         elif dlist[1].strip() == 'PRIVMSG'and dlist[2].strip() != self.logchan_pm and currnick.match(' '.join(dlist[3:])):
-                            self.msg(self.logchan_pm, '[Ping] ' + dlist[0].replace(':','') + ': (' + dlist[2] + ') ' + ' '.join(dlist[3:]).replace(":",""), True)
+                            self.msg(self.logchan_pm, '[Ping] ' + dlist[0].replace(':','') + ': (' + dlist[2] + ') ' + ' '.join(dlist[3:]).replace(":","",1), True)
 
         self.buffer = ''
 
